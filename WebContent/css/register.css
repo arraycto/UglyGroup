@@ -1,0 +1,8 @@
+@CHARSET "UTF-8";
+html, body { 
+	background: url(../images/login/bg.jpg) 0px 0px no-repeat;
+	background-size: cover;
+	overflow-y: auto;
+	overflow-x: hidden;
+	font:normal 15px "Microsoft YaHei";
+}
