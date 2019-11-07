@@ -43,6 +43,7 @@ input,img{
 	border-style: none;
 	vertical-align: middle;
 }
+
 .username,.pwd{
 	width: 300px;
 	height: 48px;
@@ -51,12 +52,15 @@ input,img{
 	margin-top: 20px;
 	background-color: rgba(254,174,80);
 }
+
 .username{
 	background: url('../images/login/username.gif') 0px 0px no-repeat;
 }
+
 .pwd{
 	background: url('../images/login/pwd.gif') 0px 0px no-repeat;
 }
+
 #btn_area{
  margin-top: 20px;
  text-align: center;
@@ -70,15 +74,4 @@ input,img{
 	font-weight: bold;
 	cursor: pointer;
 	vertical-align: middle;
-}
-
-.verify{
-	width: 50px;
-	height: 38px;
-	line-height: 38px;
-	padding-left: 25px;
-	border: 1px solid #bac7d2 ;
-	background: #ecf5fa url(../images/login/login-icon.gif) left -92px no-repeat;
- 	border-radius: 3px;
- 	box-shadow: 5px 5px 5px #e7f1f7 inset;
 }

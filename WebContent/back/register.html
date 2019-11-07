@@ -5,8 +5,44 @@
 <title>丑团外卖系统-后台注册</title>
 <link rel="shortcut icon" href="../images/logo2.png" type="image/x-icon" />
 <link rel="stylesheet" href="../css/register.css">
+<link rel="stylesheet" href="../css/button.css">
 </head>
 <body>
-    
+    <div id="register_center">
+    	<div id="register_area">
+    		<div id="register_info">
+    			<form action="register.html" method="post" id="register_form">
+    				<table>
+    					<tr>
+    						<td align="right">用户名:</td>
+    						<td><input id="register_name" type="text" placeholder="请输入您的用户名..." /></td>
+    					</tr>
+    					<tr>
+    						<td align="right">密码:</td>
+    						<td><input id="register_pwd" type="password" placeholder="请输入您的密码..." /></td>
+    					</tr>
+    					<tr>
+    						<td align="right">确认密码:</td>
+    						<td><input id="register_rpwd" type="password" placeholder="请确认您的密码..." /></td>
+    					</tr>
+    					<tr>
+    						<td align="right">手机号码:</td>
+    						<td><input id="register_tel" type="tel" placeholder="请输入您的手机号..." /></td>
+    					</tr>
+    					<tr>
+    						<td align="right">验证码:</td>
+    						<td><input type="text" style="width: 180px;" placeholder="请输入验证码..." />
+    						<input class="button button-glow button-rounded button-highlight" type="button"  onclick="checkLogin('login')" id="sub_btn"  value="发&nbsp;送" /></td>
+    					</tr>
+    					<tr>
+    						<td align="center" colspan="3">
+    							<input class="button button-glow button-rounded button-highlight" type="button"  onclick="checkLogin('register')" id="sub_btn2" value="注&nbsp;&nbsp;册" />
+    						</td>
+    					</tr>
+    				</table>
+    			</form>
+    		</div>
+    	</div>
+    </div>
 </body>
 </html> 

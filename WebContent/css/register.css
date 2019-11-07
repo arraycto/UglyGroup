@@ -6,3 +6,42 @@ html, body {
 	overflow-x: hidden;
 	font:normal 15px "Microsoft YaHei";
 }
+
+#register_center{
+	
+}
+
+#register_area{
+	margin: 0px auto;
+	width: 1000px;
+	height: 600px;
+	position: relative;
+}
+
+#register_info{
+	width: 800px;
+	height: 500px;
+	position: absolute;
+	top: 50px;
+	left: 100px;
+	background-color: rgba(255,255,255,0.4);
+}
+
+#register_form{
+	position: absolute;
+	width: 400px;
+	height: 100%;
+	left: 200px;
+	top: 100px;
+}
+
+#register_form tr{
+	color: aqua;
+	height: 50px;
+	font-size: 25px;
+}
+
+#register_form input{
+	font-size: 25px;
+	color: aqua;
+}

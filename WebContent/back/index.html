@@ -12,7 +12,7 @@ function checkLogin(op) {
 	var account = $.trim($("#account").val());
 	var pwd = $.trim($("#pwd").val());
 	
-	if (op == "login") {
+	if (op == "login") { // 登录操作
 		if (account == "") {
 			alert("请输入账号...");
 			return;
@@ -34,6 +34,7 @@ function checkLogin(op) {
 			}
 		}, "text")
 	}
+	// 注册操作
 	location.href="register.html";
 }
 </script>
