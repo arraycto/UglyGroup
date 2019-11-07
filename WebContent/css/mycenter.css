@@ -125,6 +125,7 @@ section.main {
 	padding: 50px 300px 50px 130px;
 }
 .base li {
+	folat:left;
 	font-size: 14px;
 	list-style-type: none;
 	line-height: 40px;
@@ -132,7 +133,9 @@ section.main {
 .base a {
 	color:#ec7b01;
 	float: right;
+	margin:  0px 0px;
 }
+
 .list-inner-a1 {
 	margin-right: 28px;
 }
