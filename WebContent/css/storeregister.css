@@ -1,0 +1,44 @@
+@CHARSET "UTF-8";
+* { margin:0; padding:0; list-style:none;}
+html, body { 
+	background: url(../images/login/bg.jpg) 0px 0px no-repeat;
+	background-size: cover;
+	overflow-y: auto;
+	overflow-x: hidden;
+	font:normal 15px "Microsoft YaHei";
+}
+
+#div_center_form{
+	width: 1000px;
+	height: 800px;
+	position: relative;
+	margin: 0px auto;
+	background-color: rgba(255,255,255,0.4);
+}
+
+#div_center_form select,input{
+	font-size: 20px;
+	color: aqua;
+	margin-top: 20px;
+	width:300px;
+}
+
+#div_center_form label{
+	display: inline-block;
+	font-size: 20px;
+	color: aqua;
+	margin-top: 20px;
+	width: 150px;
+	text-align: right;
+}
+
+#storeregister_form{
+	width: 800px;
+	height: 90%;
+	position: absolute;
+	left: 100px;
+}
+
+#btn_1,#btn_2{
+	height:50px;
+}

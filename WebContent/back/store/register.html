@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>丑团外卖系统-店铺注册页面</title>
+<link rel="shortcut icon" href="../../images/logo2.png"
+	type="image/x-icon" />
+<link rel="stylesheet" href="../../css/storeregister.css">
+<link rel="stylesheet" href="../../css/button.css">
+<script type="text/javascript" src="../../ckeditor/ckeditor.js"></script>
+</head>
+<body>
+	<div id="div_center">
+		<div id="div_center_form">
+			<form id="storeregister_form">
+				<ul>
+					<li>
+						<label>店铺区域:</label>
+						<select id="store_aid" class="news_ipt">
+
+						</select>
+					</li>
+
+					<li>
+						<label>店铺美食类型:</label>
+						<select id="store_tid" class="news_ipt">
+
+						</select>
+					</li>
+
+					<li>
+						<label for="store_radd">详细地址:</label>
+						<input type="text" name="tname" id="store_radd" class="news_ipt" />
+					</li>
+
+					<li>
+						<label for="store_rname">店铺名称:</label>
+						<input type="text" name="tname" id="store_rname" class="news_ipt" />
+					</li>
+
+					<li>
+						<label for="store_rtel">联系电话:</label>
+						<input type="text" name="tname" id="store_rtel" class="news_ipt" />
+					</li>
+
+					<li>
+						<label for="store_pic">店铺图片:</label>
+						<input type="file" name="pics" id="store_pic" accept="image/*" multiple="multiple" onchange="setImagePreviews(this, 'show_pic')" />
+					</li>
+
+					<li style="width: 100%">
+						<label for="store_content">店铺简介:</label>
+						<textarea name="content" id="content" rows="4" cols="100"></textarea>
+					</li>
+
+					<li style="width: 100%; text-align: center">
+						<input class="button button-glow button-rounded button-highlight" type="button" value="注&emsp;册&emsp;店&emsp;铺" onclick="addNews()" id="btn_1" />
+						<input class="button button-glow button-rounded button-highlight" type="button" value="取&emsp;消&emsp;注&emsp;册" onclick="addNews()" id="btn_2" />
+					</li>
+				</ul>
+			</form>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	CKEDITOR.replace("content");
+</script>
+</html>
