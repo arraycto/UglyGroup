@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @author 12412
  *
  */
-public class user implements Serializable{
+public class User implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private int uid;
@@ -81,7 +81,7 @@ public class user implements Serializable{
 		return serialVersionUID;
 	}
 
-	public user(int uid, String uname, String upwd, String utel, String email, int ustate) {
+	public User(int uid, String uname, String upwd, String utel, String email, int ustate) {
 		super();
 		this.uid = uid;
 		this.uname = uname;
@@ -91,7 +91,7 @@ public class user implements Serializable{
 		this.ustate = ustate;
 	}
 
-	public user() {
+	public User() {
 		super();
 	}
 
@@ -116,7 +116,7 @@ public class user implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		user other = (user) obj;
+		User other = (User) obj;
 		if (email == null) {
 			if (other.email != null)
 				return false;

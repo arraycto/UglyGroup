@@ -15,7 +15,7 @@ import java.io.Serializable;
  * @author 12412
  *
  */
-public class foods implements Serializable{
+public class Foods implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private int fid;
@@ -92,7 +92,7 @@ public class foods implements Serializable{
 		return serialVersionUID;
 	}
 
-	public foods(int fid, int trid, int rid, String fname, String fprice, int fstate, String fdisc) {
+	public Foods(int fid, int trid, int rid, String fname, String fprice, int fstate, String fdisc) {
 		super();
 		this.fid = fid;
 		this.trid = trid;
@@ -103,7 +103,7 @@ public class foods implements Serializable{
 		this.fdisc = fdisc;
 	}
 
-	public foods() {
+	public Foods() {
 		super();
 	}
 
@@ -129,7 +129,7 @@ public class foods implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		foods other = (foods) obj;
+		Foods other = (Foods) obj;
 		if (fdisc == null) {
 			if (other.fdisc != null)
 				return false;

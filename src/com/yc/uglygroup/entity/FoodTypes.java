@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author 12412
  *
  */
-public class foodtypes implements Serializable{
+public class FoodTypes implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private int tid;
@@ -40,13 +40,13 @@ public class foodtypes implements Serializable{
 		return serialVersionUID;
 	}
 
-	public foodtypes(int tid, String tname) {
+	public FoodTypes(int tid, String tname) {
 		super();
 		this.tid = tid;
 		this.tname = tname;
 	}
 
-	public foodtypes() {
+	public FoodTypes() {
 		super();
 	}
 
@@ -67,7 +67,7 @@ public class foodtypes implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		foodtypes other = (foodtypes) obj;
+		FoodTypes other = (FoodTypes) obj;
 		if (tid != other.tid)
 			return false;
 		if (tname == null) {

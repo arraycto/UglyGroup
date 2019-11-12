@@ -17,7 +17,7 @@ import java.io.Serializable;
  * @author 12412
  *
  */
-public class actiondetail implements Serializable{
+public class ActionDetail implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private int adid;
@@ -122,7 +122,7 @@ public class actiondetail implements Serializable{
 		return serialVersionUID;
 	}
 
-	public actiondetail(int adid, int fid, String acid, float discount, int lowmin, int remoney, String acptime,
+	public ActionDetail(int adid, int fid, String acid, float discount, int lowmin, int remoney, String acptime,
 			String acendtime, int acnum, int acstate) {
 		super();
 		this.adid = adid;
@@ -137,7 +137,7 @@ public class actiondetail implements Serializable{
 		this.acstate = acstate;
 	}
 
-	public actiondetail() {
+	public ActionDetail() {
 		super();
 	}
 
@@ -166,7 +166,7 @@ public class actiondetail implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		actiondetail other = (actiondetail) obj;
+		ActionDetail other = (ActionDetail) obj;
 		if (acendtime == null) {
 			if (other.acendtime != null)
 				return false;

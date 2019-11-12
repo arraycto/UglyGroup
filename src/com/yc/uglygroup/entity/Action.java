@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @author 12412
  *
  */
-public class action implements Serializable{
+public class Action implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private String acid;
@@ -51,14 +51,14 @@ public class action implements Serializable{
 		return serialVersionUID;
 	}
 
-	public action(String acid, int rid, int actype) {
+	public Action(String acid, int rid, int actype) {
 		super();
 		this.acid = acid;
 		this.rid = rid;
 		this.actype = actype;
 	}
 
-	public action() {
+	public Action() {
 		super();
 	}
 
@@ -80,7 +80,7 @@ public class action implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		action other = (action) obj;
+		Action other = (Action) obj;
 		if (acid == null) {
 			if (other.acid != null)
 				return false;

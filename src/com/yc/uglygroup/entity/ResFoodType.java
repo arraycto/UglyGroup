@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @author 12412
  *
  */
-public class resfoodtype implements Serializable{
+public class ResFoodType implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private int trid;
@@ -50,14 +50,14 @@ public class resfoodtype implements Serializable{
 		return serialVersionUID;
 	}
 
-	public resfoodtype(int trid, int rid, String trtype) {
+	public ResFoodType(int trid, int rid, String trtype) {
 		super();
 		this.trid = trid;
 		this.rid = rid;
 		this.trtype = trtype;
 	}
 
-	public resfoodtype() {
+	public ResFoodType() {
 		super();
 	}
 
@@ -79,7 +79,7 @@ public class resfoodtype implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		resfoodtype other = (resfoodtype) obj;
+		ResFoodType other = (ResFoodType) obj;
 		if (rid != other.rid)
 			return false;
 		if (trid != other.trid)

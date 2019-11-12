@@ -17,7 +17,7 @@ import java.io.Serializable;
  * @author 12412
  *
  */
-public class restaurant implements Serializable{
+public class Restaurant implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private int rid;
@@ -122,7 +122,7 @@ public class restaurant implements Serializable{
 		return serialVersionUID;
 	}
 
-	public restaurant(int rid, int uid, int aid, int tid, String radd, String rname, String rtel, String rpic,
+	public Restaurant(int rid, int uid, int aid, int tid, String radd, String rname, String rtel, String rpic,
 			String rdisc, int rstate) {
 		super();
 		this.rid = rid;
@@ -137,7 +137,7 @@ public class restaurant implements Serializable{
 		this.rstate = rstate;
 	}
 
-	public restaurant() {
+	public Restaurant() {
 		super();
 	}
 
@@ -166,7 +166,7 @@ public class restaurant implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		restaurant other = (restaurant) obj;
+		Restaurant other = (Restaurant) obj;
 		if (aid != other.aid)
 			return false;
 		if (radd == null) {

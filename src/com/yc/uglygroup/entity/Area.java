@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author 12412
  *
  */
-public class area implements Serializable{
+public class Area implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private int aid;
@@ -40,13 +40,13 @@ public class area implements Serializable{
 		return serialVersionUID;
 	}
 
-	public area(int aid, String aname) {
+	public Area(int aid, String aname) {
 		super();
 		this.aid = aid;
 		this.aname = aname;
 	}
 
-	public area() {
+	public Area() {
 		super();
 	}
 
@@ -67,7 +67,7 @@ public class area implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		area other = (area) obj;
+		Area other = (Area) obj;
 		if (aid != other.aid)
 			return false;
 		if (aname == null) {

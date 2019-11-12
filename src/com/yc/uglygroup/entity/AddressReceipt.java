@@ -12,7 +12,7 @@ import java.io.Serializable;
  * @author 12412
  *
  */
-public class addressreceipt implements Serializable{
+public class AddressReceipt implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private int arid;
@@ -71,7 +71,7 @@ public class addressreceipt implements Serializable{
 		return serialVersionUID;
 	}
 
-	public addressreceipt(int arid, int uid, String arname, String artel, String aradd) {
+	public AddressReceipt(int arid, int uid, String arname, String artel, String aradd) {
 		super();
 		this.arid = arid;
 		this.uid = uid;
@@ -80,7 +80,7 @@ public class addressreceipt implements Serializable{
 		this.aradd = aradd;
 	}
 
-	public addressreceipt() {
+	public AddressReceipt() {
 		super();
 	}
 
@@ -104,7 +104,7 @@ public class addressreceipt implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		addressreceipt other = (addressreceipt) obj;
+		AddressReceipt other = (AddressReceipt) obj;
 		if (aradd == null) {
 			if (other.aradd != null)
 				return false;

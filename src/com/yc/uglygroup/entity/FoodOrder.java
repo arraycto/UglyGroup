@@ -14,7 +14,7 @@ import java.io.Serializable;
  * @author 12412
  *
  */
-public class foodorder implements Serializable{
+public class FoodOrder implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private String oid;
@@ -91,7 +91,7 @@ public class foodorder implements Serializable{
 		return serialVersionUID;
 	}
 
-	public foodorder(String oid, int uid, int arid, float oprice, String otime, String endtime, int ostate) {
+	public FoodOrder(String oid, int uid, int arid, float oprice, String otime, String endtime, int ostate) {
 		super();
 		this.oid = oid;
 		this.uid = uid;
@@ -102,7 +102,7 @@ public class foodorder implements Serializable{
 		this.ostate = ostate;
 	}
 
-	public foodorder() {
+	public FoodOrder() {
 		super();
 	}
 
@@ -128,7 +128,7 @@ public class foodorder implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		foodorder other = (foodorder) obj;
+		FoodOrder other = (FoodOrder) obj;
 		if (arid != other.arid)
 			return false;
 		if (endtime == null) {

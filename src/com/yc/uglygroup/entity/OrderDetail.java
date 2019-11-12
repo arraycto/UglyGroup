@@ -12,7 +12,7 @@ import java.io.Serializable;
  * @author 12412
  *
  */
-public class orderdetail implements Serializable{
+public class OrderDetail implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private int did;
@@ -70,7 +70,7 @@ public class orderdetail implements Serializable{
 		return serialVersionUID;
 	}
 
-	public orderdetail(int did, String oid, int fid, int num, float price) {
+	public OrderDetail(int did, String oid, int fid, int num, float price) {
 		super();
 		this.did = did;
 		this.oid = oid;
@@ -79,7 +79,7 @@ public class orderdetail implements Serializable{
 		this.price = price;
 	}
 
-	public orderdetail() {
+	public OrderDetail() {
 		super();
 	}
 
@@ -103,7 +103,7 @@ public class orderdetail implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		orderdetail other = (orderdetail) obj;
+		OrderDetail other = (OrderDetail) obj;
 		if (did != other.did)
 			return false;
 		if (fid != other.fid)
