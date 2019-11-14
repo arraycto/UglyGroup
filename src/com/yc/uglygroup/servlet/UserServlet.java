@@ -15,6 +15,7 @@ import com.yc.uglygroup.sendmsg.SendMsg;
 
 @WebServlet("/admin")
 public class UserServlet extends BasicServlet{
+	private static final long serialVersionUID = 1L;
 	private String code = "null";
 	
 	@Override
