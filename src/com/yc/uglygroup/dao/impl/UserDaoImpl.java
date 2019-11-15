@@ -20,4 +20,12 @@ public class UserDaoImpl implements IUserDao{
 		return dbHelper.update(sql, uname, upwd, utel);
 	}
 
+	@Override
+	public int userup( Integer uid ,String uname, String upwd, String email) {
+		DBHelper db = new DBHelper();
+		String sql = " update  user set uanme= ? ,upwd= ? email = ? where uid = ?";
+		return db.update(sql, uname,upwd,email,uid);
+	}
+
+
 }

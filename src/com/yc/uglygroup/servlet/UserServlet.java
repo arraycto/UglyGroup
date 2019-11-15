@@ -28,7 +28,25 @@ public class UserServlet extends BasicServlet{
 			utel(request, response);
 		} else if ("register".equals(op)) { // 注册操作
 			register(request, response);
+		}else if ("userup".equals(op)){//修改操作
+			userup(request, response);
 		}
+	}
+	/**
+	 * 用户修改的操作
+	 * @param request
+	 * @param response
+	 * @throws IOException 
+	 */
+	private void userup(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		Integer uid = Integer.getInteger(request.getParameter("uid"));
+		String uname= request.getParameter("uname");
+		String upwd = request.getParameter("upwd");
+		String email = request.getParameter("email");
+		IUserBiz userBiz = new UserBizImpl();
+		int result = userBiz.userup(uid, uname, upwd, email);
+		this.send(response, result);
+		
 	}
 
 	/**

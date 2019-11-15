@@ -17,4 +17,12 @@ public interface IUserDao{
 	 * @return
 	 */
 	public int register(String uname, String upwd, String utel);
+	/**
+	 * 更改用户信息的方法
+	 * @param uname
+	 * @param upwd
+	 * @param email
+	 * @return
+	 */
+	public int userup(Integer uid, String uname, String upwd, String email);
 }

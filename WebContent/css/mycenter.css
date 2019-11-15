@@ -115,20 +115,43 @@ section.main {
 	float: left;
 	line-height: 40px;
 }
+.list-top a{
+	color:#cc0930
+}
 .list-bottom p,.li-first {
 	padding-left: 20px;
 	line-height: 40px;
+}
+.li-first input{
+	background:transparent;
+	 border: 0px;
+}
+.list-bottom a{
+	color:#4784c1
 }
 .base {
 	}
 .base .list-inner {
 	padding: 50px 300px 50px 130px;
 }
+.base .list-inner textarea{
+	width: 451px;
+    height: 84px;
+}
+}
+.base .list-inner  input{
+	background:transparent;
+	border: 0px;
+}
+ 
 .base li {
-	folat:left;
 	font-size: 14px;
 	list-style-type: none;
 	line-height: 40px;
+}
+.base li  input{
+	background:transparent;
+	border: 0px;
 }
 .base a {
 	color:#ec7b01;
@@ -173,4 +196,10 @@ section.main {
 /*display: block;*/
 	.genzong p {
 	font-size: 14px;
+}
+#add_foods_form .foods_ipt{
+	width:300px;
+	border: 1px solid #016BD1;
+	height: 20px;
+	border-radius:2px;
 }

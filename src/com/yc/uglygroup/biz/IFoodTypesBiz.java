@@ -10,4 +10,5 @@ public interface IFoodTypesBiz {
 	 * @return
 	 */
 	public List<FoodTypes> findAllTypes();
+
 }

@@ -19,4 +19,14 @@ public interface IUserBiz {
 	 * @return
 	 */
 	public User register(String uname, String upwd, String utel);
+	/**
+	 * 用户修改的方法
+	 * @param uid
+	 * @param uname
+	 * @param upwd
+	 * @param email
+	 * @return
+	 */
+	public int userup( Integer uid ,String uname, String upwd, String email);
+
 }

@@ -9,4 +9,5 @@ public interface IFoodTypesDao {
 	 * 查询所有美食类型
 	 */
 	public List<FoodTypes> findAllTypes();
+
 }
