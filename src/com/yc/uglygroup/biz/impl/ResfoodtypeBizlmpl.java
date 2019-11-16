@@ -4,8 +4,9 @@ import java.util.List;
 
 import com.yc.uglygroup.biz.IResfoodtypebiz;
 import com.yc.uglygroup.dao.IFoodTypesDao;
+import com.yc.uglygroup.dao.IResfoodtypeDao;
 import com.yc.uglygroup.dao.impl.FoodTypesDaoImpl;
-import com.yc.uglygroup.dao.impl.Resfoodtypelmpl;
+import com.yc.uglygroup.dao.impl.ResfoodtypeDaolmpl;
 import com.yc.uglygroup.entity.ResFoodType;
 
 public class ResfoodtypeBizlmpl implements IResfoodtypebiz{
@@ -14,8 +15,8 @@ public class ResfoodtypeBizlmpl implements IResfoodtypebiz{
 	 */
 	@Override
 	public int addTypes(int rid, String trtype) {
-		IResfoodtypebiz resfoodtypebiz = new ResfoodtypeBizlmpl();
-		return resfoodtypebiz.addTypes(rid, trtype);
+		IResfoodtypeDao resfoodtypedao = new ResfoodtypeDaolmpl();
+		return resfoodtypedao.addTypes(rid, trtype);
 	}
 
 	@Override
@@ -23,9 +24,9 @@ public class ResfoodtypeBizlmpl implements IResfoodtypebiz{
 	 * 查询该商铺美食类型的方法
 	 */
 	public List<ResFoodType> findAllTypes(int rid ) {
-		Resfoodtypelmpl resfoodtypelmpl = new Resfoodtypelmpl();
+		IResfoodtypeDao resfoodtypedao = new ResfoodtypeDaolmpl();
 		
-		return resfoodtypelmpl.findAllTypes(rid);
+		return resfoodtypedao.findAllTypes(rid);
 	}
 
 }

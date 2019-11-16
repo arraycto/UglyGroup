@@ -9,4 +9,11 @@ public interface IRestaurantDao {
 	 * @return
 	 */
 	public int addRestaurant(Map<String, String> map);
+	/**
+	 * 查询自己的商铺
+	 * @param uid
+	 * @return
+	 */
+	public Map<String, String> findres(Integer uid);
+	
 }

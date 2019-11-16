@@ -7,7 +7,7 @@
 <title>丑团外卖</title>
 <link rel="stylesheet" type="text/css" href="../../css/reset.css">
 <link rel="stylesheet" type="text/css" href="../../css/public.css">
-<link rel="shortcut icon" href="favicon.ico" />
+<link rel="shortcut icon" href="../../favicon.ico" />
 <link rel="stylesheet" href="../../css/menu.css">
 <link rel="stylesheet" href="../../css/responsive.css">
 <script type="text/javascript" src="../../js/jquery-1.12.2.min.js"></script>
@@ -25,7 +25,7 @@
 				<h1><a href="#">丑团外卖</a></h1>
 			</div>
 			<div class="top-left">
-				<a href="#" class="btn">登录</a> <a href="#" class="btn">注册</a>
+				<a href="../login.html" class="btn">登录</a> <a href="#" class="btn">注册</a>
 			</div>
 		</div>
 		<div class="top-right">
@@ -44,15 +44,15 @@
 			</ul>
 			</li>
 				<li onmouseenter=" event.target.querySelector('.header-nav-second').style.display = 'block';"onmouseleave=" event.target.querySelector('.header-nav-second').style.display = 'none';">
-					<a href="mystore.html">我的店铺</a>
+					<a href="mystore.jsp">我的店铺</a>
 					<ul class="header-nav-second" onmouseenter="event.target.querySelector('.header-nav-second').style.display = 'block';"onmouseleave=" event.target.querySelector('.header-nav-second').style.display = 'none';">
 							<li>
-								<a href="mystore.html" >店铺信息</a></br>
+								<a href="mystore.jsp" >店铺信息</a></br>
 							</li>
 							<li>
-								<a href="#">注册店铺</a></br>
+								<a href="../store/register.html">注册店铺</a></br>
 							</li>
-							<li><a href="mystore.html">修改店铺</a></br>
+							<li><a href="mystore.jsp">修改店铺</a></br>
 							</li>
 					</ul>
 				</li>
@@ -111,17 +111,11 @@
 
 								<span>店家描述</span> <span> :</span> <span> 湘菜 </span>
 							</div>
-
-
 							<div class="yd">
 								<span class="kyd">营业中</span>
 							</div>
 						</div>
-
 				</a></li>
-
-
-
 			</ul>
 		</div>
 		<div class="goTop" id="goTop"></div>
@@ -215,6 +209,21 @@
 				},2000)
 			})
 
+			//登陆的用户获取
+			var uid;
+			var uname;
+			$.ajax({
+	            type : "post",
+	            url : "../../resturant?op=getuser",
+	            dataType : "text",
+	            success : function(data) {
+	            	uid = data["uid"];
+	            	uname = data["uname"];
+	            },
+	            error : function() {
+	                alert("请优先登录失敗");
+	            }
+	        });
 		})
 
 	</script>

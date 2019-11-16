@@ -28,7 +28,8 @@ public class ResfoodtypeServlet extends BasicServlet {
 		}else if("addTypes".equals(op)){
 			addTypes(request, response);
 		}
-	}
+		}
+	
 	/**
 	 * 查找所有店铺美食类型
 	 * @param request
@@ -36,7 +37,7 @@ public class ResfoodtypeServlet extends BasicServlet {
 	 * @throws IOException 
 	 */
 		private void findAllTypes(HttpServletRequest request, HttpServletResponse response) throws IOException {
-			int rid = Integer.getInteger(request.getParameter("rid"));
+			int rid = Integer.parseInt(request.getParameter("rid"));
 			IResfoodtypebiz Resfoodtypebiz = new ResfoodtypeBizlmpl();
 			List<ResFoodType> list = Resfoodtypebiz.findAllTypes(rid);
 			this.send(response, list);
@@ -44,14 +45,17 @@ public class ResfoodtypeServlet extends BasicServlet {
 		/**
 		 * 添加店铺美食类型
 		 * @param request
-		 * @param response
+		 * @param response	
 		 * @throws IOException 
 		 */
 	private void addTypes(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		System.out.println("添加操作");
 		IResfoodtypebiz iResfoodtypebiz = new ResfoodtypeBizlmpl();
-		int rid = Integer.getInteger(request.getParameter("rid"));
+		int rid = Integer.parseInt(request.getParameter("rid"));
+		System.out.println(rid);
 		String trtype = request.getParameter("trtype");
 		int result = iResfoodtypebiz.addTypes(rid, trtype);
+		System.out.println(result);
 		this.send(response, result);
 	}
 

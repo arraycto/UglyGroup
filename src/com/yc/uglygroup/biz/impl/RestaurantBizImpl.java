@@ -18,4 +18,10 @@ public class RestaurantBizImpl implements IRestaurantBiz{
 		return restaurantDao.addRestaurant(map);
 	}
 
+	@Override
+	public Map<String, String> findres(Integer uid) {
+		IRestaurantDao restaurantDao = new RestaurantDaoImpl();
+		return restaurantDao.findres(uid);
+	}
+
 }

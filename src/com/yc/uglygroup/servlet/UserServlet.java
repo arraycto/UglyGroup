@@ -2,11 +2,14 @@ package com.yc.uglygroup.servlet;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.yc.uglygroup.biz.IUserBiz;
 import com.yc.uglygroup.biz.impl.UserBizImpl;
@@ -32,6 +35,7 @@ public class UserServlet extends BasicServlet{
 			userup(request, response);
 		}
 	}
+
 	/**
 	 * 用户修改的操作
 	 * @param request
@@ -108,7 +112,7 @@ public class UserServlet extends BasicServlet{
 		int result = -1;
 		if (user != null) { // 说明登录成功，查询到了此账户的信息
 			// 将当前用户信息存到session，方便以后获取
-			request.getSession().setAttribute("user", user);
+			request.getSession().setAttribute("user",user);
 			result = 1;
 		} else {
 			result = -1;

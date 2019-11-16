@@ -9,4 +9,10 @@ public interface IRestaurantBiz {
 	 * @return
 	 */
 	public int addRestaurant(Map<String, String> map);
+	/**
+	 * 查询用户店铺
+	 * @param rid
+	 * @return
+	 */
+	public Map<String, String> findres(Integer uid);
 }

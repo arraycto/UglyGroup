@@ -17,4 +17,10 @@ public class RestaurantDaoImpl implements IRestaurantDao{
 				map.get("rdisc"));
 	}
 
+	@Override
+	public Map<String, String> findres(Integer uid) {
+		DBHelper dbHelper = new DBHelper();
+		String sql = "select rid , rname , aid,radd,rpic,rdisc,rstate from restaurant where uid = ?";
+		return dbHelper.find(sql, uid);
+	}
 }
