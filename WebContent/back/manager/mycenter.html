@@ -23,14 +23,16 @@
 				<h1><a href="#">丑团外卖</a></h1>
 			</div>
 			<div class="login">
+				<a href="menu.html">返回</a>
 				<div class="username">
-					<a href="#">用户6232</a>
+					 <a href="#">用户6232</a>
 					<ul id="userMenu" class="userMenu">
 						<li><a href="#">我的资料</a></li>
 						<li><a href="#">我的订单</a></li>
 						<li><a href="#">退出登陆</a></li>
 					</ul>
 					<span class="triangle_icon"></span>
+					
 				</div>
 			</div>
 		</div>
@@ -55,8 +57,8 @@
 						<span class="information-r-span1">用户6232</span>
 					</p>
 					<ul>
-						<li>密码修改&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="password-a">修改</a></li>
-						<li>我的邮箱&nbsp;&nbsp;&nbsp;&nbsp;596*****@qq.com<a href="#" class="password-a">修改</a></li>
+						<li>密码&nbsp;&nbsp;******</li>
+						<li>我的邮箱&nbsp;&nbsp;&nbsp;&nbsp;596*****@qq.com</li>
 						<li>手机号&nbsp;&nbsp;&nbsp;&nbsp;187****6232</li>
 					</ul>
 				</div>
@@ -67,10 +69,10 @@
 							<ul>
 								<li class="li-first" style="width:17%">姓名</li>
 								<li style="width:8%">城市</li>
-								<li style="width:25%">配送地址</li>
+								<li style="width:35%">配送地址</li>
 								<li style="width:15%">手机号码</li>
 								<li style="width:20%">操作</li>
-								<li style="width:10%">快速入口</li>
+
 							</ul>
 						</div>
 						<div class="small-list list-bottom">
@@ -85,7 +87,6 @@
 							<ul>
 								<li class="li-first" style="width:24%">订单号</li>
 								<li style="width:25%">订单商家</li>
-								<li style="width:10%">付款方式</li>
 								<li style="width:12%">订单金额</li>
 								<li style="width:16%">下单时间</li>
 								<li style="width:8%">订单状态</li>
@@ -103,9 +104,11 @@
 						<div class="list-inner">
 							<ul>
 								<li>手机：&nbsp;&nbsp;&nbsp;&nbsp;187****6232</li>
-								<li>昵称：&nbsp;&nbsp;&nbsp;&nbsp;用户6232<a href="#" >修改</a></li>	
-								<li>密码：&nbsp;&nbsp;&nbsp;&nbsp;********<a href="#" >修改密码</a></li>
-								<li>邮箱：&nbsp;&nbsp;&nbsp;&nbsp;596****@qq.com<a href="#" >修改</a></li>
+								<li>昵称：&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" readonly="readonly" value="tjy"  id = "username"><a href="javascript:void(0)" onclick="usernameup()" >修改</a></li>	
+								<li>密码：&nbsp;&nbsp;&nbsp;&nbsp;<input type="password" readonly="readonly" value="********" id="userpwd"><a href="javascript:void(0)" onclick="userpwdup()">修改密码</a></li>
+								<li>邮箱：&nbsp;&nbsp;&nbsp;&nbsp;<input type="email" readonly="readonly" value="596****@qq.com"id="useremail"><a href="javascript:void(0)" onclick="useremailup()">修改</a></li>
+								
+								<li><div style="text-align: center;"><button type="button" onclick="userup()" >提交</button></div></li>
 							</ul>
 						</div>
 					</div>
@@ -116,15 +119,24 @@
 						<div class="small-list list-top">
 							<ul>
 								<li class="li-first" style="width:17%">姓名</li>
-								<li style="width:8%">城市</li>
-								<li style="width:25%">配送地址</li>
+								<li style="width:8%">区域</li>
+								<li style="width:30%">配送地址</li>
 								<li style="width:15%">手机号码</li>
 								<li style="width:20%">操作</li>
-								<li style="width:10%">快速入口</li>
+								<li style="width:5%"><a class="add" href="javascript:void(0)" onclick="addrow()">添加</a></li>
 							</ul>
 						</div>
 						<div class="small-list list-bottom">
-							<p>暂无相关数据。</p>
+							<ul class="addressreceipt" id= "addressreceipt">
+								<li class="li-first" >
+								<input type="text" name="address" readonly="readonly" value="tjy">
+								<input type="text" name="address" readonly="readonly" value="蒸湘区">
+								<input type="text" name="address" readonly="readonly" value="南华大学致远园12栋">
+								<input type="text" name="address" readonly="readonly" value="15226380133">
+								<a href="javascript:void(0)" onclick="addresscaseup()">修改</a>
+								<a href="javascript:void(0)" onclick="addressup()">提交</a>
+								</li>
+							</ul>
 						</div>
 					</div>
 			</div>
@@ -164,8 +176,50 @@
 
 		<div class="goTop"></div>
 	</section>
+<script type="text/javascript">
+	//配送资料添加
+	function addrow(){
+		var str = '<li class="li-first" ><input type="text" name="address"><input type="text" name="address"><input type="text" name="address"><input type="text" name="address"><a class="add" href="javascript:void(0)" onclick="add()">添加</a></li>'
+		$("#addressreceipt").append($(str));
 
-
+	}
+	function add(){
+		
+	}
+	//配送资料修改
+	function addresscaseup(){
+		$("input[name='address']").removeAttr("readonly");
+	}
+	function addressup(){
+		$("input[name='address']").attr("readonly","readonly");
+	}
+	//用户修改
+	function usernameup(){
+		$("#username").removeAttr("readonly");
+	}
+	function userpwdup(){
+		$("#userpwd").removeAttr("readonly");
+	}
+	function useremailup(){
+		$("#useremail").removeAttr("readonly");
+	}
+	function userup(){
+		var uid;
+		var uname = $("#username").val();
+		var upwd = $("#userpwd").val();
+		var email = $("#useremail").val();
+		$.post("../../admin",{op:"userup" , uid:uid, uname:uname,upwd:upwd,email:email} , function(data){
+			if (data>0){
+				alert("修改成功");
+				$("#username").attr("readonly","readonly");
+				$("#userpwd").attr("readonly","readonly");
+				$("#useremail").attr("readonly","readonly");
+			}else{
+				alert("修改失败");
+			}	
+		},"json")
+	}
+</script>
 
 
 	<footer>

@@ -14,5 +14,7 @@ public class FoodTypesDaoImpl implements IFoodTypesDao{
 		String sql = "select tid, tname from foodtypes";
 		return dbHelper.finds(sql, FoodTypes.class);
 	}
+
+
 	
 }

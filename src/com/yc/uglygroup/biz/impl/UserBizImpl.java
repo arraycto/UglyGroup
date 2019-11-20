@@ -31,4 +31,10 @@ public class UserBizImpl implements IUserBiz{
 			return null;
 		}
 	}
+
+	@Override
+	public int userup(Integer uid, String uname, String upwd, String email) {
+		IUserDao userDao = new UserDaoImpl();
+		return userDao.userup(uid, uname, upwd, email);
+	}
 }

@@ -2,7 +2,6 @@ package com.yc.uglygroup.servlet;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -14,7 +13,7 @@ import javax.servlet.jsp.PageContext;
 
 import com.yc.uglygroup.biz.IRestaurantBiz;
 import com.yc.uglygroup.biz.impl.RestaurantBizImpl;
-import com.yc.uglygroup.entity.Restaurant;
+import com.yc.uglygroup.entity.User;
 import com.yc.uglygroup.util.FileUploadUtil;
 
 @WebServlet("/resturant")
@@ -36,9 +35,29 @@ public class ResturantServlet extends BasicServlet{
 			refuse(request,response);
 		} else if ("delete".equals(op)) { // 驳回店铺申请
 			delete(request,response);
+		} else if("findres".equals(op)){
+			findres(request,response);
 		}
 	}
 
+	private void findres(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		User user  = (com.yc.uglygroup.entity.User)request.getSession().getAttribute("user");
+		int uid =Integer.valueOf(user.getUid());
+		System.out.println(uid);
+		IRestaurantBiz biz = new RestaurantBizImpl();
+		int result;
+		Map<String, String> restaurant = biz.findres(uid);
+		if(restaurant != null){
+			result = 1;
+			request.getSession().setAttribute("restaurant", restaurant);
+		}else{
+			result = -1;
+		}
+		this.send(response, result);
+
+	}
+
+	
 	/**
 	 * 删除店铺，将店铺的状态改为 3.已删除 
 	 * @param request

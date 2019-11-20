@@ -11,8 +11,11 @@ public class FoodTypesBizImpl implements IFoodTypesBiz{
 
 	@Override
 	public List<FoodTypes> findAllTypes() {
-		IFoodTypesDao foodTypesDao = new FoodTypesDaoImpl();
-		return foodTypesDao.findAllTypes();
+			IFoodTypesDao foodTypesDao = new FoodTypesDaoImpl();
+			return foodTypesDao.findAllTypes();
+
 	}
+
+
 
 }

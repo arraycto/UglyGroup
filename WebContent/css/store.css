@@ -95,6 +95,9 @@
 	text-align: center;
 	border-bottom: 1px solid #ccc;
 }
+.typeshow .good-list li>a {
+	color:red;
+}
 
 .typeshow .good-list .te {
 	background: rgb(1, 116, 16);

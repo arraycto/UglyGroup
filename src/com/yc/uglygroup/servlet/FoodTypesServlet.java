@@ -23,7 +23,6 @@ public class FoodTypesServlet extends BasicServlet{
 			findAllTypes(request, response);
 		}
 	}
-
 	/**
 	 * 查询所有美食类型
 	 * @param request

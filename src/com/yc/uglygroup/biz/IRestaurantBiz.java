@@ -23,4 +23,11 @@ public interface IRestaurantBiz {
 	 * @return
 	 */
 	public int updateState(int rstate, int rid);
+	
+	/**
+	 * 查询用户店铺
+	 * @param rid
+	 * @return
+	 */
+	public Map<String, String> findres(Integer uid);
 }

@@ -35,4 +35,9 @@ public class RestaurantBizImpl implements IRestaurantBiz{
 		IRestaurantDao restaurantDao = new RestaurantDaoImpl();
 		return restaurantDao.updateState(rstate, rid);
 	}
+	
+	public Map<String, String> findres(Integer uid) {
+		IRestaurantDao restaurantDao = new RestaurantDaoImpl();
+		return restaurantDao.findres(uid);
+	}
 }

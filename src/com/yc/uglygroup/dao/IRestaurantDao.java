@@ -30,4 +30,11 @@ public interface IRestaurantDao {
 	 * @return
 	 */
 	public int updateState(int rstate, int rid);
+	
+	/**
+	 * 查询自己的商铺
+	 * @param uid
+	 * @return
+	 */
+	public Map<String, String> findres(Integer uid);
 }
