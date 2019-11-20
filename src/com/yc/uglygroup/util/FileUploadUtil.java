@@ -56,7 +56,6 @@ public class FileUploadUtil {
 				map.put(name, request.getParameter(name));
 			}
 			
-			
 			//处理请求中的文件
 			Files files = smartUpload.getFiles();
 			if (files == null || files.getCount() <= 0) {
