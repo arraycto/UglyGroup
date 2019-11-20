@@ -42,7 +42,7 @@ create table if not exists area(
 --店铺联系电话 rtel
 --店铺图片 rpic
 --店铺简介 rdisc
---店铺状态 rstate 0.营业 1.休息 2.审核中
+--店铺状态 rstate 0.营业 1.休息 2.审核中 3.已删除 4.未通过
 create table if not exists restaurant(
 	rid int primary key auto_increment,
 	uid  int,

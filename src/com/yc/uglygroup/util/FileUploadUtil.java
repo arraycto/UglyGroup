@@ -56,8 +56,6 @@ public class FileUploadUtil {
 				map.put(name, request.getParameter(name));
 			}
 			
-			System.out.println("map.get('rpic')" + map.get("rpic"));
-			
 			//处理请求中的文件
 			Files files = smartUpload.getFiles();
 			if (files == null || files.getCount() <= 0) {

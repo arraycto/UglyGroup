@@ -69,9 +69,7 @@ $(function() {
 					</tr>
 					<tr>
 						<td><label>店铺简介:</label></td>
-					</tr>
-					<tr>
-						<td colspan="4"><textarea name="content" id="content" rows="4" cols="100"></textarea></td>
+						<td  colspan="3"><textarea rows="4" cols="100"></textarea></td>
 					</tr>
 					<tr>
 						<td colspan="2" align="center"><input class="button button-glow button-rounded button-highlight" type="button" value="注&emsp;册&emsp;店&emsp;铺" onclick="addRestaurant()" id="btn_1" /></td>
@@ -83,8 +81,6 @@ $(function() {
 	</div>
 </body>
 <script type="text/javascript">
-	CKEDITOR.replace("content");
-
 	function addRestaurant() {
 		var uid = "1";
 		var aid = $.trim($("#store_aid").val());
@@ -92,7 +88,7 @@ $(function() {
 		var radd = $.trim($("#store_radd").val());
 		var rname = $.trim($("#store_rname").val());
 		var rtel = $.trim($("#store_rtel").val());
-		var content = CKEDITOR.instances.content.getData();
+		var rdisc = $.trim($("#store_rdisc").val());
 		
 		var reg = /^[0-9]{11}$/;
 		if (!reg.test(rtel)) {
@@ -108,7 +104,7 @@ $(function() {
 			url:"../../resturant?op=addRestaurant",
 			secureuri: false,
 			fileElementId: ["store_pic"],
-			data: {uid:uid, aid:aid, tid:tid, radd:radd, rname:rname, rtel:rtel, rdisc:content},
+			data: {uid:uid, aid:aid, tid:tid, radd:radd, rname:rname, rtel:rtel, rdisc:rdisc},
 			dataType: "text",
 			success: function(data, status) {
 				data = parseInt($.trim(data));
@@ -118,7 +114,6 @@ $(function() {
 				} else if (data > 0) {
 					$("#storeregister_form")[0].reset();
 					$("#show_pic").html("");
-					CKEDITOR.instances.content.setData("");
 					alert("店铺注册成功...");
 				} else {
 					alert("店铺注册失败...");
