@@ -27,7 +27,7 @@ section.main {
 }
 .main-right {
 	float: right;
-	width: 830px;
+	width: 730px;
 	position: relative;
 }
 .main-right-inner {
@@ -57,7 +57,7 @@ section.main {
 }
 .information-r-span1 {
 	width: 500px;
-	color:#000;
+	color:#ff0000;
 	font-size: 24px;
 }
 .information-r-span2 {
@@ -132,7 +132,7 @@ section.main {
 .base {
 	}
 .base .list-inner {
-	padding: 50px 300px 50px 130px;
+	padding: 50px 200px 50px 130px;
 }
 .base .list-inner textarea{
 	width: 451px;
@@ -198,8 +198,21 @@ section.main {
 	font-size: 14px;
 }
 #add_foods_form .foods_ipt{
-	width:300px;
+	width:250px;
 	border: 1px solid #016BD1;
 	height: 20px;
 	border-radius:2px;
+}
+#add_types_form .foods_ipt{
+	width:250px;
+	border: 1px solid #016BD1;
+	height: 20px;
+	border-radius:2px;
+}
+#foodinfo_foodshow img{
+	width: 64px;
+	height: 64px;
+}
+.PS{
+	background: #fff;border: 2px;
 }

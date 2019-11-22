@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -62,27 +61,26 @@
 		<div class="main-right-inner mycenter clearfix active">
 			<div class="information clearfix">
 				<p class="clearfix">	
-					<span class="information-r-span1">${restaurant[0].value}</span>
+					<img src=${restaurant["rpic"]}>
+					<span class="information-r-span1">${restaurant["rname"]}</span>
 				</p>
-				
 				<p>公告</p>
-				<input type="text" class="gg" value="">
-					<a href="#" class="password-a">修改</a>
-
-			
+				<div>
+				${restaurant['rdisc']}
+				</div>
 			</div>
 			<div class="table table-add">
 				<div class="list">
 					<table width="90%" align="center" border="1px" cellspacing="0xp"
 						cellpadding="0px" role="all">
 						<caption>商品信息</caption>
-						<thead>
-							<tr>
+						<thead id= "foodinfo_foodshow">
+							<tr >
 								<th>图片</th>
 								<th>名称</th>
 								<th>类型</th>
 								<th>价格</th>
-							</tr>
+							</tr>							
 						</thead>
 						<tbody align="center" id="types">
 							<c:forEach items="${foods}" var="item">
@@ -105,7 +103,7 @@
 					<form id="add_types_form">
 						<ul>
 							<li><label for="add_type_name">美食类型</label> <input
-								type="text" name="trname" id="add_types_name"  />
+								type="text" name="trname" id="add_types_name"  class ="foods_ipt"/>
 							</li>
 							<li style="width: 100%; text-align: center"><input
 								type="button" value="添加" onclick="addtypes()" class="mybtn" /></li>
@@ -145,10 +143,10 @@
 			<div class="list">
 				<div class="small-list list-top">
 					<ul>
-						<li class="li-first" style="width: 10%">菜系类型</li>
-						<li style="width: 35%">名称</li>
+						<li class="li-first" style="width: 25%">菜系类型</li>
+						<li style="width: 25%">名称</li>
 						<li style="width: 10%">价格</li>
-						<li style="width: 15%">描述</li>
+						<li style="width: 25%">操作</li>
 					</ul>
 				</div>
 				<div class="small-list list-bottom">
@@ -204,12 +202,21 @@
 				$.post("../../resturant", {
 					op : "findres"
 				}, function(data) {
-					if (data < 0) {
+					if (data < -1) {
 						alert("您暂无商铺，请先注册");
+						location.href = "../store/register.html";
+					}else if(data == 2){
+						alert("您的商铺审核中请等待");
+						location.href = "../manager/menu.html";					
+					}else if(data == 3){
+						alert("您的商铺已注销");
+						location.href = "../manager/menu.html";
+					
+					}else if(data == 4){
+						alert("您未通过，请重新注册");
 						location.href = "../store/register.html";
 					}
 				}, "json");
-				
 				$.post("../../ResfoodtypeServlet", {
 					op : "findAllTypes",
 					rid : rid
@@ -221,8 +228,19 @@
 					})
 					$("#add_foods_typeid").append($(str));
 				}, "json");
-				
+				$.post("../../foods", {
+					op : "findfoods",
+					rid : rid
+				}, function(data) {
+					var str = "";
+					var str1="";
+					$.each(data, function(index, item) {
 
+						str += "<tr><th><img src ='../../"+item.fpic+"'></th><th>"+item.fname+"</th><th>"+item.trtype+"</th><th>"+item.fprice+"</th></tr>";
+						str1 += "<tr><th>"+item.trtype+"'</th><th>"+item.fname+"</th><th>"+item.fprice+"</th><a>修改</a></tr>";
+					})
+					$("#foodinfo_foodshow").append($(str));
+				}, "json");
 			})
 			//添加店铺美食类型
 			function addtypes() {
@@ -263,9 +281,10 @@
 						if (data == -1) {
 							alert("您输入的信息不完整请确认后重新输入22222...");
 						} else if (data > 0) {
-							alert("添加注册成功...");
+							alert("添加成功...");
 						} else {
-							alert("添加注册失败...");
+							alert("添加失败...");
+
 						}
 					},
 					error: function(data, status, e) {
@@ -280,7 +299,8 @@
 						$(this).find("a").addClass("active-li");
 						$(this).siblings().find("a").removeClass("active-li");
 						$("#main-right-inner>div").eq(index).addClass("active")
-								.siblings().removeClass("active");
+								.siblings().removeClass("active");  
+						 
 					})
 
 			$("#fb").click(function() {

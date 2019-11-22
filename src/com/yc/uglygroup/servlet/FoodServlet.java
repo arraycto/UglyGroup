@@ -15,6 +15,7 @@ import com.yc.uglygroup.biz.IFoodBiz;
 import com.yc.uglygroup.biz.impl.FoodBizlmpl;
 import com.yc.uglygroup.entity.Foods;
 import com.yc.uglygroup.util.FileUploadUtil;
+import com.yc.uglygroup.util.StringUtil;
 
 @WebServlet("/foods")
 public class FoodServlet extends BasicServlet{
@@ -24,8 +25,10 @@ public class FoodServlet extends BasicServlet{
 			String op = request.getParameter("op");
 			if ("addfoods".equals(op)) {//添加美食
 				addfoods(request, response);
-			}else if("findfoods".equals(op)) {
-				findfoods(request,response);
+			}else if("findfood".equals(op)) {
+				findfood(request,response);
+			}else if("findfoods".equals(op)){
+				findfoods(request, response);
 			}
 		}
 		/**
@@ -34,10 +37,27 @@ public class FoodServlet extends BasicServlet{
 		 * @param response
 		 * @throws IOException 
 		 */
-		private void findfoods(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		private void findfood(HttpServletRequest request, HttpServletResponse response) throws IOException {
 			IFoodBiz foodsbiz = new FoodBizlmpl();
-			List<Foods> list = foodsbiz.findfoods();
+			List<Foods> list = foodsbiz.findfood();
 			this.send(response, list);
+			}
+		/**
+		 * 分页查询美食的方法
+		 * @param request
+		 * @param response
+		 * @throws IOException 
+		 * @throws NumberFormatException 
+		 */
+		private void findfoods(HttpServletRequest request, HttpServletResponse response) throws NumberFormatException, IOException {
+			String rid = request.getParameter("rid");
+			IFoodBiz foodBiz = new  FoodBizlmpl();
+			if(StringUtil.checkNull(rid)){
+				return;
+			}
+			List<Map<String,String>>  foodshows =foodBiz.findfoods(Integer.parseInt(rid), 1, 5);
+			
+			this.send(response, foodshows);
 			
 		}
 		/**

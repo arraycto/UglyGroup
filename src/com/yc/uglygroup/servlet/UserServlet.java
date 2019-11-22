@@ -109,6 +109,7 @@ public class UserServlet extends BasicServlet{
 		
 		IUserBiz userBiz = new UserBizImpl();
 		User user = userBiz.login(account, pwd);
+		System.out.println(user);
 		int result = -1;
 		if (user != null) { // 说明登录成功，查询到了此账户的信息
 			// 将当前用户信息存到session，方便以后获取

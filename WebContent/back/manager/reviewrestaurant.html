@@ -1,0 +1,52 @@
+<table id="restaurant_data" data-options="fit:true"></table>
+
+<script type="text/javascript">
+var restaurant_editRow = undefined; // 正在被编辑的行
+var restaurant_op; // 用来记录用的操作
+var restaurant_flag; // 用来记录操作的名称
+var rstate = "2"; // 2.审核中 
+
+var restaurant_datagridObj = $('#restaurant_data').datagrid({
+	url : '../../resturant',
+	queryParams: {op:"findByPage", rstate:rstate},
+	fitColumns: true,
+	loadMsg: "数据加载中...",
+	striped: true,
+	pagination: true,
+	pageSize: 5,
+	pageList: [5, 10, 20, 30, 40, 50, 100],
+	sortName: "rid",
+	remoteSort: false,
+	sortOrder: "desc",
+	singleSelect: true,
+	columns : [ [ 
+		{field : 'rid', title : '店铺编号', width : 100, align : 'center', sortable: true},
+		{field : 'rpic', title : '店铺图片', width : 100, align : 'center', sortable: true},
+		{field : 'rname', title : '店铺名称', width : 100, align : 'center', sortable: true},
+		{field : 'radd', title : '店铺地址', width : 100, align : 'center', sortable: true},
+		{field : '_operate', title : '操作', width : 50, align : 'center', formatter: function(val, row, index) {
+			return "<a href='javascript:allow(" + row.rid +")'>[审核通过]</a><a href='javascript:refuse(" + row.rid +")'>[审核不通过]</a>";
+		}}
+	] ]
+});
+
+function allow(rid){
+	$.post("../../resturant",{op:"allow", rid:rid}, function(data){
+		data = parseInt($.trim(data));
+		if (data > 0) {
+			$.messager.show({title:'成功提示', msg:'该店铺已通过审核...', timeout:2000, showType:'slide'});
+			restaurant_datagridObj.datagrid("reload"); // 重新加载表格中的数据
+		}
+	}, "text");
+}
+
+function refuse(rid){
+	$.post("../../resturant",{op:"refuse", rid:rid}, function(data){
+		data = parseInt($.trim(data));
+		if (data > 0) {
+			$.messager.show({title:'成功提示', msg:'该店铺的申请已驳回...', timeout:2000, showType:'slide'});
+			restaurant_datagridObj.datagrid("reload"); // 重新加载表格中的数据
+		}
+	}, "text");
+}
+</script>

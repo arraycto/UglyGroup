@@ -6,6 +6,9 @@
 <link rel="shortcut icon" href="../images/logo2.png" type="image/x-icon" />
 <link rel="stylesheet" href="../css/backlogin.css">
 <link rel="stylesheet" href="../css/button.css">
+<link rel="stylesheet" type="text/css" href="../../easyui/css/easyui.css" />
+<link rel="stylesheet" type="text/css" href="../../easyui/css/wu.css" />
+<link rel="stylesheet" type="text/css" href="../../easyui/css/icon.css" />
 <script type="text/javascript" src="../js/jquery-1.12.2.min.js"></script>
 <script type="text/javascript">
 function checkLogin(op) {
@@ -48,7 +51,8 @@ function checkLogin(op) {
 			</div>
 			<div id="login_form">
 				<form action="index.html" method="post" id="myform">
-					<div><input type="text" class="username" id="account" placeholder="请输入账号..."></div>
+					<div><input class="easyui-textbox" data-options="iconCls:'icon-search'" style="width:300px"> 
+					<input type="text" class="username" id="account" placeholder="请输入账号..."></div>
 					<div><input type="password" class="pwd" id="pwd" placeholder="请输入密码..."></div>
 					<div id="btn_area">
 						<input class="button button-glow button-rounded button-highlight" type="button"  onclick="checkLogin('login')" id="sub_btn"  value="登&nbsp;&nbsp;录">&nbsp;&nbsp;
