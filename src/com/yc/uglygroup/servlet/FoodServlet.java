@@ -1,6 +1,7 @@
 package com.yc.uglygroup.servlet;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.jsp.PageContext;
 
 import com.yc.uglygroup.biz.IFoodBiz;
 import com.yc.uglygroup.biz.impl.FoodBizlmpl;
+import com.yc.uglygroup.entity.Foods;
 import com.yc.uglygroup.util.FileUploadUtil;
 
 @WebServlet("/foods")
@@ -22,7 +24,21 @@ public class FoodServlet extends BasicServlet{
 			String op = request.getParameter("op");
 			if ("addfoods".equals(op)) {//添加美食
 				addfoods(request, response);
+			}else if("findfoods".equals(op)) {
+				findfoods(request,response);
 			}
+		}
+		/**
+		 * 查询食品
+		 * @param request
+		 * @param response
+		 * @throws IOException 
+		 */
+		private void findfoods(HttpServletRequest request, HttpServletResponse response) throws IOException {
+			IFoodBiz foodsbiz = new FoodBizlmpl();
+			List<Foods> list = foodsbiz.findfoods();
+			this.send(response, list);
+			
 		}
 		/**
 		* 添加商铺美食的方法

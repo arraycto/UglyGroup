@@ -17,6 +17,43 @@
 <!--[if lt ie 9]>
 		<script type="text/javascript" src="../../js/html5.js"></script>
 	<![end if]-->
+<script type="text/javascript">
+function getArea(){
+	$.post("../../area",{op:"getArea"},function(data){
+		var str ="";
+		$.each(data,function(index,item){
+			str +='<a  href="javascript:areaid('+item.aid+')" >'+item.aname+'</a>';
+		})
+		 $("#area").append($(str)); 
+	},"json")
+}
+
+ function areaid(num){
+	i = num;
+	$('.top a').click(function(){//点击的时候给当前这个加上，其他的移除
+		$(this).addClass("active").siblings("a").removeClass("active");
+		})	
+} 
+function getfoodTypes(){
+	$.post("../../foodtypes",{op:"findAllTypes"},function(data){
+		var str ="";
+		$.each(data,function(index,item){
+			str +='<a  href="javascript:foodtypesid('+item.aid+')" >'+item.aname+'</a>';
+		})
+		 $("#foodTypes").append($(str)); 
+	},"json")
+}
+function foodtypesid(num){
+	i = num;
+	$('.top a').click(function(){//点击的时候给当前这个加上，其他的移除
+		$(this).addClass("active").siblings("a").removeClass("active");
+		})
+}
+$(function(){
+	getArea();
+	getfoodTypes();
+});
+</script>
 </head>
 <body>
 	<header>
@@ -74,13 +111,13 @@
 			</ul>
 		</div>
 		<div class="shaixuan">
-			<div class="top">
-				<p>
-					区域: <a href="#" class="active">所有类别</a>
+			<div class="top" >
+				<p id="area" >
+					区域: 
 				</p>
-				<p>
-					菜系: <a href="#" class="active">人均不限</a><a href="#">30元以下</a><a
-						href="#">30-50元</a><a href="#">50元以上</a>
+				
+				<p id="foodTypes">
+					菜系: 
 				</p>
 			</div>
 			<div class="bottom clearfix">
