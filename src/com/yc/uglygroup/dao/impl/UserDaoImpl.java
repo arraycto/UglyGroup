@@ -21,10 +21,10 @@ public class UserDaoImpl implements IUserDao{
 	}
 
 	@Override
-	public int userup( Integer uid ,String uname, String upwd, String email) {
+	public int userup(Integer uid ,String uname, String upwd, String email, Integer ustate) {
 		DBHelper db = new DBHelper();
-		String sql = " update  user set uanme= ? ,upwd= ? email = ? where uid = ?";
-		return db.update(sql, uname,upwd,email,uid);
+		String sql = " update  user set uname= ? ,upwd= ? ,email = ? ,ustate=? where uid = ?";
+		return db.update(sql, uname,upwd,email,ustate,uid);
 	}
 
 

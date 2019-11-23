@@ -133,12 +133,14 @@ create table if not exists actiondetail(
 --[收获地址表 addressreceipt]
 --地址编号 arid
 --用户编号 uid 外键 [用户表 user]
+--地区序号 aid 外键【地区表 area】
 --收货人姓名 arname (默认为当前用户)
 --收货人电话 artel(默认为当前用户)
 --收货地址 aradd
 create table if not exists addressreceipt(
 	arid int primary key auto_increment,
 	uid int,
+	aid int,
 	arname varchar(10) not null,
 	artel  varchar(20) not null,
 	aradd  varchar(100) not null,
