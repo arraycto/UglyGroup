@@ -18,6 +18,13 @@ public class FoodDaolmpl implements IFoodDao{
 	}
 
 	@Override
+	public List<Foods> findfood() {
+		DBHelper db = new DBHelper();
+		String sql = "select * from foods where fname like % ";
+		return db.finds(sql, Foods.class);
+	}
+	
+
 	public List<Map<String,String>> findfoods(Integer rid, int page, int rows) {
 		String sql =null;
 		DBHelper db =new DBHelper();

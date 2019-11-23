@@ -8,8 +8,10 @@ import com.yc.uglygroup.entity.Foods;
 public interface IFoodBiz {
 
 	public int addfood(Map<String, String> map);
-	
-	
+	/**
+	 * 查询食物
+	 */
+	public List<Foods> findfood();
 	/**
 	 * 分页查询的方法(图片，名称，类型，价格)
 	 * @param Rid

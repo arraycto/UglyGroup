@@ -12,6 +12,8 @@ public interface IFoodDao {
 	 * @return
 	 */
 	public int addfood(Map<String,String> map);
+	
+	public List<Foods> findfood();
 	/**
 	 * 分页查询的方法
 	 * @param Rid

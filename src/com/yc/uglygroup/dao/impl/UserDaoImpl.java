@@ -9,8 +9,8 @@ public class UserDaoImpl implements IUserDao{
 	@Override
 	public User login(String account, String pwd) {
 		DBHelper dbHelper = new DBHelper();
-		String sql = "select uid, uname, upwd, utel, email, ustate from user where (uname=? or utel=? or email=?) and upwd=?";
-		return dbHelper.find(sql, User.class, account, account, account, pwd);
+		String sql = "select uid, uname, upwd, utel, email, ustate from user where (utel=? or email=?) and upwd=?";
+		return dbHelper.find(sql, User.class, account, account, pwd);
 	}
 
 	@Override
