@@ -45,11 +45,20 @@ public class ResturantServlet extends BasicServlet{
 		int uid =Integer.valueOf(user.getUid());
 		System.out.println(uid);
 		IRestaurantBiz biz = new RestaurantBizImpl();
-		int result;
+		int result = 0;
 		Map<String, String> restaurant = biz.findres(uid);
 		if(restaurant != null){
-			result = 1;
-			request.getSession().setAttribute("restaurant", restaurant);
+			if(Integer.parseInt(restaurant.get("rstate")) == 0 || Integer.parseInt(restaurant.get("rstate")) == 1){//营业中或休息中
+				result = 1;
+				request.getSession().setAttribute("restaurant", restaurant);
+			}else if(Integer.parseInt(restaurant.get("rstate")) == 2 ){//审核中
+				result = 2;
+			}else if(Integer.parseInt(restaurant.get("rstate")) == 3 ){//已删除
+				result = 3;
+			}else if(Integer.parseInt(restaurant.get("rstate")) == 4 ){//未通过
+				result = 4;
+			}
+			
 		}else{
 			result = -1;
 		}
@@ -118,6 +127,7 @@ public class ResturantServlet extends BasicServlet{
 		FileUploadUtil fuu = new FileUploadUtil();
 		PageContext pageContext = JspFactory.getDefaultFactory().getPageContext(this, request, response, null, true, 8192, true);
 		Map<String, String> map = fuu.upload(pageContext);
+		System.out.println(map.get("rdisc"));
 		IRestaurantBiz restaurantBiz = new RestaurantBizImpl();
 		this.send(response, restaurantBiz.addRestaurant(map));
 	}

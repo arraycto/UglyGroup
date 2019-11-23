@@ -75,7 +75,7 @@ public class FileUploadUtil {
 			Collection<File> fls = files.getCollection();
 			for(File file : fls){ //循环取出每一个文件
 				if (!file.isMissing()) {
-					fileName = new Date().getTime() + "_" + file.getFileName(); //取出上传的文件文件名
+					fileName = new Date().getTime() + file.getFileName().substring(file.getFileName().length()-4, file.getFileName().length()); //取出上传的文件文件名
 					fieldName = file.getFieldName(); // pics video
 					System.out.println("取出上传的文件文件名" + fileName);
 					System.out.println(fieldName);

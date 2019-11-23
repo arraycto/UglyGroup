@@ -111,7 +111,6 @@ $(function() {
 			dataType: "text",
 			success: function(data, status) {
 				data = parseInt($.trim(data));
-				
 				if (data == -1) {
 					Notiflix.Notify.Warning('您输入的信息不完整请确认后重新输入...');
 				} else if (data > 0) {
