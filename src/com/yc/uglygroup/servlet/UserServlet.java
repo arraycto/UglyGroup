@@ -30,13 +30,10 @@ public class UserServlet extends BasicServlet{
 			register(request, response);
 		} else if ("userup".equals(op)){//修改操作
 			userup(request, response);
-<<<<<<< HEAD
-		}else if ("userid".equals(op)){
+		}else if ("userid".equals(op)){//获取用户id
 			userid(request, response);
-=======
 		} else if ("getUstate".equals(op)){// 查询用户身份
 			getUstate(request, response);
->>>>>>> 3ecda5d3d8ac3bb48987dabf5d6db0e682a122f3
 		}
 	}
 	/**

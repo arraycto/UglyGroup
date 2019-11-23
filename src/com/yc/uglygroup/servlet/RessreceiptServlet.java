@@ -21,14 +21,47 @@ public class RessreceiptServlet extends BasicServlet{
 		String op = request.getParameter("op");
 		if ("findress".equals(op)) {//查询收货地址
 			findress(request, response);
-		}else if("address".equals(op)){
+		}else if("address".equals(op)){//添加收货地址
 			address(request, response);
 
-		}else if("findarea".equals(op)){
+		}else if("findarea".equals(op)){//查询所在区域
 			findarea(request, response);
-
+		}else if("addressup".equals(op)){
+			addressup(request, response);
+		}else if("deleteaddress".equals(op)){
+			deleteaddress(request, response);
 		}
 	}
+	/**
+	 * 删除收货地址
+	 * @param request
+	 * @param response
+	 * @throws IOException 
+	 */
+	private void deleteaddress(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String arid = request.getParameter("arid");
+		IRessreceiptDao dao = new RessreceiptDaolmpl();
+		int result = dao.deleteaddress(Integer.parseInt(arid));
+		this.send(response, result);
+	}
+	/**
+	 * 修改收货地址
+	 * @param request
+	 * @param response
+	 * @throws IOException 
+	 */
+
+	private void addressup(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String arname = request.getParameter("arname");
+		String artel = request.getParameter("artel");
+		String aradd = request.getParameter("aradd");
+		String aid = request.getParameter("aid");
+		String arid = request.getParameter("arid");
+		IRessreceiptDao dao = new RessreceiptDaolmpl();
+		int result = dao.addressup(Integer.parseInt(arid), arname, artel, aradd, Integer.parseInt(aid));
+		this.send(response, result);
+	}
+
 	/**
 	 * 查询区域
 	 * @param request
@@ -51,11 +84,12 @@ public class RessreceiptServlet extends BasicServlet{
 		String arname = request.getParameter("arname");
 		String artel = request.getParameter("artel");
 		String aradd = request.getParameter("aradd");
+		String aid = request.getParameter("aid");
 		IRessreceiptDao dao = new RessreceiptDaolmpl();
 		if(StringUtil.checkNull(uid)){
 			return;
 		}
-		int result =dao.address(Integer.parseInt(uid), arname, artel, aradd);
+		int result =dao.address(Integer.parseInt(uid), arname, artel, aradd,Integer.parseInt(aid));
 		this.send(response, result);
 		
 	}

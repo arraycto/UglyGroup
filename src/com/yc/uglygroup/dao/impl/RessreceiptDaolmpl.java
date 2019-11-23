@@ -11,15 +11,15 @@ public class RessreceiptDaolmpl implements IRessreceiptDao{
 	@Override
 	public List<Map<String, String>> findress(Integer uid) {
 		DBHelper db = new DBHelper();
-		String sql = "select arid,arname, artel, aradd from addressreceipt where uid = ?";
+		String sql = "select arid,arname, artel, aradd ,ad.aid, aname  from addressreceipt ad ,area ar where uid = ? and ad.aid = ar.aid";
 		return db.finds(sql, uid);
 	}
 
 	@Override
-	public int address(Integer uid, String arname, String artel, String aradd) {
+	public int address(Integer uid, String arname, String artel, String aradd,Integer aid) {
 		DBHelper db = new DBHelper();
-		String sql="insert into addressreceipt values(0,?,?,?,?)";
-		return db.update(sql, uid,arname,artel,aradd);
+		String sql="insert into addressreceipt values(0,?,?,?,?,?)";
+		return db.update(sql, uid,arname,artel,aradd,aid);
 	}
 
 	@Override
@@ -27,6 +27,20 @@ public class RessreceiptDaolmpl implements IRessreceiptDao{
 		DBHelper db = new DBHelper();
 		String sql = "select aid ,aname from area";
 		return db.finds(sql);
+	}
+
+	@Override
+	public int addressup(Integer arid, String arname, String artel, String aradd, Integer aid) {
+		DBHelper db = new DBHelper();
+		String sql = "update  addressreceipt set arname= ? ,artel= ? ,aradd = ? ,aid=? where arid = ?";
+		return db.update(sql, arname,artel,aradd,aid,arid);
+	}
+
+	@Override
+	public int deleteaddress(Integer arid) {
+		DBHelper db = new DBHelper();
+		String sql = "delete from addressreceipt where arid = ?";
+		return db.update(sql, arid);
 	}
 
 }

@@ -35,7 +35,7 @@
 					<ul id="userMenu" class="userMenu">
 						<li><a href="#">我的资料</a></li>
 						<li><a href="#">我的订单</a></li>
-						<li><a href="#">退出登陆</a></li>
+						<li><a href="../index.html">退出登陆</a></li>
 					</ul>
 					<span class="triangle_icon"></span>
 					
@@ -64,7 +64,7 @@
 					</p>
 					<ul>
 						<li><p>手机号:${user.utel}</p></li>
-						<li><p>密码:*******</p></li>
+						<li><p>密码:${user.upwd}</p></li>
 						<li><p>我的邮箱:${user.email} </p></li>
 						
 					</ul>
@@ -129,7 +129,7 @@
 								<li style="width:25%">配送地址</li>
 								<li style="width:15%">手机号码</li>
 								<li style="width:20%">操作</li>
-								<li style="width:14%"><a class="add" href="javascript:void(0)" onclick="addrow()">添加</a></li>
+								<li style="width:14%"><a  id="addrows" class="add" href="javascript:void(0)" onclick="addrow()">添加</a></li>
 							</ul>
 						</div>
 						<div class="small-list list-bottom">
@@ -164,7 +164,7 @@
 					</div>
 				</div>
 				<div class="button">
-					<a href="#"></a>
+					<a href="#"><</a>
 					<a href="#" class="active-a">1</a>
 					<a href="#">></a>
 				</div>
@@ -200,13 +200,13 @@
 				uid = data;//获取uid
 			}else{
 				Notiflix.Notify.Warning('请先登陆');
-				location.href = "../login.html";
+				location.href = "../index.html";
 			}
 		}, "json");
 	}
 	//获取当前元素的id	
     function dianji(e) {
-        var id = e.id;
+        id = e.id;
     }
  	//查找所有的收货地址
  	function findressreceipt(){
@@ -214,11 +214,18 @@
 			op : "findress",
 			uid :uid
 		}, function(data) {
+			var length = data.length;
+			if(length >= 10){
+				$("#addrows").attr("disabled",true).css("pointer-events","none")
+			}
+			if(data == null){
+				return;
+			}
 			//先清空
 			 $("#addressreceipt").html("");
 			//循环添加查出来的收货地址
 			$.each(data, function(index, item) {
-				var str = '<li class="li-first"   id="'+item.arid+'" > <input type="text" name="address"  readonly="readonly" style="width:8%; " value="'+item.arname+'">&nbsp;<select id="center_area_select" class="foods_ipt"  name ="address" disabled="disabled"><option vlaue= "'+item.aid+'" >'+ item.area+ '</option>"</select>&nbsp;<input type="text" name="address" readonly="readonly" style="width:25%;" value="'+item.aradd+'">&nbsp;<input type="text" readonly="readonly" name="address" style="width:15%;" value="'+item.artel+'">&nbsp;<a  href="javascript:void(0)" onclick="addresscaseup()">修改</a><a href="javascript:void(0)" onclick="addressup()">提交</a></li>';
+				var str = '<li class="li-first"   id="'+item.arid+'" onmouseover="dianji(this)" > <input type="text"  id="arname'+item.arid+'" name="address"  readonly="readonly" style="width:8%; " value="'+item.arname+'">&nbsp;<select id="center_area_select'+item.arid+'" class="foods_ipt"  name ="address" disabled="disabled"><option vlaue= "'+item.aid+'" >'+ item.aname+ '</option>"</select>&nbsp;<input type="text" id="aradd'+item.arid+'" name="address" readonly="readonly" style="width:25%;" value="'+item.aradd+'">&nbsp;<input type="text" id="artel'+item.arid+'" readonly="readonly" name="address" style="width:15%;" value="'+item.artel+'">&nbsp;<a  href="javascript:void(0)" onclick="addresscaseup()">修改</a><a href="javascript:void(0)" onclick="addressup()">提交</a></a><a href="javascript:void(0)" onclick="deleteaddress()">删除</a></li>';
 				$("#addressreceipt").append($(str));
 			})
 		}, "json");
@@ -246,17 +253,18 @@
 	function add(){
 		$("input[name='address']").attr("readonly","readonly");
 		$("input[name='address']").removeAttr("style");
-		
 		var arname=$("#arname").val();//名字
 		var artel = $("#artel").val();//电话
 		var aradd= $("#aradd").val();//详细地址
-		var aname =$("#center_area option:selected").val();//区域
+		var aname =$("#center_area option:selected").text();//区域名
+		var aid =$("#center_area option:selected").val();//区域编号
 		$.post("../../ressreceipt",{
 			op : "address",
 			uid:uid,
 			arname:arname,
 			artel:artel,
-			aradd:aradd
+			aradd:aradd,
+			aid:aid
 		},function(data){
 			if(data > 0){
 				Notiflix.Notify.Success('添加成功');
@@ -271,7 +279,9 @@
 	}
 	//配送资料修改
 	function addresscaseup(){
-		$("input[name='address']").removeAttr("readonly");
+		$("#arname"+id+"").removeAttr("readonly");
+		$("#aradd"+id+"").removeAttr("readonly");
+		$("#artel"+id+"").removeAttr("readonly");
 		$.post("../../ressreceipt", {
 			op : "findarea",
 		}, function(data) {
@@ -280,19 +290,49 @@
 				str1 += "<option value = '" + item.aid + "'>"
 						+ item.aname + "</option>";
 			})
-			$("#center_area_select").append($(str1));
+			$("#center_area_select"+id+"").append($(str1));
 		}, "json");
-		$("#center_area_select").removeAttr("disabled");
+		$("#center_area_select"+id+"").removeAttr("disabled");
 	}
 	//配送资料提交
 	function addressup(){
+		var arname = $("#arname"+id+"").val();//名字
+		var aradd= $("#aradd"+id+"").val();//详细地址
+		var artel= $("#artel"+id+"").val();//电话
+		var aid  =$("#center_area_select"+id+" option:selected").val();//区域编号
 		$.post("../../ressreceipt", {
-			op : "areaup",
-			
+			op : "addressup",
+			arname:arname,
+			aradd:aradd,
+			artel:artel,
+			aid:aid,
+			arid:id
 		}, function(data) {
+			if(data>0){
+				Notiflix.Notify.Success('修改成功');
+				//重新查询(刷新)
+				findressreceipt();
+			}else{
+				Notiflix.Notify.Failure('遇到未知错误，修改失败');
+			}
 		}, "json");
-		//重新查询(刷新)
-		findressreceipt();
+		
+	}
+	function deleteaddress(){
+		$.post("../../ressreceipt", {
+			op : "deleteaddress",
+			arid:id
+		}, function(data) {
+			if(data>0){
+				Notiflix.Notify.Success('删除成功');
+				//重新查询(刷新)
+				findressreceipt();
+			}else{
+				Notiflix.Notify.Failure('遇到未知错误，修改失败');
+				//重新查询(刷新)
+				findressreceipt();
+			}
+		}, "json");
 	}
 	//用户修改
 	function usernameup(){
