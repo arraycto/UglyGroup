@@ -9,7 +9,7 @@
 --用户角色  ustate 0.用户，1.店家，2.管理员
 create table if not exists user(
 	uid int primary key auto_increment,
-	uname varchar(100) not null unique,
+	uname varchar(100) not null,
 	upwd varchar(100) not null,
 	utel varchar(11) unique,
 	email varchar(20) unique,

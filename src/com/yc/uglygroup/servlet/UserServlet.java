@@ -2,14 +2,11 @@ package com.yc.uglygroup.servlet;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.yc.uglygroup.biz.IUserBiz;
 import com.yc.uglygroup.biz.impl.UserBizImpl;
@@ -31,9 +28,22 @@ public class UserServlet extends BasicServlet{
 			utel(request, response);
 		} else if ("register".equals(op)) { // 注册操作
 			register(request, response);
-		}else if ("userup".equals(op)){//修改操作
+		} else if ("userup".equals(op)){//修改操作
 			userup(request, response);
+		} else if ("getUstate".equals(op)){// 查询用户身份
+			getUstate(request, response);
 		}
+	}
+
+	/**
+	 * 查询用户身份
+	 * @param request
+	 * @param response
+	 * @throws IOException 
+	 */
+	private void getUstate(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		User user = (User) request.getSession().getAttribute("user");
+		this.send(response, user.getUstate());
 	}
 
 	/**
