@@ -95,7 +95,7 @@ create table if not exists foods(
 --[活动表 action]
 --活动编号 acid
 --店铺 rid 外键 [店铺表 restaurant]
---actype 活动类型 0.满减 1.打折
+--活动类型 actype  0.满减 1.打折
 --活动id生成方法 action+5位随机数+店铺id+当前时间 
 create table if not exists action(
 	acid varchar(100) primary key ,
@@ -133,12 +133,14 @@ create table if not exists actiondetail(
 --[收获地址表 addressreceipt]
 --地址编号 arid
 --用户编号 uid 外键 [用户表 user]
+--地区序号 aid 外键【地区表 area】
 --收货人姓名 arname (默认为当前用户)
 --收货人电话 artel(默认为当前用户)
 --收货地址 aradd
 create table if not exists addressreceipt(
 	arid int primary key auto_increment,
 	uid int,
+	aid int,
 	arname varchar(10) not null,
 	artel  varchar(20) not null,
 	aradd  varchar(100) not null,
@@ -156,12 +158,13 @@ create table if not exists addressreceipt(
 create table if not exists foodorder(
 	oid varchar(250) primary key unique,--以uglygroup加5位随机数加时间戳生成
 	uid  int,
-	arid int,
 	oprice float(10,2) not null,
 	otime Datetime not null,
 	endtime Datetime ,
 	ostate int(2),
+	arid int,
 	constraint FK_foodorder_uid foreign key(uid) references user(uid),
+	constraint FK_foodorder_aid foreign key(aid) references area(aid),
 	constraint FK_foodorder_arid foreign key(arid) references addressreceipt(arid)
 )ENGINE=InnoDB default charset=utf8 collate=utf8_bin;
 

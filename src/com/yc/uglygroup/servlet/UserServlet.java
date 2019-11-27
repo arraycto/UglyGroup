@@ -30,9 +30,28 @@ public class UserServlet extends BasicServlet{
 			register(request, response);
 		} else if ("userup".equals(op)){//修改操作
 			userup(request, response);
+		}else if ("userid".equals(op)){//获取用户id
+			userid(request, response);
 		} else if ("getUstate".equals(op)){// 查询用户身份
 			getUstate(request, response);
 		}
+	}
+	/**
+	 * 获取用户id
+	 * @param request
+	 * @param response
+	 * @throws IOException 
+	 */
+	private void userid(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		User user= (User) request.getSession().getAttribute("user");
+		Integer uid = null;
+		if(user != null){
+			uid= user.getUid();
+		}else{
+			System.out.println("空user");
+		}
+		System.out.println("获取到的用户id为"+uid);
+		this.send(response, uid);
 	}
 
 	/**
@@ -53,12 +72,14 @@ public class UserServlet extends BasicServlet{
 	 * @throws IOException 
 	 */
 	private void userup(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		Integer uid = Integer.getInteger(request.getParameter("uid"));
+		String uid = request.getParameter("uid");
 		String uname= request.getParameter("uname");
 		String upwd = request.getParameter("upwd");
 		String email = request.getParameter("email");
+		User user1= (User) request.getSession().getAttribute("user");
+		int  ustate = user1.getUstate();
 		IUserBiz userBiz = new UserBizImpl();
-		int result = userBiz.userup(uid, uname, upwd, email);
+		int result = userBiz.userup(Integer.parseInt(uid), uname, upwd, email,ustate);
 		this.send(response, result);
 		
 	}

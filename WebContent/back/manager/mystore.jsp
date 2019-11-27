@@ -11,9 +11,12 @@
 <link rel="stylesheet" type="text/css" href="../../css/mycenter.css">
 <link rel="shortcut icon" href="../images/favicon.ico" />
 <link rel="stylesheet" href="../../css/responsive.css">
+<link rel="stylesheet" href="../../css/notiflix-1.3.0.min.css">
 <script type="text/javascript" src="../../js/jquery-1.12.2.min.js"></script>
 <script type="text/javascript" src="../../js/menu.js"></script>
 <script type="text/javascript" src="../../js/ajaxfileupload.js"></script>
+<script src="../../js/notiflix-1.3.0.min.js" type="text/javascript"></script>
+
 
 
 <!--[if lt ie 9]>
@@ -149,8 +152,8 @@
 						<li style="width: 25%">操作</li>
 					</ul>
 				</div>
-				<div class="small-list list-bottom">
-					<p>暂无相关数据。</p>
+				<div class="small-list list-bottom" id = "mystore_update_foodsshows">
+					
 				</div>
 			</div>
 		</div>
@@ -199,35 +202,34 @@
 		<script>
 		var rid = 4;
 			$(function() {
+				findres();
+				findAllTypes();
+				findfoods()
+			})
+			//查看商铺目前状态
+			function findres(){
 				$.post("../../resturant", {
 					op : "findres"
 				}, function(data) {
 					if (data < -1) {
-						alert("您暂无商铺，请先注册");
+						Notiflix.Notify.Warning('您暂无商铺，请先注册');
 						location.href = "../store/register.html";
 					}else if(data == 2){
-						alert("您的商铺审核中请等待");
+						Notiflix.Notify.Warning('您的商铺审核中请等待');
 						location.href = "../manager/menu.html";					
 					}else if(data == 3){
-						alert("您的商铺已注销");
+						Notiflix.Notify.Failure('您的商铺已注销');
 						location.href = "../manager/menu.html";
-					
 					}else if(data == 4){
-						alert("您未通过，请重新注册");
-						location.href = "../store/register.html";
+						Notiflix.Notify.Success('您的店铺未通过，请重新注册');
+						setTimeout( location.href = "../store/register.html",2000);			
 					}
 				}, "json");
-				$.post("../../ResfoodtypeServlet", {
-					op : "findAllTypes",
-					rid : rid
-				}, function(data) {
-					var str = "";
-					$.each(data, function(index, item) {
-						str += "<option value = '" + item.trid + "'>"
-								+ item.trtype + "</option>";
-					})
-					$("#add_foods_typeid").append($(str));
-				}, "json");
+			}
+			
+
+			//查找美食
+			function findfoods(){
 				$.post("../../foods", {
 					op : "findfoods",
 					rid : rid
@@ -241,7 +243,23 @@
 					})
 					$("#foodinfo_foodshow").append($(str));
 				}, "json");
-			})
+			}
+			
+			//查询所有店铺美食类型
+			function findAllTypes(){
+				$.post("../../ResfoodtypeServlet", {
+					op : "findAllTypes",
+					rid : rid
+				}, function(data) {
+					var str = "";
+					$.each(data, function(index, item) {
+						str += "<option value = '" + item.trid + "'>"
+								+ item.trtype + "</option>";
+					})
+					$("#add_foods_typeid").append($(str));
+				}, "json");
+			}
+			
 			//添加店铺美食类型
 			function addtypes() {
 				var trtype = $.trim($("#add_types_name").val());

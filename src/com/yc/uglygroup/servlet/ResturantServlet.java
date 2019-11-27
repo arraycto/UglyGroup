@@ -43,7 +43,6 @@ public class ResturantServlet extends BasicServlet{
 	private void findres(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		User user  = (com.yc.uglygroup.entity.User)request.getSession().getAttribute("user");
 		int uid =Integer.valueOf(user.getUid());
-		System.out.println(uid);
 		IRestaurantBiz biz = new RestaurantBizImpl();
 		int result = 0;
 		Map<String, String> restaurant = biz.findres(uid);

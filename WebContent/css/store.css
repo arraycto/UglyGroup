@@ -193,7 +193,13 @@
 	float: left;
 	width: 590px;
 }
-
+.store-left > p{
+	padding:5px;
+}
+.store-left > span{
+	padding:5px;
+	margin: 5px;
+}
 .store-left img {
 	float: left;
 	width: 200px;
