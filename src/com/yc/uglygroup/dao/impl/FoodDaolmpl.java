@@ -24,16 +24,45 @@ public class FoodDaolmpl implements IFoodDao{
 		return db.finds(sql, Foods.class);
 	}
 	
-
+	
 	public List<Map<String,String>> findfoods(Integer rid, int page, int rows) {
 		String sql =null;
 		DBHelper db =new DBHelper();
 		if(rid == null){
-			sql = "select trtype ,fname ,fprice , fpic,fstate,fdisc  from foods f, resfoodtype r  where f.rid = r.rid and f.trid=r.trid order by trtype desc limit ?,?";
+			sql = "select  fid ,trtype ,fname ,fprice , fpic,fstate,fdisc  from foods f, resfoodtype r  where f.rid = r.rid and f.trid=r.trid order by trtype desc limit ?,?";
 			return db.finds(sql, (page - 1)*rows,rows);
 		}
-		sql = "select trtype,fname ,fprice , fpic,fstate,fdisc  from foods f, resfoodtype r  where f.rid = r.rid and r.rid = ?  and f.trid = r.trid order by trtype desc limit ?,?";
+		sql = "select fid ,trtype,fname ,fprice , fpic,fstate,fdisc  from foods f, resfoodtype r  where f.rid = r.rid and r.rid = ?  and f.trid = r.trid order by trtype desc limit ?,?";
 		return db.finds(sql,rid, (page - 1)*rows,rows);
 	}
+
+	@Override
+	public List<Foods> findAllfood(Integer rid) {
+		DBHelper db =new DBHelper();
+		String sql = "select fid, trid,rid,fname,fprice,fpic,fstate,fdisc from foods where rid = ? ";
+		return db.finds(sql, Foods.class, rid);
+	}
 	
+	@Override
+	public int getTotal(Integer rid) {
+		DBHelper db = new DBHelper();
+		String sql = "select count(fid) from foods where rid = ?";
+		return db.getTotal(sql);
+	}
+
+	@Override
+	public int foodup(Integer fid, String fname, Double fprice, Integer trid) {
+		DBHelper db = new DBHelper();
+		String sql = "update  foods set fname= ? ,fprice= ? ,trid = ? where fid = ?";
+		return db.update(sql, fname,fprice,trid,fid);
+	}
+
+	@Override
+	public int fooddelete(Integer fid) {
+		DBHelper db = new DBHelper();
+		String sql = "delete from foods WHERE fid = ?";
+		return db.update(sql,fid);
+	}
+
+
 }

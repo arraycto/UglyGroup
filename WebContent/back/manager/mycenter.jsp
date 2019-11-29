@@ -51,7 +51,7 @@
 				<li ><a href="#"class="active-li">个人中心</a></li>
 				<li><a href="#">基本资料</a></li>
 				<li><a href="#" onclick="findressreceipt()">配送资料</a></li>
-				<li><a href="#">我的订单</a></li>
+				<li><a href="#" onclick="findorder()">我的订单</a></li>
 			</ul>
 		</div>
 
@@ -97,9 +97,9 @@
 								<li style="width:16%">下单时间</li>
 								<li style="width:8%">订单状态</li>
 							</ul>
+							<p>  </p>
 						</div>
 						<div class="small-list list-bottom">
-							<p>暂无相关数据。</p>
 						</div>
 					</div>
 				</div>
@@ -153,14 +153,21 @@
 				<div class="list">
 					<div class="small-list list-top">
 						<ul>
-							<li style="width:20%" class="li-first">商家</li>
-							<li style="width:20%">订单金额</li>
-							<li style="width:20%">下单时间</li>
-							<li style="width:20%">订单状态</li>
+							<li style="width:24%" class="li-first">商家</li>
+							<li style="width:24%">订单金额</li>
+							<li style="width:24%">下单时间</li>
+							<li style="width:24%">订单状态</li>
 						</ul>
 					</div>
 					<div class="small-list list-bottom">
-						<p>没有您的订单记录。</p>
+						<ul  id = "mycenter_ordershow">
+							<li class="li-first">
+								<input  type="text" name="address" readonly="readonly" value="15226380133">
+								<input  type="text" name="address" readonly="readonly" value="15226380133">
+								<input  type="text" name="address" readonly="readonly" value="15226380133">
+								<input  type="text" name="address" readonly="readonly" value="15226380133">
+							</li>
+						</ul>
 					</div>
 				</div>
 				<div class="button">
@@ -191,6 +198,7 @@
 	$(function(){
 		Notiflix.Notify.Init();
 		userid();
+		findorder();
 	});
 	function userid(){
 		$.post("../../admin", {
@@ -208,6 +216,32 @@
     function dianji(e) {
         id = e.id;
     }
+	//查找订单的方法
+	function findorder(){
+		$.post("../../order",{
+			op:"findByPage",
+			uid:uid,
+			page:1,
+			rows:5,
+		},function(data){
+			var str = "";
+			//先清空
+			 $("#mycenter_ordershow").html("");
+			$.each(data,function(index,item){
+				str += '<li class="li-first""><img src="../../'+item.rpic+'" class="mycenterimg" ><input style="width:20%"  type="text" name="address" readonly="readonly" value="'+item.rname+' "><input style="width:20%" type="text" name="address" readonly="readonly" value="'+item.oprice+'"><input style="width:30%" type="text" name="address" readonly="readonly" value="'+item.otime+'">'
+				if(item.ostate == 0){
+					str +='<input  type="text" name="address" readonly="readonly" value="已下单"></li>'
+				}else if(item.ostate == 1){
+					str +='<input  type="text" name="address" readonly="readonly" value="已付款"></li>'
+				}else if(item.ostate == 2){
+					str +='<input  type="text" name="address" readonly="readonly" value="已送达"></li>'
+				}else if(item.ostate == 3){
+					str +='<input  type="text" name="address" readonly="readonly" value="已取消"></li>'
+				}
+			})
+			$("#mycenter_ordershow").append($(str));
+		},"json")
+	}
  	//查找所有的收货地址
  	function findressreceipt(){
 		$.post("../../ressreceipt", {

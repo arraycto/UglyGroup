@@ -113,7 +113,7 @@ create table if not exists action(
 --满减金额 remoney
 --活动起始时间 acptime
 --活动结束时间 acendtime
---满减数量 acnum
+--打折数量 acnum
 --活动状态 acstate 0.活动中 1.已结束
 create table if not exists actiondetail(
 	adid int primary key auto_increment,
@@ -151,6 +151,7 @@ create table if not exists addressreceipt(
 --订单编号 oid
 --下单用户 uid 外键 [用户表 user]
 --地址编号 arid 外键 [收获地址表 addressreceipt]
+--商家编号 rid 外键[店铺表 restaurant]
 --总价格 oprice
 --下单时间 otime
 --实际送达时间 endtime
@@ -158,13 +159,14 @@ create table if not exists addressreceipt(
 create table if not exists foodorder(
 	oid varchar(250) primary key unique,--以uglygroup加5位随机数加时间戳生成
 	uid  int,
+	rid int,
 	oprice float(10,2) not null,
 	otime Datetime not null,
 	endtime Datetime ,
 	ostate int(2),
 	arid int,
 	constraint FK_foodorder_uid foreign key(uid) references user(uid),
-	constraint FK_foodorder_aid foreign key(aid) references area(aid),
+	constraint FK_foodorder_rid foreign key(rid) references restaurant(rid),
 	constraint FK_foodorder_arid foreign key(arid) references addressreceipt(arid)
 )ENGINE=InnoDB default charset=utf8 collate=utf8_bin;
 

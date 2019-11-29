@@ -9,8 +9,7 @@
 	width: 100%;
 	height: 250px;
 	padding: 25px 25px;
-	background: url(../images/login/bg.jpg) no-repeat -50px center;
-	background-size: 100% 100%;
+	
 }
 
 .pp {
@@ -22,13 +21,11 @@
 
 .jian {
 	padding: 5px 5px;
-	background: #fff;
 	margin-right: 5px;
 	color: red;
 }
 
 .gg {
-	background: #000;
 	color: #fff;
 	font-size: 12px;
 	border-radius: 2px;
