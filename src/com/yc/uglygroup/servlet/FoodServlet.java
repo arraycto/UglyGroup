@@ -33,10 +33,59 @@ public class FoodServlet extends BasicServlet{
 				findfood(request,response);
 			}else if("findfoods".equals(op)){
 				findfoods(request, response);
+			}else if("findAllfood".equals(op)){
+				findAllfood(request, response);
+			}else if("foodup".equals(op)){
+				foodup(request, response);
+			}else if("fooddelete".equals(op)){
+				fooddelete(request, response);
 			}
 		}
 		/**
+<<<<<<< HEAD
 		 * 查询食品 和店铺名字
+=======
+		 * 店铺美食删除
+		 * @param request
+		 * @param response
+		 * @throws IOException 
+		 */
+		private void fooddelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
+			Integer fid = Integer.parseInt(request.getParameter("fid"));
+			IFoodBiz biz = new FoodBizlmpl();
+			int result = biz.fooddelete(fid);
+			this.send(response, result);
+		}
+		/**
+		 * 修改店铺美食
+		 * @param request
+		 * @param response
+		 * @throws IOException 
+		 */
+		private void foodup(HttpServletRequest request, HttpServletResponse response) throws IOException {
+			Integer trid = Integer.parseInt(request.getParameter("trid"));
+			Integer fid = Integer.parseInt(request.getParameter("fid"));
+			String fname = request.getParameter("fname");
+			Double fprice = Double.parseDouble(request.getParameter("fprice"));
+			IFoodBiz biz = new FoodBizlmpl();
+			int result = biz.foodup(fid, fname, fprice, trid);
+			this.send(response, result);
+		}
+		/**
+		 * 查询所有店铺美食
+		 * @param request
+		 * @param response
+		 * @throws IOException 
+		 */
+		private void findAllfood(HttpServletRequest request, HttpServletResponse response) throws IOException {
+			Integer rid = Integer.parseInt(request.getParameter("rid"));
+			IFoodBiz foodsbiz = new FoodBizlmpl();
+			List<Foods> food = foodsbiz.findAllfood(rid);
+			this.send(response, food);
+		}
+		/**
+		 * 查询食品
+>>>>>>> dd68adf83cb0cec312d97d4b6ce87a3dc9c6f6ee
 		 * @param request
 		 * @param response
 		 * @throws IOException 
@@ -101,7 +150,6 @@ public class FoodServlet extends BasicServlet{
 				return;
 			}
 			List<Map<String,String>>  foodshows =foodBiz.findfoods(Integer.parseInt(rid), 1, 5);
-			
 			this.send(response, foodshows);
 			
 		}

@@ -27,6 +27,6 @@ public interface IUserBiz {
 	 * @param email
 	 * @return
 	 */
-	public int userup( Integer uid ,String uname, String upwd, String email);
+	public int userup( Integer uid ,String uname, String upwd, String email , Integer state);
 
 }

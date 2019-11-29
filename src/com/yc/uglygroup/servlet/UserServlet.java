@@ -2,14 +2,11 @@ package com.yc.uglygroup.servlet;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.yc.uglygroup.biz.IUserBiz;
 import com.yc.uglygroup.biz.impl.UserBizImpl;
@@ -31,9 +28,41 @@ public class UserServlet extends BasicServlet{
 			utel(request, response);
 		} else if ("register".equals(op)) { // 注册操作
 			register(request, response);
-		}else if ("userup".equals(op)){//修改操作
+		} else if ("userup".equals(op)){//修改操作
 			userup(request, response);
+		}else if ("userid".equals(op)){//获取用户id
+			userid(request, response);
+		} else if ("getUstate".equals(op)){// 查询用户身份
+			getUstate(request, response);
 		}
+	}
+	/**
+	 * 获取用户id
+	 * @param request
+	 * @param response
+	 * @throws IOException 
+	 */
+	private void userid(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		User user= (User) request.getSession().getAttribute("user");
+		Integer uid = null;
+		if(user != null){
+			uid= user.getUid();
+		}else{
+			System.out.println("空user");
+		}
+		System.out.println("获取到的用户id为"+uid);
+		this.send(response, uid);
+	}
+
+	/**
+	 * 查询用户身份
+	 * @param request
+	 * @param response
+	 * @throws IOException 
+	 */
+	private void getUstate(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		User user = (User) request.getSession().getAttribute("user");
+		this.send(response, user.getUstate());
 	}
 
 	/**
@@ -43,12 +72,14 @@ public class UserServlet extends BasicServlet{
 	 * @throws IOException 
 	 */
 	private void userup(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		Integer uid = Integer.getInteger(request.getParameter("uid"));
+		String uid = request.getParameter("uid");
 		String uname= request.getParameter("uname");
 		String upwd = request.getParameter("upwd");
 		String email = request.getParameter("email");
+		User user1= (User) request.getSession().getAttribute("user");
+		int  ustate = user1.getUstate();
 		IUserBiz userBiz = new UserBizImpl();
-		int result = userBiz.userup(uid, uname, upwd, email);
+		int result = userBiz.userup(Integer.parseInt(uid), uname, upwd, email,ustate);
 		this.send(response, result);
 		
 	}

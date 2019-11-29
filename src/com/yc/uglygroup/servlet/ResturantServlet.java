@@ -41,24 +41,12 @@ public class ResturantServlet extends BasicServlet{
 			findres(request,response);
 		}else if("findByFirst".equals(op)) {//第一次页面
 			findByFirst(request,response);
-		}else if("findBypage1".equals(op)) {
+		}else if("findBypage1".equals(op)) { //分页查询
 			findBypage1(request,response);
-		}else if("find".equals(op)) {  //通过rid三表查询区域  菜系
-			find(request,response);
 		}
 	}
 
 	
-
-	private void find(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		int page = Integer.parseInt(request.getParameter("rid"));
-		IRestaurantBiz restaurantbiz = new RestaurantBizImpl();
-		System.out.println(restaurantbiz.findsan(page));
-		this.send(response, restaurantbiz.findsan(page));
-	}
-
-
-
 	private void findBypage1(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		int page = Integer.parseInt(request.getParameter("page"));
 		int rows = Integer.parseInt(request.getParameter("rows"));
@@ -83,7 +71,6 @@ public class ResturantServlet extends BasicServlet{
 	private void findres(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		User user  = (com.yc.uglygroup.entity.User)request.getSession().getAttribute("user");
 		int uid =Integer.valueOf(user.getUid());
-		System.out.println(uid);
 		IRestaurantBiz biz = new RestaurantBizImpl();
 		int result = 0;
 		Map<String, String> restaurant = biz.findres(uid);

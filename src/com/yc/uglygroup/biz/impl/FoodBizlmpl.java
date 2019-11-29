@@ -21,9 +21,27 @@ public class FoodBizlmpl implements IFoodBiz{
 		IFoodDao dao = new FoodDaolmpl();
 		return dao.findfood(str);
 	}
+
 	public List<Map<String,String>> findfoods(Integer rid, int page, int rows) {
 		IFoodDao dao = new FoodDaolmpl();
 		return dao.findfoods(rid, page, rows);
 	}
 
+	@Override
+	public List<Foods> findAllfood(Integer rid) {
+		IFoodDao dao = new FoodDaolmpl();
+		return dao.findAllfood(rid);
+	}
+
+	@Override
+	public int foodup(Integer fid, String fname, Double fprice, Integer trid) {
+		IFoodDao dao = new FoodDaolmpl();
+		return dao.foodup(fid, fname, fprice, trid);
+	}
+
+	@Override
+	public int fooddelete(Integer fid) {
+		IFoodDao dao = new FoodDaolmpl();
+		return dao.fooddelete(fid);		
+	}
 }

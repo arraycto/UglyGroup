@@ -9,8 +9,8 @@ public class UserDaoImpl implements IUserDao{
 	@Override
 	public User login(String account, String pwd) {
 		DBHelper dbHelper = new DBHelper();
-		String sql = "select uid, uname, upwd, utel, email, ustate from user where (uname=? or utel=? or email=?) and upwd=?";
-		return dbHelper.find(sql, User.class, account, account, account, pwd);
+		String sql = "select uid, uname, upwd, utel, email, ustate from user where (utel=? or email=?) and upwd=?";
+		return dbHelper.find(sql, User.class, account, account, pwd);
 	}
 
 	@Override
@@ -21,10 +21,10 @@ public class UserDaoImpl implements IUserDao{
 	}
 
 	@Override
-	public int userup( Integer uid ,String uname, String upwd, String email) {
+	public int userup(Integer uid ,String uname, String upwd, String email, Integer ustate) {
 		DBHelper db = new DBHelper();
-		String sql = " update  user set uanme= ? ,upwd= ? email = ? where uid = ?";
-		return db.update(sql, uname,upwd,email,uid);
+		String sql = " update  user set uname= ? ,upwd= ? ,email = ? ,ustate=? where uid = ?";
+		return db.update(sql, uname,upwd,email,ustate,uid);
 	}
 
 

@@ -11,9 +11,14 @@
 <link rel="stylesheet" type="text/css" href="../../css/mycenter.css">
 <link rel="shortcut icon" href="../images/favicon.ico" />
 <link rel="stylesheet" href="../../css/responsive.css">
+<link rel="stylesheet" href="../../css/notiflix-1.3.0.min.css">
+<link rel="stylesheet" href="../../css/dateTime.css">
 <script type="text/javascript" src="../../js/jquery-1.12.2.min.js"></script>
+<script type="text/javascript" src="../../js/dateTime.min.js"></script>
 <script type="text/javascript" src="../../js/menu.js"></script>
 <script type="text/javascript" src="../../js/ajaxfileupload.js"></script>
+<script src="../../js/notiflix-1.3.0.min.js" type="text/javascript"></script>
+
 
 
 <!--[if lt ie 9]>
@@ -143,14 +148,16 @@
 			<div class="list">
 				<div class="small-list list-top">
 					<ul>
-						<li class="li-first" style="width: 25%">菜系类型</li>
-						<li style="width: 25%">名称</li>
+						<li class="li-first" style="width: 20%">菜系类型</li>
+						<li style="width: 15%">名称</li>
 						<li style="width: 10%">价格</li>
 						<li style="width: 25%">操作</li>
+					</ul>			
+					<ul id="food-show_up">
 					</ul>
 				</div>
-				<div class="small-list list-bottom">
-					<p>暂无相关数据。</p>
+				<div class="small-list list-bottom" id = "mystore_update_foodsshows">
+							
 				</div>
 			</div>
 		</div>
@@ -159,38 +166,45 @@
 				<table>
 					<tr>
 						<td>活动类型</td>
-						<td><select>
-								<option value="打折">打折</option>
-								<option value="打折">满减</option>
+						<td><select id = "actype">
+								<option value="0" selected>满减</option>
+								<option value="1">打折</option>
 						</select></td>
 					</tr>
 					<tr>
 						<td>活 动 起 始 时 间:</td>
-						<td><input type="date"></td>
-						<td><input type="time"></td>
+						<td><input type="text" placeholder="请选择日期和时间" id="datetime"></td>
 					</tr>
 					<tr>
 						<td>活 动 结束 时 间:</td>
-						<td><input type="date"></td>
-						<td><input type="time"></td>
+						<td><input type="text" placeholder="请选择日期和时间" id="enddatetime"></td>
 					</tr>
 					<tr>
-						<td>折扣选择:</td>
-						<td><input type="text"></td>
+						<td >折扣选择:</td>
+						<td id ="zk"><select id= "discount">
+								<option value="1">1折</option>
+								<option value="2">2折</option>
+								<option value="3">3折</option>
+								<option value="4">4折</option>
+								<option value="5">5折</option>
+								<option value="6">6折</option>
+								<option value="7">7折</option>
+								<option value="8">8折</option>
+								<option value="9">9折</option>
+						</select>&nbsp;<span>数量</span><input type="text" id= "acnum" style="width: 50px"></td>
+						<td id = "mj"><span class="jian">满</span><input type="text" id= "lowmin" style="width: 20px"> <span class="jian">减</span> <input type="text" id= "remoney" style="width: 20px">  </td>
 					</tr>
 					<tr>
 						<td>活动菜系:</td>
-						<td><input type="checkbox" value="" name="check">菜名</td>
-						<td><input type="checkbox" value="" name="check">菜名</td>
-						<td><input type="checkbox" value="" name="check">菜名</td>
-						<td><input type="checkbox" value="" name="check">菜名</td>
-						<td><input type="checkbox" value="" name="check">菜名</td>
-						<td><input type="checkbox" value="" name="check">菜名</td>
-						<td><input type="checkbox" value="" name="check">菜名</td>
-						<td><input type="checkbox" value="" name="check">菜名</td>
+						<td><input type="checkbox" id="oCheck"  value="0" name="oCheck">全选</td>
 					</tr>
 					<tr>
-						<td><input type="button" value="发布" id="fb"></td>
+						<td id = "action_foodshow1"></td>
+						<td id = "action_foodshow2"></td>
+						<td id = "action_foodshow3"></td>
+					</tr>
+					<tr>
+						<td><input type="button" value="发布" id="fb" onclick="addaction()"></td>
 					</tr>
 				</table>
 			</form>
@@ -198,25 +212,167 @@
 
 		<script>
 		var rid = 4;
+		var id;
+		$("#pdatetime").datetime({
+			type:"datetime",
+		})
+		$("#enddatetime").datetime({
+			type:"datetime",
+		})
+		
 			$(function() {
+				Notiflix.Notify.Init();
+				findres();//查看商铺目前状态
+				findAllTypes();//查询所有店铺美食类型
+				findfoods();//分页查找美食(主界面)
+				findfoodsup();//分页查找美食(修改界面)
+				findAllfood();//查找店铺所有美食
+				$("#zk").hide();
+			})
+			//获取当前元素的id	
+   			function dianji(e) {
+        		id = e.id;
+    		}
+			//查看商铺目前状态
+			function findres(){
 				$.post("../../resturant", {
 					op : "findres"
 				}, function(data) {
 					if (data < -1) {
-						alert("您暂无商铺，请先注册");
+						Notiflix.Notify.Warning('您暂无商铺，请先注册');
 						location.href = "../store/register.html";
 					}else if(data == 2){
-						alert("您的商铺审核中请等待");
+						Notiflix.Notify.Warning('您的商铺审核中请等待');
 						location.href = "../manager/menu.html";					
 					}else if(data == 3){
-						alert("您的商铺已注销");
+						Notiflix.Notify.Failure('您的商铺已注销');
 						location.href = "../manager/menu.html";
-					
 					}else if(data == 4){
-						alert("您未通过，请重新注册");
-						location.href = "../store/register.html";
+						Notiflix.Notify.Success('您的店铺未通过，请重新注册');
+						setTimeout( location.href = "../store/register.html",2000);			
 					}
 				}, "json");
+			}
+			//查找店铺所有美食
+			function findAllfood(){
+				$.post("../../foods", {
+					op : "findAllfood",
+					rid : rid
+				}, function(data) {
+					var str1 = "";
+					var str2 = "";
+					var str3 = "";//活动界面
+
+					var count = 1;
+					$.each(data, function(index, item) {
+						if(count%3 == 0){
+							str3 +='<li><input type="checkbox" value="'+item.fid+'" name="check" >'+item.fname+'</li>'
+						} else if(count%3 == 1) {
+							str1 +='<li><input type="checkbox" value="'+item.fid+'" name="check" >'+item.fname+'</li>'
+						} else {
+							str2 +='<li><input type="checkbox" value="'+item.fid+'" name="check" >'+item.fname+'</li>'
+						}
+						count ++ ;
+					})
+					$("#action_foodshow1").append($(str1));
+					$("#action_foodshow2").append($(str2));
+					$("#action_foodshow3").append($(str3));
+				}, "json");
+			}
+			//分页查找美食（主界面）
+			function findfoods(){
+				$.post("../../foods", {
+					op : "findfoods",
+					rid : rid
+				}, function(data) {
+					var str = "";
+					var str1="";
+					$.each(data, function(index, item) {
+						
+						str += "<tr><th><img src ='../../"+item.fpic+"'></th><th>"+item.fname+"</th><th>"+item.trtype+"</th><th>"+item.fprice+"</th></tr>";
+					})
+					$("#foodinfo_foodshow").append($(str));
+					$("#foodinfo_foodshow").append($(str1));
+				}, "json");
+			}
+			//分页查找美食(修改界面)
+			function findfoodsup(){
+				$.post("../../foods", {
+					op : "findfoods",
+					rid : rid
+				}, function(data) {
+					var str ="";//修改界面
+					$.each(data, function(index, item) {
+						str +='<li class="li-first" id="'+item.fid+'" onmouseover="dianji(this)"><select id="mystore_foodup_select_'+item.fid+'"  class="foods_ipt"  name ="address"  disabled="disabled" style="width: 25%"><option value ="'+item.trid+'">'+item.trtype+'</option></select><input id="foodup_fname'+item.fid+'" style="width: 25%" type="text" name="address" readonly="readonly" value="'+item.fname+'" ><input id="foodup_fprice'+item.fid+'" style="width:10%" type="text" name="address" readonly="readonly" value="'+item.fprice+'"><a href="javascript:void(0)" onclick="foodinfoup()">修改</a><a href="javascript:void(0)" onclick="foodinfoop()">提交</a><a href="javascript:void(0)" onclick="foodinfodelete()">删除</a></li>'
+					})
+					$("#food-show_up").append($(str));
+				}, "json");
+			}
+			//菜单修改——修改
+			function foodinfoup(){
+				$("#foodup_fname"+id+"").removeAttr("readonly");
+				$("#foodup_fprice"+id+"").removeAttr("readonly");
+				$.post("../../ResfoodtypeServlet", {
+					op : "findAllTypes",
+					rid : rid
+				}, function(data) {
+					var str1 = "";
+					$.each(data, function(index, item) {
+						$("#mystore_foodup_select_"+id+"").find("option").remove();//清空
+						str1 += "<option value = '" + item.trid + "'>"
+								+ item.trtype + "</option>";
+					})
+					$("#mystore_foodup_select_"+id+"").append($(str1));
+				}, "json");
+				$("#mystore_foodup_select_"+id+"").removeAttr("disabled");
+			}
+			//菜单修改——提交
+			function foodinfoop(){
+				var fname = $("#foodup_fname"+id+"").val();//美食名字
+				var fprice= $("#foodup_fprice"+id+"").val();//美食价格
+				var trid  =$("#mystore_foodup_select_"+id+" option:selected").val();//美食类型编号
+				$.post("../../foods", {
+					op : "foodup",
+					fid:id,
+					fname:fname,
+					fprice:fprice,
+					trid:trid,
+				}, function(data) {
+					if(data>0){
+						Notiflix.Notify.Success('美食修改成功');
+						Notiflix.Notify.Success('清空');
+						//先清空
+						 $("#food-show_up").html("");
+						 $("#foodinfo_foodshow").html("");
+						//重新查询(刷新)
+						findfoods();
+						findfoodsup();
+					}else{
+						Notiflix.Notify.Failure('遇到未知错误，美食修改失败');
+					}
+				}, "json");
+			}
+			//菜单修改——删除
+			function foodinfodelete(){
+				$.post("../../foods", {
+					op : "fooddelete",
+					fid:id,
+				}, function(data) {
+					if(data>0){
+						Notiflix.Notify.Success('美食删除成功');
+						//先清空
+						 $("#food-show_up").html("");
+						 $("#foodinfo_foodshow").html("");
+						//重新查询(刷新)
+						findfoods();
+						findfoodsup();
+					}else{
+						Notiflix.Notify.Failure('遇到未知错误，美食删除失败');
+					}
+				}, "json");
+			}
+			//查询所有店铺美食类型
+			function findAllTypes(){
 				$.post("../../ResfoodtypeServlet", {
 					op : "findAllTypes",
 					rid : rid
@@ -228,20 +384,8 @@
 					})
 					$("#add_foods_typeid").append($(str));
 				}, "json");
-				$.post("../../foods", {
-					op : "findfoods",
-					rid : rid
-				}, function(data) {
-					var str = "";
-					var str1="";
-					$.each(data, function(index, item) {
-
-						str += "<tr><th><img src ='../../"+item.fpic+"'></th><th>"+item.fname+"</th><th>"+item.trtype+"</th><th>"+item.fprice+"</th></tr>";
-						str1 += "<tr><th>"+item.trtype+"'</th><th>"+item.fname+"</th><th>"+item.fprice+"</th><a>修改</a></tr>";
-					})
-					$("#foodinfo_foodshow").append($(str));
-				}, "json");
-			})
+			}
+			
 			//添加店铺美食类型
 			function addtypes() {
 				var trtype = $.trim($("#add_types_name").val());
@@ -255,6 +399,7 @@
 					} else {
 						alert("添加失败");
 					}
+					findAllTypes();
 				}, "json");
 			}
 
@@ -291,8 +436,72 @@
 						alert("店铺注册失败...\n" + e);
 					}
 				})
+				findAllfood();
 			}
-			
+			//折扣类型改变
+		    $("#actype").change(function() {
+				var x = $("#actype").val();
+				if(x == 0){
+					$("#zk").hide();
+					$("#mj").show();
+				}else if(x == 1){
+					$("#mj").hide();
+					$("#zk").show();
+				}
+		    });
+			//全选,取消
+			$('#oCheck').click(function () {
+            //获取复选框的状态 如果为true 为选中状态，false 为未选中状态
+                var is_check = $('#oCheck').is(':checked');
+                $("input:checkbox[name='check']:checkbox").each(function(){
+    				$(this).prop("checked",is_check)
+     			});
+            });    
+			//发布活动
+			function addaction(){
+				var actype = $("#actype").val();//折扣类型
+				var discount = $("#discount option:selected").val();//折扣选择
+				var lowmin  = $("#lowmin").val();//满减下限
+				var remoney  = $("#remoney").val();//满减金额
+				var acnum  = $("#acnum").val();//满减数量
+				var fids = "";
+				var count = 1;
+				$("input[name='check']:checkbox").each(function() {  
+				        var flag = $(this).is(':checked');  
+				        if(flag){
+				        	if(count == 1){
+				        		fids = $(this).val();
+				        	}else{
+					        	fids += "/"+$(this).val();
+				        	}
+				        	count ++;
+				        }  
+				});
+				if(actype == 0){//满减活动操作
+					$.post("../../action", {
+						op : "addmj",
+						rid : rid,//店铺
+						actype : actype,
+						lowmin : lowmin,
+						remoney : remoney,
+						fids : fids
+					}, function(data) {
+						alert("满减活动设置成功，有"+data+"个菜系修改失败");
+					}, "json");
+				}else if(actype == 1){//打折活动操作
+					$.post("../../action", {
+						op : "adddz",
+						rid : rid,//店铺
+						actype : actype,
+						discount:discount,
+						acnum:acnum,
+						fids : fids
+					}, function(data) {
+						alert("打折	活动设置成功，有"+data+"个菜系修改失败");
+					}, "json");
+				}
+				findAllfood();
+			}
 			$("#main-left-ul li").click(
 					function() {
 						var index = $(this).index();
@@ -302,10 +511,7 @@
 								.siblings().removeClass("active");  
 						 
 					})
-
-			$("#fb").click(function() {
-
-			})
+					
 		</script>
 	</div>
 

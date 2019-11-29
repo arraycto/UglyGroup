@@ -7,7 +7,6 @@ import java.util.Map;
 import com.yc.uglygroup.dao.DBHelper;
 import com.yc.uglygroup.dao.IRestaurantDao;
 import com.yc.uglygroup.entity.Restaurant;
-import com.yc.uglygroup.entity.Restaurant1;
 
 
 public class RestaurantDaoImpl implements IRestaurantDao{
@@ -95,7 +94,7 @@ public class RestaurantDaoImpl implements IRestaurantDao{
 	}
 
 	@Override
-	public List<Restaurant> findByPage1(Integer rid, int page, int rows) {
+	public List<Map<String,String>> findByPage1(Integer rid, int page, int rows) {
 		DBHelper db = new DBHelper();
 		List<Object> params = new ArrayList<Object>();
 		String sql = "select res.rid,res.aid, res.tid,rpic,rname,rstate,rdisc, fod.tname, ar.aname from restaurant res, area ar,foodtypes fod where res.aid=ar.aid and res.tid=fod.tid ";
@@ -107,13 +106,6 @@ public class RestaurantDaoImpl implements IRestaurantDao{
 			sql += " limit ?,?";//第一个参数是从哪一条记录开始查，第二参数是查多少条
 			params.add((page-1) * rows);
 			params.add(rows);
-		return db.finds(sql,Restaurant.class, params) ;
-	}
-
-	@Override
-	public List<Restaurant> findsan(Integer rid) {
-		DBHelper db = new DBHelper();
-		String sql = "select res.aid, res.tid,rpic,rname,rstate,rdisc, fod.tname, ar.aname from restaurant res, area ar,foodtypes fod where res.aid=ar.aid and res.tid=fod.tid and res.rid = ? ";
-		return db.finds(sql,Restaurant1.class,rid) ;
+		return db.finds(sql,params) ;
 	}
 }

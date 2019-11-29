@@ -8,7 +8,7 @@
 	<link rel="stylesheet" type="text/css" href="../../css/public.css">
 	<link rel="stylesheet" type="text/css" href="../../css/mycenter.css">
 	<link rel="shortcut icon" href="favicon.ico" /> 
-	<link rel="stylesheet" href="../../css/responsive/css">
+	<link rel="stylesheet" href="../../css/responsive.css">
 	<script type="text/javascript" src="../../js/jquery-1.12.2.min.js"></script>
 	<script type="text/javascript" src="../../js/menu.js"></script>
 
@@ -54,7 +54,7 @@
 			<div class="main-right-inner mycenter clearfix active" >
 				<div class="information clearfix">
 					<p class="clearfix">
-						<span class="information-r-span1">用户6232</span>
+						<span class="information-r-span1">${user.uname}</span>
 					</p>
 					<ul>
 						<li>密码&nbsp;&nbsp;******</li>
@@ -103,8 +103,8 @@
 					<div class="list">
 						<div class="list-inner">
 							<ul>
-								<li>手机：&nbsp;&nbsp;&nbsp;&nbsp;187****6232</li>
-								<li>昵称：&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" readonly="readonly" value="tjy"  id = "username"><a href="javascript:void(0)" onclick="usernameup()" >修改</a></li>	
+								<li>手机：&nbsp;&nbsp;&nbsp;&nbsp;${user.tel}</li>
+								<li>昵称：&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" readonly="readonly" value="" id = "username"><a href="javascript:void(0)" onclick="usernameup()" >修改</a></li>	
 								<li>密码：&nbsp;&nbsp;&nbsp;&nbsp;<input type="password" readonly="readonly" value="********" id="userpwd"><a href="javascript:void(0)" onclick="userpwdup()">修改密码</a></li>
 								<li>邮箱：&nbsp;&nbsp;&nbsp;&nbsp;<input type="email" readonly="readonly" value="596****@qq.com"id="useremail"><a href="javascript:void(0)" onclick="useremailup()">修改</a></li>
 								
@@ -116,11 +116,11 @@
 			<div class="main-right-inner send">
 					<h2>配送资料</h2>
 					<div class="list">
-						<div class="small-list list-top">
+						<div class="small-list list-top" id="Delivery">
 							<ul>
-								<li class="li-first" style="width:17%">姓名</li>
+								<li class="li-first" style="width:8%">姓名</li>
 								<li style="width:8%">区域</li>
-								<li style="width:20%">配送地址</li>
+								<li style="width:25%">配送地址</li>
 								<li style="width:15%">手机号码</li>
 								<li style="width:20%">操作</li>
 								<li style="width:10%"><a class="add" href="javascript:void(0)" onclick="addrow()">添加</a></li>
@@ -129,11 +129,11 @@
 						<div class="small-list list-bottom">
 							<ul class="addressreceipt" id= "addressreceipt">
 								<li class="li-first" >
-								<input type="text" name="address" readonly="readonly" value="tjy">
-								<input type="text" name="address" readonly="readonly" value="蒸湘区">
-								<input type="text" name="address" readonly="readonly" value="南华大学致远园12栋">
-								<input type="text" name="address" readonly="readonly" value="15226380133">
-								<a href="javascript:void(0)" onclick="addresscaseup()">修改</a>
+								<input  style="width: 8%" type="text" name="address" readonly="readonly" value="tjy">
+								<input style="width:8%" type="text" name="address" readonly="readonly" value="蒸湘区">
+								<input style="width:25%" type="text" name="address" readonly="readonly" value="南华大学致远园12栋">
+								<input style="width:15%" type="text" name="address" readonly="readonly" value="15226380133">
+								<a  href="javascript:void(0)" onclick="addresscaseup()">修改</a>
 								<a href="javascript:void(0)" onclick="addressup()">提交</a>
 								</li>
 							</ul>
@@ -177,11 +177,24 @@
 		<div class="goTop"></div>
 	</section>
 <script type="text/javascript">
-	//配送资料添加
+	$(function(){
+		var Deliveryid = 1;
+		var uname = ${user.uname};
+		var upwd = ${user.uname};
+		var uname = ${user.uname};
+		var uname = ${user.uname};
+		
+	})
+	$("#Delivery ul li").click(function(e){
+    	var a=e.id//使用this获取input的值;
+    	alert(a);
+ 	})
+ 	
+	//配送资料行添加
 	function addrow(){
-		var str = '<li class="li-first" ><input type="text" name="address" style="background: #fff;border: 2px;"><input type="text" name="address"style="background: #fff;border: 2px;"><input type="text" name="address" style="background: #fff;border: 2px;"><input type="text" name="address" style="background: #fff;border: 2px;"><a class="add" href="javascript:void(0)" onclick="add()">添加</a></li>'
+		var str = '<li class="li-first" id="'+Deliveryid+'"><input type="text" name="address" style="background: #fff;border: 2px;width:8%; ">&nbsp;<input type="text" name="address"style="background: #fff;border: 2px; width:8%;">&nbsp;<input type="text" name="address" style="background: #fff;border: 2px;width:25%;">&nbsp;<input type="text" name="address" style="background: #fff;border: 2px;width:15%;">&nbsp;<a class="add" href="javascript:void(0)" onclick="add()">添加</a></li>'
 		$("#addressreceipt").append($(str));
-
+		Deliveryid = Deliveryid + 1;
 	}
 	function add(){
 		
@@ -190,8 +203,18 @@
 	function addresscaseup(){
 		$("input[name='address']").removeAttr("readonly");
 	}
+	//配送资料提交
 	function addressup(){
+		    	//1.通过jq获得input数组
+		        var $inputArr = $('input');//length = 4
+		   		 //2.循环处理input,并定义结果集
+		        var result = [];
+		        $inputArr.each(function(){
+		    	//3.将每个input的值放进结果集
+		            result.push($(this).val());
+				});
 		$("input[name='address']").attr("readonly","readonly");
+		
 	}
 	//用户修改
 	function usernameup(){

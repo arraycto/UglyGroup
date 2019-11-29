@@ -52,10 +52,8 @@ public class ResfoodtypeServlet extends BasicServlet {
 		System.out.println("添加操作");
 		IResfoodtypebiz iResfoodtypebiz = new ResfoodtypeBizlmpl();
 		int rid = Integer.parseInt(request.getParameter("rid"));
-		System.out.println(rid);
 		String trtype = request.getParameter("trtype");
 		int result = iResfoodtypebiz.addTypes(rid, trtype);
-		System.out.println(result);
 		this.send(response, result);
 	}
 

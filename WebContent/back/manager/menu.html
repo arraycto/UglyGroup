@@ -82,25 +82,18 @@ function search(){
 	a标签的重定向至店家详情网未写
 */
 function getrestaurant(data){
+	var str = '';
 	$.each(data,function(index,item){
-		getres(item.rid);
+		str += '<li><a href="store.html?rid='+item.rid+'"><div class="restaurantPic" >';
+		str += '<img src="../'+item.rpic+'" alt=""></div><div class="restaurantInfo" ><h3>'+item.rname+'</h3>';
+		str += '<div class="f12 g6 mt5"><span class="location-icon"></span> <span>区域</span> <span>| </span> ';
+		str += '<span>'+item.aname+'</span></div><div class="f12 mt10 g6"><span>特色菜系</span> <span> | </span> <span> '+item.tname+' </span></div><div class="f12 mt10 g6"><span>店家描述</span> <span> :</span> <span>'+item.rdisc+' </span></div><div class="yd"><span class="kyd">'+item.rstate+'</span></div></div></a></li>';
 	})
+	$("#restaurant").html('').append($(str));
+	
 	
 }
-function getres(da){
-	rid = da;
-	var str = '';
-	$.post("../../resturant",{op:"find",rid:rid},function(data){
-		$.each(data,function(index,item){
-			str += '<li><a href="#"><div class="restaurantPic" >';
-			str += '<img src="../'+item.rpic+'" alt=""></div><div class="restaurantInfo" ><h3>'+item.rname+'</h3>';
-			str += '<div class="f12 g6 mt5"><span class="location-icon"></span> <span>区域</span> <span>| </span> ';
-			str += '<span>'+item.aname+'</span></div><div class="f12 mt10 g6"><span>特色菜系</span> <span> | </span> <span> '+item.tname+' </span></div><div class="f12 mt10 g6"><span>店家描述</span> <span> :</span> <span>'+item.rdisc+' </span></div><div class="yd"><span class="kyd">'+item.rstate+'</span></div></div></a></li>';
-		})
-		$("#restaurant").html("").append($(str));
-		
-	})
-}
+
 /*分页的第一次界面  */
 function getrestaurantByFirst(){
 	$.post("../../resturant",{op:"findByFirst",page:page,rows:rows},function(data){
@@ -111,6 +104,7 @@ function getrestaurantByFirst(){
 			page +='<a href="javascript:findByPage('+i+')">'+i+'</a>';
 		}
 		$("#page_info").append($(page));
+		
 	},"json")
 }
 function findByPage(num){
@@ -118,11 +112,7 @@ function findByPage(num){
 	$.post("../../resturant",{op:"findBypage1",page:num,rows:rows},function(data){
 		 getrestaurant(data);
 		$("#page_info>a").removeClass("active");
-
-			/*  活跃class没法添加上去 */
-		
-		
-		$("#page_info>a").eq(num -1).addclass("active"); 
+		$("#page_info>a").eq(num -1).addClass("active"); 
 	},"json");
 }
 $(function(){

@@ -26,15 +26,15 @@ public class UserBizImpl implements IUserBiz{
 		// 如果不为空，则访问数据模型层写入数据
 		IUserDao userDao = new UserDaoImpl();
 		if (userDao.register(uname, upwd, utel) > 0) { //说明注册成功
-			return userDao.login(uname, upwd);
+			return userDao.login(utel, upwd);
 		} else {
 			return null;
 		}
 	}
 
 	@Override
-	public int userup(Integer uid, String uname, String upwd, String email) {
+	public int userup(Integer uid, String uname, String upwd, String email,Integer ustate) {
 		IUserDao userDao = new UserDaoImpl();
-		return userDao.userup(uid, uname, upwd, email);
+		return userDao.userup(uid, uname, upwd, email ,ustate);
 	}
 }

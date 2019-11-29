@@ -27,7 +27,6 @@ public class RestaurantBizImpl implements IRestaurantBiz{
 		IRestaurantDao restaurantDao = new RestaurantDaoImpl();
 		map.put("total", restaurantDao.getTotal(rstate));
 		map.put("rows", restaurantDao.findByPage(page, rows, rstate));
-		
 		return map;
 	}
 
@@ -64,14 +63,10 @@ public class RestaurantBizImpl implements IRestaurantBiz{
 	}
 
 	@Override
-	public List<Restaurant> findByPage1(Integer rid, int page, int rows) {
+	public List<Map<String,String>> findByPage1(Integer rid, int page, int rows) {
 		IRestaurantDao restaurantdao = new RestaurantDaoImpl();
 		return restaurantdao.findByPage1(rid, page, rows);
 	}
 
-	@Override
-	public List<Restaurant> findsan(Integer rid) {
-		IRestaurantDao restaurantdao = new RestaurantDaoImpl();
-		return restaurantdao.findsan(rid);
-	}
+	
 }

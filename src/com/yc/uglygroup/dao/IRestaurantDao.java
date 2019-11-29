@@ -55,11 +55,6 @@ public interface IRestaurantDao {
 	 * @param rows
 	 * @return
 	 */
-	public List<Restaurant> findByPage1(Integer rid,int page,int rows);
-	/**
-	 * 三表查询
-	 * @param rid
-	 * @return
-	 */
-	public List<Restaurant> findsan(Integer rid);
+	public List<Map<String, String>> findByPage1(Integer rid,int page,int rows);
+	
 }

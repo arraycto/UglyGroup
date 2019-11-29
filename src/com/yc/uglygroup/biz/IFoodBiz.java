@@ -13,12 +13,35 @@ public interface IFoodBiz {
 	 */
 	public List<Foods> findfood(String str);
 	/**
-	 * 分页查询的方法(图片，名称，类型，价格)
+	 * 分页查询的方法
 	 * @param Rid
 	 * @param page
 	 * @param rows
 	 * @return
 	 */
 	public List<Map<String,String>> findfoods(Integer rid , int page, int rows);
+	/**
+	 * 查询店铺所有食物
+	 * @return
+	 */
+	public List<Foods> findAllfood(Integer rid);
+	
+	/**
+	 * 修改店铺美食
+	 * @param fid
+	 * @param fname
+	 * @param fprice
+	 * @param trid
+	 * @return
+	 */
+	public int foodup(Integer fid ,String fname,Double fprice,Integer trid);
+	
+	/**
+	 * 删除店铺美食
+	 * @param fid
+	 * @return
+	 */
+	public int fooddelete(Integer fid);
+	
 	
 }
