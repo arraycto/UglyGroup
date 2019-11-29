@@ -13,7 +13,7 @@ public interface IFoodDao {
 	 */
 	public int addfood(Map<String,String> map);
 	
-	public List<Foods> findfood();
+	public List<Foods> findfood(String str);
 	/**
 	 * 分页查询的方法
 	 * @param Rid

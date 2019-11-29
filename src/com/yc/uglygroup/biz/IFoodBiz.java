@@ -11,7 +11,7 @@ public interface IFoodBiz {
 	/**
 	 * 查询食物
 	 */
-	public List<Foods> findfood();
+	public List<Foods> findfood(String str);
 	/**
 	 * 分页查询的方法(图片，名称，类型，价格)
 	 * @param Rid

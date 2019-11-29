@@ -18,6 +18,15 @@
 		<script type="text/javascript" src="../../js/html5.js"></script>
 	<![end if]-->
 <script type="text/javascript">
+/**
+ * page:当前页
+ * rows：每页几条数据
+ *	totalPage:总页数
+ */
+var page = 1;
+var rows = 4;
+var totalPage =1;
+/* 获取地区的名称  */
 function getArea(){
 	$.post("../../area",{op:"getArea"},function(data){
 		var str ="";
@@ -27,31 +36,99 @@ function getArea(){
 		 $("#area").append($(str)); 
 	},"json")
 }
-
+/*  按钮点击活跃*/
  function areaid(num){
 	i = num;
 	$('.top a').click(function(){//点击的时候给当前这个加上，其他的移除
 		$(this).addClass("active").siblings("a").removeClass("active");
 		})	
 } 
+/*  获取菜系名称*/
 function getfoodTypes(){
 	$.post("../../foodtypes",{op:"findAllTypes"},function(data){
 		var str ="";
 		$.each(data,function(index,item){
-			str +='<a  href="javascript:foodtypesid('+item.aid+')" >'+item.aname+'</a>';
+			str +='<a  href="javascript:foodtypesid('+item.tid+')" >'+item.tname+'</a>';
 		})
 		 $("#foodTypes").append($(str)); 
 	},"json")
 }
+/*  按钮点击活跃状态*/
 function foodtypesid(num){
 	i = num;
 	$('.top a').click(function(){//点击的时候给当前这个加上，其他的移除
 		$(this).addClass("active").siblings("a").removeClass("active");
 		})
 }
+/* 搜索功能实现  报错了  前端显示界面没有完成 */
+function search(){
+	var str =$("#searchname").val();
+	$.post("../../foods",{op:"findfood",str:str},function(data){
+		if(data ==null){
+			alert("请重新输入");
+			//将输入值变为空
+			document.getElementById("searchname").value="";
+			window.location.replace("store.html");
+		}else{
+		/* 	var str = '';
+			$.each(data,function(data){
+				str +=	;
+			})
+			 */
+		}
+	},"json")
+}
+/* 主页面店铺显示
+	a标签的重定向至店家详情网未写
+*/
+function getrestaurant(data){
+	$.each(data,function(index,item){
+		getres(item.rid);
+	})
+	
+}
+function getres(da){
+	rid = da;
+	var str = '';
+	$.post("../../resturant",{op:"find",rid:rid},function(data){
+		$.each(data,function(index,item){
+			str += '<li><a href="#"><div class="restaurantPic" >';
+			str += '<img src="../'+item.rpic+'" alt=""></div><div class="restaurantInfo" ><h3>'+item.rname+'</h3>';
+			str += '<div class="f12 g6 mt5"><span class="location-icon"></span> <span>区域</span> <span>| </span> ';
+			str += '<span>'+item.aname+'</span></div><div class="f12 mt10 g6"><span>特色菜系</span> <span> | </span> <span> '+item.tname+' </span></div><div class="f12 mt10 g6"><span>店家描述</span> <span> :</span> <span>'+item.rdisc+' </span></div><div class="yd"><span class="kyd">'+item.rstate+'</span></div></div></a></li>';
+		})
+		$("#restaurant").html("").append($(str));
+		
+	})
+}
+/*分页的第一次界面  */
+function getrestaurantByFirst(){
+	$.post("../../resturant",{op:"findByFirst",page:page,rows:rows},function(data){
+		totalPage = Math.ceil(data.total /rows);
+		getrestaurant(data.rows);//之所以。rows是因为byFirst里面的原因
+		var page = '<a href="javascript:findByPage(1)" class="active">1</a>';
+		for(var i=2;i<= totalPage; i++){
+			page +='<a href="javascript:findByPage('+i+')">'+i+'</a>';
+		}
+		$("#page_info").append($(page));
+	},"json")
+}
+function findByPage(num){
+	page = num;
+	$.post("../../resturant",{op:"findBypage1",page:num,rows:rows},function(data){
+		 getrestaurant(data);
+		$("#page_info>a").removeClass("active");
+
+			/*  活跃class没法添加上去 */
+		
+		
+		$("#page_info>a").eq(num -1).addclass("active"); 
+	},"json");
+}
 $(function(){
 	getArea();
 	getfoodTypes();
+	getrestaurantByFirst();
 });
 </script>
 </head>
@@ -124,39 +201,17 @@ $(function(){
 				<input type="checkbox" id="dianguo"> <label for="dianguo">我点过的餐厅</label>
 				<input type="checkbox" id="yingye"> <label for="yingye">只显示营业中的餐厅</label>
 				<div class="search">
-					<input type="text" class="search-box" placeholder="搜索餐厅/餐品"><a
-						href="#" class="search-btn"></a>
+					<input type="text" class="search-box" id="searchname" name="namesearch" placeholder="搜索餐厅/餐品">
+					<a href="javascript:search()" class="search-btn"></a>
 				</div>
 			</div>
 		</div>
-		<div class="restaurant">
-			<ul class="restaurant-list clearfix">
-				<li><a href="#">
-						<div class="restaurantPic">
-							<img src="../../images/restaurant-img.jpg" alt="">
-						</div>
-						<div class="restaurantInfo">
-							<h3>小杨生煎大华巴春店</h3>
-							<div class="f12 g6 mt5">
-								<span class="location-icon"></span> <span>区域</span> <span>
-									| </span> <span>20元</span>
-							</div>
-							<div class="f12 mt10 g6">
-								<span>特色菜系</span> <span> | </span> <span> 湘菜 </span>
-							</div>
-							<div class="f12 mt10 g6">
-
-								<span>店家描述</span> <span> :</span> <span> 湘菜 </span>
-							</div>
-							<div class="yd">
-								<span class="kyd">营业中</span>
-							</div>
-						</div>
-				</a></li>
-			</ul>
+		<div class="restaurant" >
+			<ul class="restaurant-list clearfix" id = "restaurant" ></ul>
 		</div>
+		<div id="page_info">
+			</div>
 		<div class="goTop" id="goTop"></div>
-
 	</section>
 	<footer>
 		<div class="inner clearfix">
@@ -264,8 +319,5 @@ $(function(){
 		})
 
 	</script>
-
-
-	}
 </body>
 </html>
