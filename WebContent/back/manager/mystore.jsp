@@ -274,6 +274,10 @@
 						}
 						count ++ ;
 					})
+					
+					$("#action_foodshow1").html("");
+					$("#action_foodshow2").html("");
+					$("#action_foodshow3").html("");
 					$("#action_foodshow1").append($(str1));
 					$("#action_foodshow2").append($(str2));
 					$("#action_foodshow3").append($(str3));
@@ -340,7 +344,6 @@
 				}, function(data) {
 					if(data>0){
 						Notiflix.Notify.Success('美食修改成功');
-						Notiflix.Notify.Success('清空');
 						//先清空
 						 $("#food-show_up").html("");
 						 $("#foodinfo_foodshow").html("");
@@ -395,9 +398,10 @@
 					trtype : trtype
 				}, function(data) {
 					if (data > 0) {
-						alert("添加成功");
+						Notiflix.Notify.Success("添加成功");
+						$("#add_types_name").html("");
 					} else {
-						alert("添加失败");
+						Notiflix.Notify.Failure("添加失败");
 					}
 					findAllTypes();
 				}, "json");
@@ -424,16 +428,19 @@
 						data = parseInt($.trim(data));
 						
 						if (data == -1) {
-							alert("您输入的信息不完整请确认后重新输入22222...");
+							Notiflix.Notify.Failure("您输入的信息不完整请确认后重新输入22222...");
 						} else if (data > 0) {
-							alert("添加成功...");
+							Notiflix.Notify.Success("添加成功...");
+							$("#add_foods_name").val("");
+							$("#add_foods_price").val("");
+							$("#add_foods_pic").val("");
+							$("#add_foods_context").val("");
 						} else {
-							alert("添加失败...");
-
+							Notiflix.Notify.Info("添加失败...");
 						}
 					},
 					error: function(data, status, e) {
-						alert("店铺注册失败...\n" + e);
+						Notiflix.Notify.Failure("店铺注册失败...\n" + e);
 					}
 				})
 				findAllfood();
@@ -486,7 +493,7 @@
 						remoney : remoney,
 						fids : fids
 					}, function(data) {
-						alert("满减活动设置成功，有"+data+"个菜系修改失败");
+						Notiflix.Notify.Success("满减活动设置成功，有"+data+"个菜系修改失败");
 					}, "json");
 				}else if(actype == 1){//打折活动操作
 					$.post("../../action", {
@@ -497,7 +504,7 @@
 						acnum:acnum,
 						fids : fids
 					}, function(data) {
-						alert("打折	活动设置成功，有"+data+"个菜系修改失败");
+						Notiflix.Notify.Success("打折	活动设置成功，有"+data+"个菜系修改失败");
 					}, "json");
 				}
 				findAllfood();

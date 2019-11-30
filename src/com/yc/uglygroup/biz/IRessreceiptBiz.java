@@ -5,6 +5,12 @@ import java.util.Map;
 
 public interface IRessreceiptBiz {
 	/**
+	 * 分页查询收货地址
+	 * @param uid
+	 * @return
+	 */
+	public List<Map<String,String>> findByPageress(Integer uid,int page ,int rows);
+	/**
 	 * 查询收货地址
 	 * @param uid
 	 * @return

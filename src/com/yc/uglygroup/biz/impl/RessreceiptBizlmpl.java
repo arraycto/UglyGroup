@@ -8,6 +8,11 @@ import com.yc.uglygroup.dao.IRessreceiptDao;
 import com.yc.uglygroup.dao.impl.RessreceiptDaolmpl;
 
 public class RessreceiptBizlmpl implements IRessreceiptBiz {
+	@Override
+	public List<Map<String, String>> findByPageress(Integer uid, int page, int rows) {
+		IRessreceiptDao dao = new RessreceiptDaolmpl();
+		return dao.findByPageress(uid, page, rows);
+	}
 
 	@Override
 	public List<Map<String, String>> findress(Integer uid) {
@@ -38,4 +43,6 @@ public class RessreceiptBizlmpl implements IRessreceiptBiz {
 		IRessreceiptDao dao = new RessreceiptDaolmpl();
 		return dao.deleteaddress(arid);
 	}
+
+
 }
