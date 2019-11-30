@@ -8,7 +8,9 @@
 	<link rel="stylesheet" type="text/css" href="../../css/public.css">
 	<link rel="stylesheet" type="text/css" href="../../css/store.css">
 	<link rel="shortcut icon" href="favicon.ico" /> 
+	<link rel="stylesheet" href="../../css/cart.css">
 	<link rel="stylesheet" href="../../css/responsive/css">
+	<link rel="stylesheet" href="../../css/font-awesome.css">
 	<script type="text/javascript" src="../../js/jquery-1.12.2.min.js"></script>
 	<script type="text/javascript" src="../../js/menu.js"></script>
 
@@ -17,8 +19,47 @@
 	<![end if]-->
 </head>
 <script type="text/javascript">
+$(function(){
+	var id= window.location.href.split("?")[1].split("=")[1];
+	rinfo(id);
+	rtinfo(id); 
+	
+})
 
-
+function rinfo(num){
+	/*店铺的店名   图片  简介  */
+	rid = num;
+	var str = "";
+	$.post("../../resturant",{op:"resturantinfo",rid:num},function(data){
+		$.each(data,function(indedx,item){
+			str +='<div class="store-left"><img src="../../'+item.rpic+'"><h4><span class="pp">品牌</span>'+item.rname+'</h4>';
+			str +='<p>丑团专送</p><span class="jian">减</span><span>在线支付满30减10，满50减25</span><h3><span class="gg">公告：</span></h3><p>'+item.rdisc+'</p></div>';
+		})
+		$("#bgimg").append($(str));
+		
+	},"json")
+}
+function rtinfo(num){
+	/* 店里美食类型  */
+	rid = num;
+	var str = "";
+	$.post("../../resturant",{op:"rtinfo",rid:num},function(data){
+		if(data == null){
+			alert("请输入店铺美食类型");
+			return ;
+		}
+		 $.each(data,function(indedx,item){
+			str += '<li><a href="javascript:fodinfo()">优惠</a></li>';
+			str +='<li><a href="javascript:fodinfo('+item.trid+')">'+item.trtype+'</a></li>';
+		})
+		$("#good-list").append($(str)); 
+		
+	},"json")
+}
+function fodinfo(num){
+	
+	$.post("../../resturant",{op:"",})
+}
 </script>
 <body>
 <header>
@@ -42,15 +83,8 @@
 	
 	<section>
 		<div class="head">
-			<div class="bgimg" style="background: url(../../images/restaurant-img.jpg) no-repeat -50px center;background-size: 100% 100%;">
-				<div class="store-left">
-					<img src="../../images/restaurant-img.jpg">
-					<h4><span class="pp">品牌</span>小杨生煎</h4>
-					<p>丑团专送</p>
-					<span class="jian">减</span><span>在线支付满30减10，满50减25</span>
-					<h3><span class="gg">公告：</span></h3>
-					<p>本店新开张，所有下单达15元以上的帅哥美女都免费赠送饮料一瓶</p>
-				</div>
+			<div id ="bgimg" class="bgimg" style="background: url(../../images/restaurant-img.jpg) no-repeat -50px center;background-size: 100% 100%;">
+				
 			</div>
 		</div>
 		<div class= "ms">
@@ -65,17 +99,7 @@
 
 		<div class = "foods">
 			<div class ="typeshow">
-			<ul class="good-list">
-            	<li>热销榜</li>
-            	<li>
-               	 	<span class="te">特</span><a href="#">单人套餐</a>
-            	</li>
-            	<li><a href="#">特色粥品</a></li>
-            	<li><a href="#">精选热菜</a></li>
-            	<li><a href="#">爽口凉菜</a></li>
-            	<li><a href="#">半成品</a></li>
-            	<li><a href="#">饭类</a></li>
-            	<li><a href="#">面类</a></li>
+			<ul class="good-list" id = "good-list">
         	</ul>
 		</div>
 		<div class="foodinfoshow">
@@ -145,5 +169,50 @@
 			</div>
 		</div>
 	</footer>
+	<nav class="menu-wrap">
+        <div class="menu">
+	        <div class="cart_list_th clearfix" class="div1">
+	        	<ul>
+	            	<li class="col01">商品名称</li>
+	            	<li class="col02">商品单位</li>
+	                <li class="col03">商品价格(元)</li>
+	                <li class="col04">数量</li>
+	                <li class="col05">小计</li>
+	                <li class="col06">操作</li>
+	            </ul>
+	        </div>
+	        <div class="div2">
+				<div class="cart_list_td clearfix" >
+		       		<ul>
+		        		<li class="col01"><input type="checkbox" checked></li>
+		            	<li class="col02"><img src="images/goods/goods003.jpg"></li>
+		                <li class="col03">牛奶草莓<br><em>16.80元/500g</em></li>
+		                <li class="col04">500g</li>
+		                <li class="col05">16.80</li>
+		                <li class="col06">
+		                	<div class="num_add">
+		                    	<a href="javascript:void(0)" onclick="lost(this)" class="minus fl">-</a>
+		                        <input type="text" value="1" class="num_show fl">
+		                        <a href="javascript:void(0)" onclick="add(this)" class="add fl">+</a>
+		                    </div>
+		                </li>
+		                <li class="col07">16.80</li>
+		                <li class="col08"><a href="javascript:;" onclick="delGoods(this)">删除</a></li>
+		            </ul>
+            	</div>	        
+	        </div>
+            <div class="setElements" class="div3">
+	        	<ul>
+	            	<li class="col01"><input type="checkbox" checked id="all"></li>
+	            	<li class="col02"><label for="all">全选</label></li>
+	                <li class="col03">合计(不含运费)：<span>￥</span><em id="totalPrices"></em><br>共计<b id="totalNumbers"></b>件商品</li>
+	                <li class="col04"><a href="">去结算</a></li>
+	            </ul>
+        	</div>
+        </div>
+    </nav>
+    
+    <script type="text/javascript" src="../../js/jquery-1.12.2.min.js"></script>
+    <script src="../../js/car.js"></script>
 </body>
 </html>

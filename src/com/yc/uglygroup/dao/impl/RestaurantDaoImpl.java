@@ -74,10 +74,10 @@ public class RestaurantDaoImpl implements IRestaurantDao{
 	}
 
 	@Override
-	public List<Restaurant> findrestaurantname(String str){
+	public List<Map<String, String>> resinfo(Integer rid){
 		DBHelper db = new DBHelper();
-		String sql = "select rid, aid, tid, rname, rpic, rstate from restaurant where rname like ? ";
-		return db.finds(sql, Restaurant.class,"%" + str +"%");
+		String sql = "select rdisc, rname,rpic from restaurant res where res.rid= ? ";
+		return db.finds(sql, rid);
 	}
 
 	@Override
@@ -107,5 +107,12 @@ public class RestaurantDaoImpl implements IRestaurantDao{
 			params.add((page-1) * rows);
 			params.add(rows);
 		return db.finds(sql,params) ;
+	}
+
+	@Override
+	public List<Map<String, String>> rtinfo(Integer rid) {
+		DBHelper db = new DBHelper();
+		String sql = "select trtype ,trid from resfoodtype  where  rid= ? ";
+		return db.finds(sql, rid);
 	}
 }

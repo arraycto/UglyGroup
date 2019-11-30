@@ -34,10 +34,16 @@ public interface IRestaurantBiz {
 	 */
 	public Map<String, String> findres(Integer uid);
 	/**
-	 * 查询店铺名字
+	 * 查询店铺信息
 	 * @return
 	 */
-	public List<Restaurant> findrestaurantname(String str);
+	public List<Map<String,String>> resinfo(Integer rid);
+	/**
+	 * 店铺美食类型
+	 * @param rid
+	 * @return
+	 */
+	public List<Map<String,String>> rtinfo(Integer rid);
 	/**
 	 * 第一次分页查询
 	 * @param rid 

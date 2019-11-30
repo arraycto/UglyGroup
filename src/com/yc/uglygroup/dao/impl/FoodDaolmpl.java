@@ -20,10 +20,13 @@ public class FoodDaolmpl implements IFoodDao{
 		 * 店铺名 店铺图片 美食图片 美食名字 美食价格
 		 */
 	@Override
-	public List<Foods> findfood(String str) {
+	public List<Map<String, String>> findfood(String str) {
 		DBHelper db = new DBHelper();
-		String sql = "select fo.rid, fname,fprice,fpic, rname,rpic  from foods fo,restaurant re where fo.rid=re.rid and fname like ? ";
-		return db.finds(sql, Foods.class,"%"+str+"%");
+		if(str !=null) {
+			String sql = "select fo.rid, fname,fprice,fpic,res.aid, res.tid,rpic,rname,rstate,rdisc, fod.tname, ar.aname  from foods fo,restaurant res, area ar,foodtypes fod where res.aid=ar.aid and res.tid=fod.tid and fo.rid=res.rid and (fname like ? or res.rname like ? ) ";
+			return db.finds(sql,'%'+str+'%','%'+str+'%');
+		}
+		return null;
 	}
 	
 	

@@ -42,9 +42,9 @@ public class RestaurantBizImpl implements IRestaurantBiz{
 	}
 
 	@Override
-	public List<Restaurant> findrestaurantname(String str) {
+	public List<Map<String, String>> resinfo(Integer rid) {
 		IRestaurantDao restaurantdao = new RestaurantDaoImpl();
-		return restaurantdao.findrestaurantname(str);
+		return restaurantdao.resinfo(rid);
 		
 	}
 
@@ -66,6 +66,12 @@ public class RestaurantBizImpl implements IRestaurantBiz{
 	public List<Map<String,String>> findByPage1(Integer rid, int page, int rows) {
 		IRestaurantDao restaurantdao = new RestaurantDaoImpl();
 		return restaurantdao.findByPage1(rid, page, rows);
+	}
+
+	@Override
+	public List<Map<String, String>> rtinfo(Integer rid) {
+		IRestaurantDao restaurantdao = new RestaurantDaoImpl();
+		return restaurantdao.rtinfo(rid);
 	}
 
 	

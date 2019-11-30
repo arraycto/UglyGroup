@@ -17,7 +17,7 @@ public class FoodBizlmpl implements IFoodBiz{
 	}
 
 	@Override
-	public List<Foods> findfood(String str) {
+	public List<Map<String, String>> findfood(String str) {
 		IFoodDao dao = new FoodDaolmpl();
 		return dao.findfood(str);
 	}

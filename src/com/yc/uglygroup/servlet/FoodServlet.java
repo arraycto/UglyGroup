@@ -91,50 +91,20 @@ public class FoodServlet extends BasicServlet{
 		 * @throws IOException 
 		 */
 		private void findfood(HttpServletRequest request, HttpServletResponse response) throws IOException {
-			String str = request.getParameter("str");
-			System.out.println(str);
-			IFoodBiz foodsbiz = new FoodBizlmpl();
-			List<Foods> list = foodsbiz.findfood(str);
-			System.out.println(list.size());
-			IRestaurantBiz restaurantbiz = new RestaurantBizImpl();
-			List<Restaurant> list1 = restaurantbiz.findrestaurantname(str);
-			System.out.println(list1.size());
-			if(list.size() == 0) { //判断食物是否为空
-				if(list1.size() == 0) { //判断店名
-					System.out.println("店名为空");
-					this.send(response, null);
-				}else {
-					Iterator<Restaurant> iter = list1.iterator();
-					Restaurant res =  iter.next();
-						if(res.getRname().indexOf(str) >= 0){//判断是否是店名
-							this.send(response, list1);
-						}this.send(response, null);
-				}
-			}else {
-				if(list1.size() == 0) {
-					Iterator<Foods> iter = list.iterator();
-					Foods s =  iter.next();
-					if(s.getFname().indexOf(str) >= 0) {//判断是否是美食名字
-						this.send(response, list);
-					}this.send(response, null);
-				}else {
-					Iterator<Restaurant> iter1 = list1.iterator();
-					Restaurant res =  iter1.next();
-					Iterator<Foods> iter = list.iterator();
-					Foods s =  iter.next();
-					if(s.getFname().indexOf(str) >= 0) {//判断是否是美食名字
-						this.send(response, list);
-					}else if(res.getRname().indexOf(str) >= 0){//判断是否是店名
-						this.send(response, list1);
-					}
-					this.send(response, null);
-				}
-				
-				
+			String str = request.getParameter("stri");
+			System.out.println(str+"4");
+			if(str == null) {
+				this.send(response, null);
 			}
-			
-			
-	
+			IFoodBiz foodsbiz = new FoodBizlmpl();
+			List<Map<String, String>> list = foodsbiz.findfood(str);
+			System.out.println("3"+list);
+			System.out.println(list.size());
+			if(list.size()>0) {
+				this.send(response, list);
+			}else {
+				this.send(response, null);
+			}
 			}
 		/**
 		 * 分页查询美食的方法

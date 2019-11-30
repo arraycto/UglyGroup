@@ -47,7 +47,7 @@ public interface IRestaurantDao {
 	 * 查询店铺名字
 	 * @return
 	 */
-	public List<Restaurant> findrestaurantname(String str);
+	public List<Map<String,String>> resinfo(Integer rid);
 	/**
 	 * 分页查询
 	 * @param rid	如商品类型编号为null，则分页查询所有
@@ -57,4 +57,5 @@ public interface IRestaurantDao {
 	 */
 	public List<Map<String, String>> findByPage1(Integer rid,int page,int rows);
 	
+	public List<Map<String,String>> rtinfo(Integer rid);
 }
