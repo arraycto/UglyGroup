@@ -4,8 +4,21 @@
 	display: table;
 }
 
-
-
+#page_info{
+	width:100%;
+	margin-top:20px;
+	text-align: center;
+}
+#page_info a{
+	padding: 5px 20px;
+	background: #ccc;
+	color :#FFF;
+	text-decoration: none;
+	margin-right: 10px;
+}
+#page_info .active{
+	background: #E2681B;
+	}
 /**
 *
 **/
@@ -83,7 +96,7 @@ header .logo a {
 	text-indent: -9999px;
 }
 
-/*login鐧诲綍鐘舵�佸紑濮�*/
+/*login閻ц缍嶉悩鑸碉拷浣哥磻婵拷*/
 header .login {
 	float: right;
 	padding-top: 20px;
@@ -252,7 +265,7 @@ header .top-left .btn {
 	padding: 0 20px;
 }
 
-/*login鏈櫥褰曠姸鎬佺粨鏉�*/
+/*login閺堫亞娅ヨぐ鏇犲Ц閹胶绮ㄩ弶锟�*/
 .kefu {
 	position: fixed;
 	right: 0;

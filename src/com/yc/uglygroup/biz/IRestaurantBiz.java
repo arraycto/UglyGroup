@@ -1,6 +1,9 @@
 package com.yc.uglygroup.biz;
 
+import java.util.List;
 import java.util.Map;
+
+import com.yc.uglygroup.entity.Restaurant;
 
 public interface IRestaurantBiz {
 	/**
@@ -30,4 +33,40 @@ public interface IRestaurantBiz {
 	 * @return
 	 */
 	public Map<String, String> findres(Integer uid);
+	/**
+	 * 查询店铺信息
+	 * @return
+	 */
+	public List<Map<String,String>> resinfo(Integer rid);
+	/**
+	 * 店铺美食类型
+	 * @param rid
+	 * @return
+	 */
+	public List<Map<String,String>> rtinfo(Integer rid);
+	/**
+	 * 第一次分页查询
+	 * @param rid 
+	 * @param page
+	 * @param rows
+	 * @return
+	 */
+	public Map<String,Object> findByFirstPage(Integer rid,int page,int rows);
+	/**
+	 * 获取满足条件的数据总数
+	 * @param tid
+	 * @return
+	 */
+	public int getTotal(Integer tid);
+	/**
+	 * 分页查询
+	 * @param rid 如rid为则查询所有
+	 * @param page
+	 * @param rows
+	 * @return
+	 */
+	public List<Map<String, String>> findByPage1(Integer rid,int page,int rows);
+	
+
+
 }

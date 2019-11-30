@@ -8,6 +8,7 @@ import com.yc.uglygroup.dao.DBHelper;
 import com.yc.uglygroup.dao.IRestaurantDao;
 import com.yc.uglygroup.entity.Restaurant;
 
+
 public class RestaurantDaoImpl implements IRestaurantDao{
 
 	@Override
@@ -70,5 +71,48 @@ public class RestaurantDaoImpl implements IRestaurantDao{
 		DBHelper dbHelper = new DBHelper();
 		String sql = "select rid , rname , aid,radd,rpic,rdisc,rstate from restaurant where uid = ?";
 		return dbHelper.find(sql, uid);
+	}
+
+	@Override
+	public List<Map<String, String>> resinfo(Integer rid){
+		DBHelper db = new DBHelper();
+		String sql = "select rdisc, rname,rpic from restaurant res where res.rid= ? ";
+		return db.finds(sql, rid);
+	}
+
+	@Override
+	public int getTotal(Integer rid) {
+		DBHelper db = new DBHelper();
+		if(rid == null) {
+			String sql = "select count(rid) from restaurant";
+			return db.getTotal(sql);
+		}else {
+			String sql = "select count(rid) from restaurant where rid = ?";
+			return db.getTotal(sql,rid);
+		}
+		
+	}
+
+	@Override
+	public List<Map<String,String>> findByPage1(Integer rid, int page, int rows) {
+		DBHelper db = new DBHelper();
+		List<Object> params = new ArrayList<Object>();
+		String sql = "select res.rid,res.aid, res.tid,rpic,rname,rstate,rdisc, fod.tname, ar.aname from restaurant res, area ar,foodtypes fod where res.aid=ar.aid and res.tid=fod.tid ";
+			if(rid !=null) {
+				sql +="and res.rid =?";
+				params.add(rid);
+			}
+			//mysql 分页查找 关键字limit
+			sql += " limit ?,?";//第一个参数是从哪一条记录开始查，第二参数是查多少条
+			params.add((page-1) * rows);
+			params.add(rows);
+		return db.finds(sql,params) ;
+	}
+
+	@Override
+	public List<Map<String, String>> rtinfo(Integer rid) {
+		DBHelper db = new DBHelper();
+		String sql = "select trtype ,trid from resfoodtype  where  rid= ? ";
+		return db.finds(sql, rid);
 	}
 }

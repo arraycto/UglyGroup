@@ -16,12 +16,17 @@ public class FoodDaolmpl implements IFoodDao{
 		String sql = "insert into foods values(0,?,?,?,?,?,2,?)";
 		return db.update(sql, map.get("trid"),map.get("rid"),map.get("fname"),map.get("fprice"),map.getOrDefault("pic", ""),map.get("fdisc"));
 	}
-
+		/**
+		 * 店铺名 店铺图片 美食图片 美食名字 美食价格
+		 */
 	@Override
-	public List<Foods> findfood() {
+	public List<Map<String, String>> findfood(String str) {
 		DBHelper db = new DBHelper();
-		String sql = "select * from foods where fname like % ";
-		return db.finds(sql, Foods.class);
+		if(str !=null) {
+			String sql = "select fo.rid, fname,fprice,fpic,res.aid, res.tid,rpic,rname,rstate,rdisc, fod.tname, ar.aname  from foods fo,restaurant res, area ar,foodtypes fod where res.aid=ar.aid and res.tid=fod.tid and fo.rid=res.rid and (fname like ? or res.rname like ? ) ";
+			return db.finds(sql,'%'+str+'%','%'+str+'%');
+		}
+		return null;
 	}
 	
 	

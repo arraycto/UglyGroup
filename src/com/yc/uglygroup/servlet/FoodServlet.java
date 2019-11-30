@@ -1,6 +1,7 @@
 package com.yc.uglygroup.servlet;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -12,8 +13,11 @@ import javax.servlet.jsp.JspFactory;
 import javax.servlet.jsp.PageContext;
 
 import com.yc.uglygroup.biz.IFoodBiz;
+import com.yc.uglygroup.biz.IRestaurantBiz;
 import com.yc.uglygroup.biz.impl.FoodBizlmpl;
+import com.yc.uglygroup.biz.impl.RestaurantBizImpl;
 import com.yc.uglygroup.entity.Foods;
+import com.yc.uglygroup.entity.Restaurant;
 import com.yc.uglygroup.util.FileUploadUtil;
 import com.yc.uglygroup.util.StringUtil;
 
@@ -25,7 +29,7 @@ public class FoodServlet extends BasicServlet{
 			String op = request.getParameter("op");
 			if ("addfoods".equals(op)) {//添加美食
 				addfoods(request, response);
-			}else if("findfood".equals(op)) {
+			}else if("findfood".equals(op)) {//查询食品 和店铺名字
 				findfood(request,response);
 			}else if("findfoods".equals(op)){
 				findfoods(request, response);
@@ -38,6 +42,9 @@ public class FoodServlet extends BasicServlet{
 			}
 		}
 		/**
+<<<<<<< HEAD
+		 * 查询食品 和店铺名字
+=======
 		 * 店铺美食删除
 		 * @param request
 		 * @param response
@@ -78,14 +85,26 @@ public class FoodServlet extends BasicServlet{
 		}
 		/**
 		 * 查询食品
+>>>>>>> dd68adf83cb0cec312d97d4b6ce87a3dc9c6f6ee
 		 * @param request
 		 * @param response
 		 * @throws IOException 
 		 */
 		private void findfood(HttpServletRequest request, HttpServletResponse response) throws IOException {
+			String str = request.getParameter("stri");
+			System.out.println(str+"4");
+			if(str == null) {
+				this.send(response, null);
+			}
 			IFoodBiz foodsbiz = new FoodBizlmpl();
-			List<Foods> list = foodsbiz.findfood();
-			this.send(response, list);
+			List<Map<String, String>> list = foodsbiz.findfood(str);
+			System.out.println("3"+list);
+			System.out.println(list.size());
+			if(list.size()>0) {
+				this.send(response, list);
+			}else {
+				this.send(response, null);
+			}
 			}
 		/**
 		 * 分页查询美食的方法

@@ -24,6 +24,12 @@ public interface IRestaurantDao {
 	 * @return
 	 */
 	public int getTotal(Object ... rstate);
+	/**
+	 * 获取满足条件的数据总数
+	 * @param rid
+	 * @return
+	 */
+	public int getTotal(Integer rid);
 	
 	/**
 	 * 修改店铺状态
@@ -37,4 +43,19 @@ public interface IRestaurantDao {
 	 * @return
 	 */
 	public Map<String, String> findres(Integer uid);
+	/**
+	 * 查询店铺名字
+	 * @return
+	 */
+	public List<Map<String,String>> resinfo(Integer rid);
+	/**
+	 * 分页查询
+	 * @param rid	如商品类型编号为null，则分页查询所有
+	 * @param page
+	 * @param rows
+	 * @return
+	 */
+	public List<Map<String, String>> findByPage1(Integer rid,int page,int rows);
+	
+	public List<Map<String,String>> rtinfo(Integer rid);
 }

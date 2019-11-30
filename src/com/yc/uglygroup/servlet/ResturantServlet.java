@@ -2,6 +2,7 @@ package com.yc.uglygroup.servlet;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import javax.servlet.jsp.PageContext;
 
 import com.yc.uglygroup.biz.IRestaurantBiz;
 import com.yc.uglygroup.biz.impl.RestaurantBizImpl;
+import com.yc.uglygroup.entity.Restaurant;
 import com.yc.uglygroup.entity.User;
 import com.yc.uglygroup.util.FileUploadUtil;
 
@@ -37,8 +39,58 @@ public class ResturantServlet extends BasicServlet{
 			delete(request,response);
 		} else if("findres".equals(op)){
 			findres(request,response);
+		}else if("findByFirst".equals(op)) {//第一次页面
+			findByFirst(request,response);
+		}else if("findBypage1".equals(op)) { //分页查询
+			findBypage1(request,response);
+		}else if("resturantinfo".equals(op)) {
+			resturantinfo(request,response);
+		}else if("rtinfo".equals(op)) {
+			rtinfo(request,response);
 		}
 	}
+
+	
+	private void rtinfo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		int rid = Integer.parseInt(request.getParameter("rid"));
+		IRestaurantBiz restaurantbiz = new RestaurantBizImpl();
+		this.send(response, restaurantbiz.rtinfo(rid));
+		System.out.println("1.2"+restaurantbiz.rtinfo(rid));
+		
+	}
+
+
+	private void resturantinfo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		int rid = Integer.parseInt(request.getParameter("rid"));
+		IRestaurantBiz restaurantbiz = new RestaurantBizImpl();
+		this.send(response, restaurantbiz.resinfo(rid));
+		System.out.println("1.1"+restaurantbiz.resinfo(rid));
+		
+		
+		
+	}
+
+
+	private void findBypage1(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		int page = Integer.parseInt(request.getParameter("page"));
+		int rows = Integer.parseInt(request.getParameter("rows"));
+		IRestaurantBiz restaurantbiz = new RestaurantBizImpl();
+		this.send(response, restaurantbiz.findByPage1(null, page, rows));
+		System.out.println("2"+restaurantbiz.findByPage1(null, page, rows));
+	}
+
+
+
+	private void findByFirst(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		int page = Integer.parseInt(request.getParameter("page"));
+		int rows = Integer.parseInt(request.getParameter("rows"));
+		IRestaurantBiz restaurantbiz = new RestaurantBizImpl();
+		this.send(response, restaurantbiz.findByFirstPage(null, page, rows));
+		System.out.println("1"+restaurantbiz.findByFirstPage(null, page, rows));
+		
+	}
+
+
 
 	private void findres(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		User user  = (com.yc.uglygroup.entity.User)request.getSession().getAttribute("user");

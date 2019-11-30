@@ -17,11 +17,11 @@ public class FoodBizlmpl implements IFoodBiz{
 	}
 
 	@Override
-	public List<Foods> findfood() {
+	public List<Map<String, String>> findfood(String str) {
 		IFoodDao dao = new FoodDaolmpl();
-		return dao.findfood();
+		return dao.findfood(str);
 	}
-	
+
 	public List<Map<String,String>> findfoods(Integer rid, int page, int rows) {
 		IFoodDao dao = new FoodDaolmpl();
 		return dao.findfoods(rid, page, rows);
