@@ -74,5 +74,11 @@ public class RestaurantBizImpl implements IRestaurantBiz{
 		return restaurantdao.rtinfo(rid);
 	}
 
+	@Override
+	public List<Map<String, String>> fodinfo(Integer str,Integer id) {
+		IRestaurantDao restaurantdao = new RestaurantDaoImpl();
+		return restaurantdao.fodinfo(str,id);
+	}
+
 	
 }

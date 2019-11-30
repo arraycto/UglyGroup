@@ -19,23 +19,28 @@
 	<![end if]-->
 </head>
 <script type="text/javascript">
+var id= window.location.href.split("?")[1].split("=")[1];
 $(function(){
-	var id= window.location.href.split("?")[1].split("=")[1];
 	rinfo(id);
-	rtinfo(id); 
+	rtinfo(id);
+	fodinfo1();
 	
 })
 
 function rinfo(num){
-	/*店铺的店名   图片  简介  */
+	/*店铺的店名   图片  简介   满减的显示 */
 	rid = num;
 	var str = "";
+	var str1 ="";
 	$.post("../../resturant",{op:"resturantinfo",rid:num},function(data){
 		$.each(data,function(indedx,item){
-			str +='<div class="store-left"><img src="../../'+item.rpic+'"><h4><span class="pp">品牌</span>'+item.rname+'</h4>';
-			str +='<p>丑团专送</p><span class="jian">减</span><span>在线支付满30减10，满50减25</span><h3><span class="gg">公告：</span></h3><p>'+item.rdisc+'</p></div>';
+			
+			str +='<div class="bgimg" style="background: url(../../'+item.rpic+') no-repeat -50px center;background-size: 100% 100%;"><div class="store-left"><img src="../../'+item.rpic+'"><h4><span class="pp">品牌</span>'+item.rname+'</h4>';
+			str +='<p>丑团专送</p><span  class="jian">减</span><span id="jianinfo" clss="jianinfo"></span><h3><span class="gg">公告：</span></h3><p>'+item.rdisc+'</p></div></div>';
+			/* str1 +='在线支付:满'+item.lowmin+'减'+item.remoney+'元'	; */
 		})
-		$("#bgimg").append($(str));
+		/* $("#jianinfo").append($(str1)); */
+		$("#head1").append($(str));
 		
 	},"json")
 }
@@ -49,7 +54,6 @@ function rtinfo(num){
 			return ;
 		}
 		 $.each(data,function(indedx,item){
-			str += '<li><a href="javascript:fodinfo()">优惠</a></li>';
 			str +='<li><a href="javascript:fodinfo('+item.trid+')">'+item.trtype+'</a></li>';
 		})
 		$("#good-list").append($(str)); 
@@ -57,9 +61,62 @@ function rtinfo(num){
 	},"json")
 }
 function fodinfo(num){
-	
-	$.post("../../resturant",{op:"",})
+	// strr 传 trid  id 传的是rid
+	strr = num;
+	var str = "";
+	$.post("../../resturant",{op:"fodinfo",strr:num, id:id},function(data){
+		  $.each(data,function(index,item){
+			str += '<li><div class="pro-info"><div  class="pic"><img id="fpic'+item.fid+'" src="../../'+item.fpic+'"></div>';
+			str += '<div class="details"><p id="fname'+item.fid+'">'+item.fname+'</p><span id="fdisc'+item.fid+'">'+item.fdisc+'</span><br><span  id="fprice'+item.fid+'" class="price">'+item.fprice+'</span>'; 
+			str += '</div><div class="jiaru"><button id="'+item.fid+'" class="iconfont icon-add", type="button"  onclick="buy(this)">购买</button></div></div></li>';
+			  
+		}) 
+			$("#resss").html("").append($(str));
+	},"json")
 }
+function fodinfo1(){
+	// strr 传 trid  id 传的是rid
+	var str = "";
+	strr = "999";
+	$.post("../../resturant",{op:"fodinfo",strr:strr, id:id},function(data){
+		  $.each(data,function(index,item){
+			  yhprice = item.fprice * (item.discount/10);
+				str +='<li><div class="pro-info"><div class="pic"><img src="../../'+item.fpic+'"></div><div class="details">';
+				str +='<p>'+item.fname+'</p><span>'+item.fdisc+'</span><br><span class="price"><i class="iconfont icon-icon-price-sure"></i>'+yhprice+'</span><del class="yuan"><i class="iconfont icon-icon-price-sure"></i>'+item.fprice+'</del>';
+				str +=' </div><div class="jiaru"><button id="1'+item.fid+'" class="iconfont icon-add", type="button"  onclick="buy(this)">购买</button></div></div></li>';
+			  
+		}) 
+			$("#resss").html("").append($(str));
+		 
+	},"json")
+}
+/* fodinfo 里面的按钮id 为item.fid  fodinfo1 里面的按钮id 为 1 +item.fid*/
+function buy(e){
+	var fid = e.id;//获取购买的fid
+	var fname = $("#fname"+fid+"").text();
+	var fprice = $("#fprice"+fid+"").html();
+	var fpic = $("#fpic"+fid+"").attr("src");
+	var price = fprice;
+	str ="";
+	
+	
+	if(!$("#check"+fid)){ 
+		//如果存在
+		$("#add"+fid).on("click",function(){
+			add(this);
+			price = ($("#num"+fid).val() * fprice);
+			$("#price"+fid).html("");
+			$("#price"+fid).html(price);
+		})
+		 
+	}else{
+	 	str +='<ul><li class="col01"><input type="checkbox" id="check"+fid checked></li><li class="col02"><img src="'+fpic+'"></li><li class="col03">'+fname+'</li>';
+	 	str +='<li class="col05">'+fprice+'</li><li class="col06"><div class="num_add"><a id="lost"+fid href="javascript:void(0)" onclick="lost(this)" class="minus fl">-</a><input id="num"+fid type="text" value="1" class="num_show fl">';
+	 	str +='<a id="add"+fid href="javascript:void(0)" onclick="add(this)" class="add fl">+</a></div></li><li  id ="price"+fid class="col07">price</li><li class="col08"><a href="javascript:;" onclick="delGoods(this)">删除</a></li></ul>';
+	 	$("#cart_list_td").append($(str));
+	}
+}
+
 </script>
 <body>
 <header>
@@ -74,7 +131,7 @@ function fodinfo(num){
 		<div class="top-right">
 			<ul class="header-nav-first">
 					<li>
-						<a href="mycenter.jsp">我的信息</a>
+						<a  href="mycenter.jsp">我的信息</a>
 					</li>
 			</ul>
 		</div>
@@ -82,10 +139,8 @@ function fodinfo(num){
 	</header>
 	
 	<section>
-		<div class="head">
-			<div id ="bgimg" class="bgimg" style="background: url(../../images/restaurant-img.jpg) no-repeat -50px center;background-size: 100% 100%;">
-				
-			</div>
+		<div class="head" id="head1">
+			
 		</div>
 		<div class= "ms">
 			<div class="miaoshu" align="center">
@@ -100,37 +155,13 @@ function fodinfo(num){
 		<div class = "foods">
 			<div class ="typeshow">
 			<ul class="good-list" id = "good-list">
+			<li><a href="javascript:fodinfo1()">优惠</a></li>
         	</ul>
 		</div>
 		<div class="foodinfoshow">
-			<ul class="pro-list">
-            <li>
-                <p>热销榜</p>
-                <div class="pro-info">
-                    <div class="pic"></div>               
-                    <div class="details">
-                        <p>皮蛋瘦肉粥配包子套餐</p>
-                        <span>咸粥</span><br>
-                        <span>月售1132份 好评率100%</span><br>
-                        <span class="price"><i class="iconfont icon-icon-price-sure"></i>24</span><del class="yuan"><i class="iconfont icon-icon-price-sure"></i>28</del>
-                    </div>
-                    <div class="jiaru"><i class="iconfont icon-add"></i></div>
-                </div>
-            </li>
-            <li>                   
-            	<div class="pro-info">
-            	<div class="pic">
-            		<img src="../../images/restaurant-img.jpg">
-				</div>               
-            	<div class="details">
-            	<p>皮蛋瘦肉粥配包子套餐</p>
-            	<span>咸粥</span><br>
-            	<span>月售1132份 好评率100%</span><br>
-            	<span class="price"><i class="iconfont icon-icon-price-sure"></i>22</span>
-            	</div>
-            	<div class="jiaru"><i class="iconfont icon-add"></i></div>
-            	</div>
-            </li>
+			<ul class="pro-list" id = "resss">
+           
+            
             </ul>
 		</div>
 		</div>
@@ -174,31 +205,17 @@ function fodinfo(num){
 	        <div class="cart_list_th clearfix" class="div1">
 	        	<ul>
 	            	<li class="col01">商品名称</li>
-	            	<li class="col02">商品单位</li>
+	            	<li class="col02">商品图片</li>
 	                <li class="col03">商品价格(元)</li>
 	                <li class="col04">数量</li>
 	                <li class="col05">小计</li>
 	                <li class="col06">操作</li>
+	                
 	            </ul>
 	        </div>
 	        <div class="div2">
-				<div class="cart_list_td clearfix" >
-		       		<ul>
-		        		<li class="col01"><input type="checkbox" checked></li>
-		            	<li class="col02"><img src="images/goods/goods003.jpg"></li>
-		                <li class="col03">牛奶草莓<br><em>16.80元/500g</em></li>
-		                <li class="col04">500g</li>
-		                <li class="col05">16.80</li>
-		                <li class="col06">
-		                	<div class="num_add">
-		                    	<a href="javascript:void(0)" onclick="lost(this)" class="minus fl">-</a>
-		                        <input type="text" value="1" class="num_show fl">
-		                        <a href="javascript:void(0)" onclick="add(this)" class="add fl">+</a>
-		                    </div>
-		                </li>
-		                <li class="col07">16.80</li>
-		                <li class="col08"><a href="javascript:;" onclick="delGoods(this)">删除</a></li>
-		            </ul>
+				<div class="cart_list_td clearfix" id="cart_list_td">
+		       		
             	</div>	        
 	        </div>
             <div class="setElements" class="div3">

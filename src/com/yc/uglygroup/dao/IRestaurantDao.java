@@ -58,4 +58,8 @@ public interface IRestaurantDao {
 	public List<Map<String, String>> findByPage1(Integer rid,int page,int rows);
 	
 	public List<Map<String,String>> rtinfo(Integer rid);
+	/*
+	 * 查询店铺里面的美食
+	 */
+	List<Map<String, String>> fodinfo(Integer str,Integer id );
 }

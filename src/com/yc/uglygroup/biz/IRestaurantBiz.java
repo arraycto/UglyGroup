@@ -67,6 +67,6 @@ public interface IRestaurantBiz {
 	 */
 	public List<Map<String, String>> findByPage1(Integer rid,int page,int rows);
 	
-
+	public List<Map<String, String>> fodinfo(Integer str,Integer id);
 
 }

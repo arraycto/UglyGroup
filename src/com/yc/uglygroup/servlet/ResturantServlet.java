@@ -43,14 +43,25 @@ public class ResturantServlet extends BasicServlet{
 			findByFirst(request,response);
 		}else if("findBypage1".equals(op)) { //分页查询
 			findBypage1(request,response);
-		}else if("resturantinfo".equals(op)) {
+		}else if("resturantinfo".equals(op)) { //store 店铺信息 界面
 			resturantinfo(request,response);
-		}else if("rtinfo".equals(op)) {
+		}else if("rtinfo".equals(op)) {  //store 店铺美食类型
 			rtinfo(request,response);
+		}else if("fodinfo".equals(op)) {
+			fodinfo(request,response);
 		}
 	}
 
 	
+	private void fodinfo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		int str = Integer.parseInt(request.getParameter("strr"));
+		int id = Integer.parseInt(request.getParameter("id"));
+		IRestaurantBiz restaurantbiz = new RestaurantBizImpl();
+		this.send(response, restaurantbiz.fodinfo(str,id));
+		
+	}
+
+
 	private void rtinfo(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		int rid = Integer.parseInt(request.getParameter("rid"));
 		IRestaurantBiz restaurantbiz = new RestaurantBizImpl();

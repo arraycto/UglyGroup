@@ -76,7 +76,7 @@ public class RestaurantDaoImpl implements IRestaurantDao{
 	@Override
 	public List<Map<String, String>> resinfo(Integer rid){
 		DBHelper db = new DBHelper();
-		String sql = "select rdisc, rname,rpic from restaurant res where res.rid= ? ";
+		String sql = "select rdisc, rname,rpic from restaurant res  where res.rid= ? ";
 		return db.finds(sql, rid);
 	}
 
@@ -114,5 +114,17 @@ public class RestaurantDaoImpl implements IRestaurantDao{
 		DBHelper db = new DBHelper();
 		String sql = "select trtype ,trid from resfoodtype  where  rid= ? ";
 		return db.finds(sql, rid);
+	}
+
+	@Override
+	public List<Map<String, String>> fodinfo(Integer str,Integer id) {
+		DBHelper db = new DBHelper();
+		if(str == 999) {
+			String sql = "select fo.fid,refo.trtype,fo.fname,fo.fprice,fo.fpic,fo.fdisc,acta.discount, acta.acnum from resfoodtype refo, foods fo,action ac,actiondetail acta where acta.acid=ac.acid  and ac.rid=refo.rid and fo.trid=refo.trid and fo.fid=acta.fid and ac.actype=1 and acta.acstate=0 and refo.rid= ?";
+			return db.finds(sql, id);
+		}else {
+			String sql = "select fo.fid,refo.trtype,fname,fprice ,fpic,fdisc,fstate from resfoodtype refo, foods fo  where fo.trid=refo.trid and fo.rid=refo.rid and refo.trid= ? and refo.rid= ?";
+			return db.finds(sql, str,id);
+		}
 	}
 }
