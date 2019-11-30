@@ -67,6 +67,17 @@ public interface IRestaurantBiz {
 	 */
 	public List<Map<String, String>> findByPage1(Integer rid,int page,int rows);
 	
-
+	/**
+	 * 按区域查找店铺
+	 * @param aid
+	 * @return
+	 */
+	public List<Map<String,String>> areafinds( Integer aid);
+	/**
+	 * 按特色菜系查找店铺
+	 * @param aid
+	 * @return
+	 */
+	public List<Map<String,String>> foodtypefinds( Integer tid);
 
 }

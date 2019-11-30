@@ -26,12 +26,43 @@
 var page = 1;
 var rows = 4;
 var totalPage =1;
+//按特色菜系查找
+function foodtypefinds(e){
+	var tid = e.id;
+	var str = "";
+	$.post("../../resturant",{op:"foodtypefinds",tid:tid},function(data){
+			$.each(data,function(index,item){
+				str += '<li><a href="store.html?rid='+item.rid+'"><div class="restaurantPic" >';
+				str += '<img src="../../'+item.rpic+'" alt=""></div><div class="restaurantInfo" ><h3>'+item.rname+'</h3>';
+				str += '<div class="f12 g6 mt5"><span class="location-icon"></span> <span>区域</span> <span>| </span> ';
+				str += '<span>'+item.aname+'</span></div><div class="f12 mt10 g6"><span>特色菜系</span> <span> | </span> <span> '+item.tname+' </span></div><div class="f12 mt10 g6"><span>店家描述</span> <span> :</span> <span>'+item.rdisc+' </span></div><div class="yd"><span class="kyd">'+item.rstate+'</span></div></div></a></li>';
+			})
+			$("#restaurant").html('').append($(str));
+		
+	},"json")
+}
+//按区域查询
+function areafinds(e){
+	var aid = e.id;//获取区域id
+	var str = "";
+	$.post("../../resturant",{op:"areafinds",aid:aid},function(data){
+			$.each(data,function(index,item){
+				str += '<li><a href="store.html?rid='+item.rid+'"><div class="restaurantPic" >';
+				str += '<img src="../../'+item.rpic+'" alt=""></div><div class="restaurantInfo" ><h3>'+item.rname+'</h3>';
+				str += '<div class="f12 g6 mt5"><span class="location-icon"></span> <span>区域</span> <span>| </span> ';
+				str += '<span>'+item.aname+'</span></div><div class="f12 mt10 g6"><span>特色菜系</span> <span> | </span> <span> '+item.tname+' </span></div><div class="f12 mt10 g6"><span>店家描述</span> <span> :</span> <span>'+item.rdisc+' </span></div><div class="yd"><span class="kyd">'+item.rstate+'</span></div></div></a></li>';
+			})
+			$("#restaurant").html('').append($(str));
+		
+	},"json")
+	
+}
 /* 获取地区的名称  */
 function getArea(){
 	$.post("../../area",{op:"getArea"},function(data){
 		var str ="";
 		$.each(data,function(index,item){
-			str +='<a  href="javascript:areaid('+item.aid+')" >'+item.aname+'</a>';
+			str +='<a  id="'+item.aid+'"  href="javascript:void(0)" onclick="areafinds(this)">'+item.aname+'</a>';
 		})
 		 $("#area").append($(str)); 
 	},"json")
@@ -48,7 +79,7 @@ function getfoodTypes(){
 	$.post("../../foodtypes",{op:"findAllTypes"},function(data){
 		var str ="";
 		$.each(data,function(index,item){
-			str +='<a  href="javascript:foodtypesid('+item.tid+')" >'+item.tname+'</a>';
+			str +='<a  id="'+item.tid+'" href="javascript:void(0)" onclick="foodtypefinds(this)">'+item.tname+'</a>';
 		})
 		 $("#foodTypes").append($(str)); 
 	},"json")
@@ -66,7 +97,7 @@ function search(){
 	var str = "";
 	$.post("../../foods",{op:"findfood",stri:stri},function(data){
 		if(data == null){
-			alert("请重新输入");
+			alert("查询目标 ,请重新输入");
 			//将输入值变为空
 			document.getElementById("searchname").value="";
 		}else{
@@ -88,7 +119,7 @@ function getrestaurant(data){
 	var str = '';
 	$.each(data,function(index,item){
 		str += '<li><a href="store.html?rid='+item.rid+'"><div class="restaurantPic" >';
-		str += '<img src="../'+item.rpic+'" alt=""></div><div class="restaurantInfo" ><h3>'+item.rname+'</h3>';
+		str += '<img src="../../'+item.rpic+'" alt=""></div><div class="restaurantInfo" ><h3>'+item.rname+'</h3>';
 		str += '<div class="f12 g6 mt5"><span class="location-icon"></span> <span>区域</span> <span>| </span> ';
 		str += '<span>'+item.aname+'</span></div><div class="f12 mt10 g6"><span>特色菜系</span> <span> | </span> <span> '+item.tname+' </span></div><div class="f12 mt10 g6"><span>店家描述</span> <span> :</span> <span>'+item.rdisc+' </span></div><div class="yd"><span class="kyd">'+item.rstate+'</span></div></div></a></li>';
 	})
@@ -132,7 +163,7 @@ $(function(){
 				<h1><a href="#">丑团外卖</a></h1>
 			</div>
 			<div class="top-left">
-				<a href="../login.html" class="btn">登录</a> <a href="#" class="btn">注册</a>
+				<a href="../index.html" class="btn">登录</a> <a href="../index.html" class="btn">注册</a>
 			</div>
 		</div>
 		<div class="top-right">

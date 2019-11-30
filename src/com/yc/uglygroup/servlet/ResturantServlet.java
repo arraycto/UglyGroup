@@ -1,6 +1,7 @@
 package com.yc.uglygroup.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,10 +48,41 @@ public class ResturantServlet extends BasicServlet{
 			resturantinfo(request,response);
 		}else if("rtinfo".equals(op)) {
 			rtinfo(request,response);
+		}else if("areafinds".equals(op)){
+			areafinds(request,response);
+		}else if("foodtypefinds".equals(op)){
+			foodtypefinds(request,response);
 		}
 	}
+	/**
+	 * 按特色菜系查找
+	 * @param request
+	 * @param response
+	 * @throws IOException 
+	 */
+	private void foodtypefinds(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		Integer tid = Integer.parseInt(request.getParameter("tid"));
+		IRestaurantBiz biz = new RestaurantBizImpl();
+		List<Map<String,String>> list = new ArrayList<Map<String,String>>();
+		list = biz.foodtypefinds(tid);
+		System.out.println(list);
+		
+		this.send(response, list);
+	}
 
-	
+	/**
+	 * 按区域查询
+	 * @param request
+	 * @param response
+	 * @throws IOException 
+	 */
+	private void areafinds(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		Integer aid = Integer.parseInt(request.getParameter("aid"));
+		IRestaurantBiz biz = new RestaurantBizImpl();
+		List<Map<String,String>> list = new ArrayList<Map<String,String>>();
+		list = biz.areafinds(aid);
+		this.send(response, list);
+	}
 	private void rtinfo(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		int rid = Integer.parseInt(request.getParameter("rid"));
 		IRestaurantBiz restaurantbiz = new RestaurantBizImpl();
