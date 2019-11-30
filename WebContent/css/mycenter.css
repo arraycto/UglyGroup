@@ -121,6 +121,10 @@ section.main {
 	padding-left: 20px;
 	line-height: 40px;
 }
+.list-bottom p,.li-first-mycenter {
+	padding-left: 20px;
+	line-height: 20px;
+}
 .li-first input{
 	background:transparent;
 	 border: 0px;

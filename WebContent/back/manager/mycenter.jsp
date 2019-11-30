@@ -48,7 +48,7 @@
 	<section class="main inner clearfix">
 		<div class="main-left">
 			<ul id="main-left-ul">
-				<li ><a href="#"class="active-li">个人中心</a></li>
+				<li ><a href="#"class="active-li" onclick="findPageressreceipt()">个人中心</a></li>
 				<li><a href="#">基本资料</a></li>
 				<li><a href="#" onclick="findressreceipt()">配送资料</a></li>
 				<li><a href="#" onclick="findorder()">我的订单</a></li>
@@ -74,15 +74,25 @@
 					<div class="list">
 						<div class="small-list list-top">
 							<ul>
-								<li class="li-first" style="width:17%">姓名</li>
-								<li style="width:8%">区域</li>
-								<li style="width:35%">配送地址</li>
-								<li style="width:15%">手机号码</li>
+								<li class="li-first" style="width:24%">姓名</li>
+								<li style="width:24%">区域</li>
+								<li style="width:24%">配送地址</li>
+								<li style="width:24%">手机号码</li>
 
 							</ul>
 						</div>
 						<div class="small-list list-bottom">
-							<p>暂无相关数据。</p>
+							<ul id= "mycenter_easy_show">
+								<li>
+									<input  class="noborder"style="width: 24%" type="text" name="address" readonly="readonly" value="tjy">
+									 <select tyle="width: 24%" id="" class="foods_ipt"  name ="address"  disabled="disabled">
+									 <option value ='area_id' >蒸湘区</option>
+									 </select>
+									<input style="width:24%" type="text" name="address" readonly="readonly" value="南华大学致远园12栋">
+									<input style="width:24%" type="text" name="address" readonly="readonly" value="15226380133">
+								</li>
+
+							</ul>
 						</div>
 					</div>
 				</div>
@@ -198,7 +208,7 @@
 	$(function(){
 		Notiflix.Notify.Init();
 		userid();
-		findorder();
+		
 	});
 	function userid(){
 		$.post("../../admin", {
@@ -259,8 +269,32 @@
 			 $("#addressreceipt").html("");
 			//循环添加查出来的收货地址
 			$.each(data, function(index, item) {
-				var str = '<li class="li-first"   id="'+item.arid+'" onmouseover="dianji(this)" > <input type="text"  id="arname'+item.arid+'" name="address"  readonly="readonly" style="width:8%; " value="'+item.arname+'">&nbsp;<select id="center_area_select'+item.arid+'" class="foods_ipt"  name ="address" disabled="disabled"><option vlaue= "'+item.aid+'" >'+ item.aname+ '</option>"</select>&nbsp;<input type="text" id="aradd'+item.arid+'" name="address" readonly="readonly" style="width:25%;" value="'+item.aradd+'">&nbsp;<input type="text" id="artel'+item.arid+'" readonly="readonly" name="address" style="width:15%;" value="'+item.artel+'">&nbsp;<a  href="javascript:void(0)" onclick="addresscaseup()">修改</a><a href="javascript:void(0)" onclick="addressup()">提交</a></a><a href="javascript:void(0)" onclick="deleteaddress()">删除</a></li>';
+				var str = '<li class="li-first"  id="'+item.arid+'" onmouseover="dianji(this)" > <input type="text"  id="arname'+item.arid+'" name="address"  readonly="readonly" style="width:8%; " value="'+item.arname+'">&nbsp;<select id="center_area_select'+item.arid+'" class="foods_ipt"  name ="address" disabled="disabled"><option vlaue= "'+item.aid+'" >'+ item.aname+ '</option>"</select>&nbsp;<input type="text" id="aradd'+item.arid+'" name="address" readonly="readonly" style="width:25%;" value="'+item.aradd+'">&nbsp;<input type="text" id="artel'+item.arid+'" readonly="readonly" name="address" style="width:15%;" value="'+item.artel+'">&nbsp;<a  href="javascript:void(0)" onclick="addresscaseup()">修改</a><a href="javascript:void(0)" onclick="addressup()">提交</a></a><a href="javascript:void(0)" onclick="deleteaddress()">删除</a></li>';
 				$("#addressreceipt").append($(str));
+			})
+		}, "json");
+	}
+ 	//分页查找所有的收货地址
+ 	function findPageressreceipt(){
+		$.post("../../ressreceipt", {
+			op : "findByPageress",
+			uid :uid,
+			page:1,
+			rows:3
+		}, function(data) {
+			var length = data.length;
+			if(length >= 10){
+				$("#addrows").attr("disabled",true).css("pointer-events","none")
+			}
+			if(data == null){
+				return;
+			}
+			//先清空
+			 $("#mycenter_easy_show").html("");
+			//循环添加查出来的收货地址
+			$.each(data, function(index, item) {
+				var str = '<li class="li-first"  style="line-height:20px;" id="'+item.arid+'" onmouseover="dianji(this)" > <input type="text"  id="arname'+item.arid+'" name="address"  readonly="readonly" style="width:24%; " value="'+item.arname+'">&nbsp;<input type="text"  id="arname'+item.aid+'" name="address"  readonly="readonly" style="width:24%; " value="'+item.aname+'">&nbsp;<input type="text" id="aradd'+item.arid+'" name="address" readonly="readonly" style="width:25%;" value="'+item.aradd+'">&nbsp;<input type="text" id="artel'+item.arid+'" readonly="readonly" name="address" style="width:24%;" value="'+item.artel+'">&nbsp;</li>';
+				$("#mycenter_easy_show").append($(str));
 			})
 		}, "json");
 	}

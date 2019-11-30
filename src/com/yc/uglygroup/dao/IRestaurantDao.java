@@ -62,4 +62,16 @@ public interface IRestaurantDao {
 	 * 查询店铺里面的美食
 	 */
 	List<Map<String, String>> fodinfo(Integer str,Integer id );
+	/**
+	 * 按区域查找店铺
+	 * @param aid
+	 * @return
+	 */
+	public List<Map<String,String>> areafinds( Integer aid);
+	/**
+	 * 按特色菜系查找店铺
+	 * @param aid
+	 * @return
+	 */
+	public List<Map<String,String>> foodtypefinds( Integer tid);
 }

@@ -127,4 +127,16 @@ public class RestaurantDaoImpl implements IRestaurantDao{
 			return db.finds(sql, str,id);
 		}
 	}
+	public List<Map<String,String>> areafinds(Integer aid) {
+		DBHelper db = new DBHelper();
+		String sql = "select rid,uid ,r.aid,f.tid,radd,rname,rtel,rpic,rdisc,rstate,tname,aname from restaurant r,foodtypes f,area a where r.tid = f.tid and a.aid = r.aid and   r.aid= ? ";
+		return db.finds(sql,aid);
+	}
+
+	@Override
+	public List<Map<String,String>> foodtypefinds(Integer tid) {
+		DBHelper db = new DBHelper();
+		String sql = "select rid,uid ,r.aid,f.tid,radd,rname,rtel,rpic,rdisc,rstate,tname,aname from restaurant r ,foodtypes f ,area a where r.tid = f.tid and a.aid = r.aid and f.tid= ? ";
+		return db.finds(sql,tid);
+	}
 }

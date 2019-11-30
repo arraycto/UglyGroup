@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sound.midi.Synthesizer;
 
+import com.yc.uglygroup.biz.IRessreceiptBiz;
+import com.yc.uglygroup.biz.impl.RessreceiptBizlmpl;
 import com.yc.uglygroup.dao.IRessreceiptDao;
 import com.yc.uglygroup.dao.impl.RessreceiptDaolmpl;
 import com.yc.uglygroup.util.StringUtil;
@@ -30,7 +32,9 @@ public class RessreceiptServlet extends BasicServlet{
 			addressup(request, response);
 		}else if("deleteaddress".equals(op)){
 			deleteaddress(request, response);
-		}
+		}else if("findByPageress".equals(op)){
+			findByPageress(request, response);
+			}
 	}
 	/**
 	 * 删除收货地址
@@ -107,6 +111,20 @@ public class RessreceiptServlet extends BasicServlet{
 			return;
 		}
 		List<Map<String,String>>  ressreceipt =dao.findress(Integer.parseInt(uid));
+		this.send(response, ressreceipt);
+	}
+	/**
+	 * 分页查询收货地址
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
+	private void findByPageress(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		int uid = Integer.parseInt(request.getParameter("uid"));
+		int page = Integer.parseInt(request.getParameter("page"));
+		int rows = Integer.parseInt(request.getParameter("rows"));
+		IRessreceiptBiz dao = new RessreceiptBizlmpl();
+		List<Map<String,String>>  ressreceipt =dao.findByPageress(uid, page, rows);
 		this.send(response, ressreceipt);
 	}
 }

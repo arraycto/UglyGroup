@@ -43,4 +43,11 @@ public class RessreceiptDaolmpl implements IRessreceiptDao{
 		return db.update(sql, arid);
 	}
 
+	@Override
+	public List<Map<String, String>> findByPageress(Integer uid, int page, int rows) {
+		DBHelper db = new DBHelper();
+		String sql = "select arid,arname, artel, aradd ,ad.aid, aname  from addressreceipt ad ,area ar where uid = ? and ad.aid = ar.aid order by arid desc limit ?,?";
+		return db.finds(sql, uid,(page-1)*rows,rows);
+	}
+
 }

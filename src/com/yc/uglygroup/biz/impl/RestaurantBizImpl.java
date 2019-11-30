@@ -79,6 +79,16 @@ public class RestaurantBizImpl implements IRestaurantBiz{
 		IRestaurantDao restaurantdao = new RestaurantDaoImpl();
 		return restaurantdao.fodinfo(str,id);
 	}
+	public List<Map<String,String>> areafinds(Integer aid) {
+		IRestaurantDao restaurantdao = new RestaurantDaoImpl();
+		return restaurantdao.areafinds(aid);
+	}
+
+	@Override
+	public List<Map<String,String>> foodtypefinds(Integer tid) {
+		IRestaurantDao restaurantdao = new RestaurantDaoImpl();
+		return restaurantdao.foodtypefinds(tid);
+	}
 
 	
 }
