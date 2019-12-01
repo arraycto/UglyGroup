@@ -39,12 +39,15 @@ public class ActionServlet extends BasicServlet{
 		String discount = request.getParameter("discount");
 		String acnum = request.getParameter("acnum");
 		String fids = request.getParameter("fids");
+		String datatime = request.getParameter("datatime");
+		String enddatatime = request.getParameter("enddatatime");
+		
 		String[] fid =fids.split("/");
 		int count = 0;//活动失败的菜的数量
 		IActiondetailBiz biz = new ActiondetailBizlmpl();
 		for (int i = 0; i < fid.length; i++) {
 			String acid =("action"+ (int)((Math.random()*9+1)*10000) + rid+fid ).toString();//活动编号 action+5位随机数 + rid
-			int ruselt = biz.adddz(acid, Integer.parseInt(rid), Integer.parseInt(actype), Integer.parseInt(discount), Integer.parseInt(acnum), Integer.parseInt(fid[i]));
+			int ruselt = biz.adddz(acid, Integer.parseInt(rid), Integer.parseInt(actype), Integer.parseInt(discount), Integer.parseInt(acnum),datatime, enddatatime, Integer.parseInt(fid[i]));
 			if(!(ruselt>0)){
 				count++;
 				System.out.println(fid[i]+"失败");
@@ -65,12 +68,16 @@ public class ActionServlet extends BasicServlet{
 		String lowmin = request.getParameter("lowmin");
 		String remoney = request.getParameter("remoney");
 		String fids = request.getParameter("fids");
+		String datatime = request.getParameter("datatime") + ":00";
+		String enddatatime = request.getParameter("enddatatime")+ ":00";
+		System.out.println(datatime    +"------------"+enddatatime);
 		String[] fid =fids.split("/");
 		int count = 0;//活动失败的菜的数量
 		IActiondetailBiz biz = new ActiondetailBizlmpl();
-		String acid =("action"+ (int)((Math.random()*9+1)*10000) + rid ).toString();//活动编号 action+5位随机数 + rid
+		
 		for (int i = 0; i < fid.length; i++) {
-			int ruselt = biz.addmj(acid, Integer.parseInt(rid), Integer.parseInt(actype), Integer.parseInt(lowmin), Integer.parseInt(remoney), Integer.parseInt(fid[i]));
+			String acid =("action"+ (int)((Math.random()*9+1)*10000) + rid ).toString();//活动编号 action+5位随机数 + rid
+			int ruselt = biz.addmj(acid, Integer.parseInt(rid), Integer.parseInt(actype), Integer.parseInt(lowmin), Integer.parseInt(remoney), datatime, enddatatime, Integer.parseInt(fid[i]));
 			if(!(ruselt>0)){
 				count++;
 			}

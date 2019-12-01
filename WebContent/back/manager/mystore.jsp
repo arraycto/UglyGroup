@@ -213,11 +213,13 @@
 		<script>
 		var rid = 4;
 		var id;
-		$("#pdatetime").datetime({
+		$("#datetime").datetime({
 			type:"datetime",
+			value:[2019,11,1,15,30]
 		})
 		$("#enddatetime").datetime({
 			type:"datetime",
+			value:[2019,12,1,15,30]
 		})
 		
 			$(function() {
@@ -463,7 +465,7 @@
                 $("input:checkbox[name='check']:checkbox").each(function(){
     				$(this).prop("checked",is_check)
      			});
-            });    
+            });   
 			//发布活动
 			function addaction(){
 				var actype = $("#actype").val();//折扣类型
@@ -471,6 +473,10 @@
 				var lowmin  = $("#lowmin").val();//满减下限
 				var remoney  = $("#remoney").val();//满减金额
 				var acnum  = $("#acnum").val();//满减数量
+				var datatime = $("#datetime").val();
+				var enddatatime = $("#enddatetime").val();
+				Notiflix.Notify.Success(datatime);
+				Notiflix.Notify.Success(enddatatime);
 				var fids = "";
 				var count = 1;
 				$("input[name='check']:checkbox").each(function() {  
@@ -491,7 +497,9 @@
 						actype : actype,
 						lowmin : lowmin,
 						remoney : remoney,
-						fids : fids
+						fids : fids,
+						datatime:datatime,
+						enddatatime:enddatatime
 					}, function(data) {
 						Notiflix.Notify.Success("满减活动设置成功，有"+data+"个菜系修改失败");
 					}, "json");

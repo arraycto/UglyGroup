@@ -67,7 +67,6 @@ public class ResturantServlet extends BasicServlet{
 		IRestaurantBiz biz = new RestaurantBizImpl();
 		List<Map<String,String>> list = new ArrayList<Map<String,String>>();
 		list = biz.foodtypefinds(tid);
-		System.out.println(list);
 		
 		this.send(response, list);
 	}
@@ -99,7 +98,6 @@ public class ResturantServlet extends BasicServlet{
 		int rid = Integer.parseInt(request.getParameter("rid"));
 		IRestaurantBiz restaurantbiz = new RestaurantBizImpl();
 		this.send(response, restaurantbiz.rtinfo(rid));
-		System.out.println("1.2"+restaurantbiz.rtinfo(rid));
 		
 	}
 
@@ -108,7 +106,6 @@ public class ResturantServlet extends BasicServlet{
 		int rid = Integer.parseInt(request.getParameter("rid"));
 		IRestaurantBiz restaurantbiz = new RestaurantBizImpl();
 		this.send(response, restaurantbiz.resinfo(rid));
-		System.out.println("1.1"+restaurantbiz.resinfo(rid));
 		
 		
 		
@@ -120,7 +117,6 @@ public class ResturantServlet extends BasicServlet{
 		int rows = Integer.parseInt(request.getParameter("rows"));
 		IRestaurantBiz restaurantbiz = new RestaurantBizImpl();
 		this.send(response, restaurantbiz.findByPage1(null, page, rows));
-		System.out.println("2"+restaurantbiz.findByPage1(null, page, rows));
 	}
 
 
@@ -130,7 +126,6 @@ public class ResturantServlet extends BasicServlet{
 		int rows = Integer.parseInt(request.getParameter("rows"));
 		IRestaurantBiz restaurantbiz = new RestaurantBizImpl();
 		this.send(response, restaurantbiz.findByFirstPage(null, page, rows));
-		System.out.println("1"+restaurantbiz.findByFirstPage(null, page, rows));
 		
 	}
 
@@ -222,7 +217,6 @@ public class ResturantServlet extends BasicServlet{
 		FileUploadUtil fuu = new FileUploadUtil();
 		PageContext pageContext = JspFactory.getDefaultFactory().getPageContext(this, request, response, null, true, 8192, true);
 		Map<String, String> map = fuu.upload(pageContext);
-		System.out.println(map.get("rdisc"));
 		IRestaurantBiz restaurantBiz = new RestaurantBizImpl();
 		this.send(response, restaurantBiz.addRestaurant(map));
 	}

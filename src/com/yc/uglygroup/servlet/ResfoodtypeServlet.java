@@ -49,7 +49,6 @@ public class ResfoodtypeServlet extends BasicServlet {
 		 * @throws IOException 
 		 */
 	private void addTypes(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		System.out.println("添加操作");
 		IResfoodtypebiz iResfoodtypebiz = new ResfoodtypeBizlmpl();
 		int rid = Integer.parseInt(request.getParameter("rid"));
 		String trtype = request.getParameter("trtype");

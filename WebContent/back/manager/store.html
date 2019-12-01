@@ -20,6 +20,7 @@
 </head>
 <script type="text/javascript">
 var id= window.location.href.split("?")[1].split("=")[1];
+var rid;
 $(function(){
 	rinfo(id);
 	rtinfo(id);
@@ -65,28 +66,37 @@ function fodinfo(num){
 	strr = num;
 	var str = "";
 	$.post("../../resturant",{op:"fodinfo",strr:num, id:id},function(data){
+		$("#resss").html("");
 		  $.each(data,function(index,item){
+			  if($("#"+item.fid).size()>0){ 
+			}else{
 			str += '<li><div class="pro-info"><div  class="pic"><img id="fpic'+item.fid+'" src="../../'+item.fpic+'"></div>';
 			str += '<div class="details"><p id="fname'+item.fid+'">'+item.fname+'</p><span id="fdisc'+item.fid+'">'+item.fdisc+'</span><br><span  id="fprice'+item.fid+'" class="price">'+item.fprice+'</span>'; 
 			str += '</div><div class="jiaru"><button id="'+item.fid+'" class="iconfont icon-add", type="button"  onclick="buy(this)">购买</button></div></div></li>';
-			  
+			}
 		}) 
 			$("#resss").html("").append($(str));
 	},"json")
 }
 function fodinfo1(){
 	// strr 传 trid  id 传的是rid
-	var str = "";
+	
 	strr = "999";
 	$.post("../../resturant",{op:"fodinfo",strr:strr, id:id},function(data){
+		$("#resss").html("");
 		  $.each(data,function(index,item){
+			  var str = "";
 			  yhprice = item.fprice * (item.discount/10);
-				str +='<li><div class="pro-info"><div class="pic"><img src="../../'+item.fpic+'"></div><div class="details">';
-				str +='<p>'+item.fname+'</p><span>'+item.fdisc+'</span><br><span class="price"><i class="iconfont icon-icon-price-sure"></i>'+yhprice+'</span><del class="yuan"><i class="iconfont icon-icon-price-sure"></i>'+item.fprice+'</del>';
-				str +=' </div><div class="jiaru"><button id="1'+item.fid+'" class="iconfont icon-add", type="button"  onclick="buy(this)">购买</button></div></div></li>';
-			  
+			  if($("#"+item.fid).size()>0){ 
+				//如果存在
+			}else{
+				str +='<li><div class="pro-info"><div class="pic"><img  id="fpic'+item.fid+'" src="../../'+item.fpic+'"></div><div class="details">';
+				str +='<p id="fname'+item.fid+'" >'+item.fname+'</p><span >'+item.fdisc+'</span><br><span class="price" id="fprice'+item.fid+'" ><i class="iconfont icon-icon-price-sure"></i>'+yhprice+'</span><del class="yuan"><i class="iconfont icon-icon-price-sure"></i>'+item.fprice+'</del>';
+				str +=' </div><div class="jiaru"><button id="'+item.fid+'" class="iconfont icon-add", type="button"  onclick="buy(this)">购买</button></div></div></li>';
+				$("#resss").append($(str));
+			}
 		}) 
-			$("#resss").html("").append($(str));
+			
 		 
 	},"json")
 }
@@ -99,22 +109,79 @@ function buy(e){
 	var price = fprice;
 	str ="";
 	
-	
-	if(!$("#check"+fid)){ 
+	if($("#check"+fid).size()>0){ 
+		  alert(fid+"物品存在");
 		//如果存在
 		$("#add"+fid).on("click",function(){
 			add(this);
 			price = ($("#num"+fid).val() * fprice);
 			$("#price"+fid).html("");
 			$("#price"+fid).html(price);
-		})
-		 
+		}) 
 	}else{
-	 	str +='<ul><li class="col01"><input type="checkbox" id="check"+fid checked></li><li class="col02"><img src="'+fpic+'"></li><li class="col03">'+fname+'</li>';
-	 	str +='<li class="col05">'+fprice+'</li><li class="col06"><div class="num_add"><a id="lost"+fid href="javascript:void(0)" onclick="lost(this)" class="minus fl">-</a><input id="num"+fid type="text" value="1" class="num_show fl">';
-	 	str +='<a id="add"+fid href="javascript:void(0)" onclick="add(this)" class="add fl">+</a></div></li><li  id ="price"+fid class="col07">price</li><li class="col08"><a href="javascript:;" onclick="delGoods(this)">删除</a></li></ul>';
+	 	str +='<ul id="ul_'+fid+'"><li class="col01"><input name = "order_foods" type="checkbox" id="check'+fid+'" checked></li><li class="col02"><img  id="buy_fpic_'+fid+'" src="'+fpic+'"></li><li class="col03" id="buy_fname_'+fid+'">'+fname+'</li>';
+	 	str +='<li class="col05" id ="buy_fprice_'+fid+'">'+fprice+'</li><li class="col06"><div class="num_add"><a id="lost'+fid+'" href="javascript:void(0)" onclick="lost(this)" class="minus fl">-</a><input id="num'+fid+'" type="text" value="1" class="num_show fl">';
+	 	str +='<a id="add'+fid+'" href="javascript:void(0)" onclick="add(this)" class="add fl">+</a></div></li><li  id ="buy_price_'+fid+' class="col07">'+price+'</li><li class="col08"><a href="javascript:;" id="del'+fid+'" onclick="delGoods(this)">删除</a></li></ul>';
 	 	$("#cart_list_td").append($(str));
+	 	productCount();
 	}
+}
+
+function goorder(){
+	//以下集合以,为分割符
+	var fids = "";//fid集合
+	var fpics = "";//fpic集合
+	var fnames = "";//fname集合
+	var fprices = "";//fprice集合
+	var nums = "";//num集合
+	var prices = "";//price集合
+	var total = $("#totalPrices").html();//总价
+	var numbers = $("#totalNumbers").html()//商品数量
+	
+	var count = 1;
+	$("input[name='order_foods']:checkbox").each(function() {  
+	        var flag = $(this).is(':checked');
+	        if(flag){
+	        	var id  = $(this).attr("id");
+	        	var fid = id.substring(5);
+				console.log(fid);
+	        	if(count == 1){
+	        		fids = fid
+	        		fnames = $("#buy_fname_"+fid+"").text();
+	        		fprices = $("#buy_fprice_"+fid+"").text();
+	        		fpics = $("#buy_fpic_"+fid+"").attr("src");
+	        		nums = $("#num"+fid+"").val();
+	        		prices = $("#buy_price_"+fid+"").text();
+	        	}else{
+	        		fname = $("#buy_fname_"+fid+"").text();
+	        		fprice= $("#buy_fprice_"+fid+"").text();
+	        		fpic= $("#buy_fpic_"+fid+"").attr("src");
+	        		num = $("#num"+fid+"").val();
+	        		price = $("#buy_price_"+fid+"").text();
+	        		
+		        	fids += ","+fid;
+		        	fnames += ","+fname;
+		        	fprices += ","+fprice;
+		        	fpics += ","+fpic;
+		        	nums += ","+num;
+		        	prices +=","+price;
+		        	console.log(prices);
+	        	}
+	        	count ++;
+	        }
+	});
+	
+	//整合发送
+	$.post("../../order",{op:"ordertransmission",rid:rid,fids:fids, fpics:fpics,fnames:fnames,fprices:fprices,nums:nums,prices:prices,total:total,numbers:numbers},
+			function(data){
+			if(data > 0){
+				location.href = 'myorder.jsp';
+				window.sessionStorage.setItem('total',total);
+				window.sessionStorage.setItem('numbers',numbers);
+				window.sessionStorage.setItem('rid',rid);
+			}
+
+	},"text")
 }
 
 </script>
@@ -226,8 +293,8 @@ function buy(e){
 	        	<ul>
 	            	<li class="col01"><input type="checkbox" checked id="all"></li>
 	            	<li class="col02"><label for="all">全选</label></li>
-	                <li class="col03">合计(不含运费)：<span>￥</span><em id="totalPrices"></em><br>共计<b id="totalNumbers"></b>件商品</li>
-	                <li class="col04"><a href="myorder.jsp">去结算</a></li>
+	                <li class="col03" >合计(不含运费)：<span>￥</span><em id="totalPrices"></em><br>共计<b id="totalNumbers"></b>件商品</li>
+	                <li class="col04"><a href="myorder.jsp" onclick="goorder()">去结算</a></li>
 	            </ul>
         	</div>
         </div>

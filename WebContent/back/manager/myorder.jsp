@@ -27,7 +27,7 @@
 				<h1><a href="#">丑团外卖</a></h1>
 			</div>
 			<div class="login">
-				<a href="menu.html">返回</a>
+				<a href="store.html?rid="+rid>返回</a>
 				<div class="username">
 					 <a href="#">${user.uname}</a>
 					<ul id="userMenu" class="userMenu">
@@ -76,23 +76,14 @@
     
    	<!-- 商品列表 -->
     <h3 class="common_title">商品列表</h3>
-	<div class="common_list_con clearfix">
+	<div class="common_list_con clearfix" id = "orderinfo_show">
 		<ul class="goods_list_th clearfix">
 			<li class="col01">商品名称</li>
-			<li class="col02">商品单位</li>
 			<li class="col03">商品价格</li>
 			<li class="col04">数量</li>
 			<li class="col05">小计</li>		
 		</ul>
-		<ul class="goods_list_td clearfix">
-			<li class="col01">1</li>			
-			<li class="col02"><img src="images/goods/goods012.jpg"></li>
-			<li class="col03">奇异果</li>
-			<li class="col04">500g</li>
-			<li class="col05">25.80元</li>
-			<li class="col06">1</li>
-			<li class="col07">25.80元</li>
-		</ul>
+		
 		<ul class="goods_list_td clearfix">
 			<li class="col01">2</li>			
 			<li class="col02"><img src="images/goods/goods003.jpg"></li>
@@ -128,11 +119,14 @@
 	<script type="text/javascript">
 	var id;
 	var uid = 101;
+	var rid;
+	var total;
+	var numbers;
 	$(function(){
 		Notiflix.Notify.Init();
 		//userid();
 		findressreceipt();
-		
+		getorder();
 	});
 	//获取id
 	function userid(){
@@ -230,6 +224,39 @@
 			}
 		}, "json");
 		$('input[type="text"]').each(resizeInput);
+	}
+	
+	function getorder(){
+		var str = "";
+		$.post("../../order",{op:"getorder",},
+				function(data){
+			if(data < 0){
+				return;
+			}else{
+				var data = data;//订单信息
+				alert(data);
+				total = window.sessionStorage.getItem('total');//总价格
+				numbers =window.sessionStorage.getItem('numbers');//数量
+				rid =window.sessionStorage.getItem('rid');//店铺名
+				Notiflix.Notify.Failure(total  + numbers + rid  );
+				var count = 1;
+				$.each(data, function(index, item) {
+					str +='<ul class="goods_list_th clearfix"><li class="col01">商品名称</li><li class="col03">商品价格</li><li class="col04">数量</li><li class="col05">小计</li></ul>';
+					str +='<ul class="goods_list_td clearfix">';
+					str += '<li class="col01">'+count+'</li>';		
+					str +='<li class="col02"><img src="'+item.fpic+'"></li>';
+					str += '<li class="col03">'+item.fname+'</li>';
+					str +='<li class="col05">'+item.fprice+'</li>';
+					str +='<li class="col06">'+item.num+'</li>';
+					str +='<li class="col07">'+item.price+'元</li></ul>';
+				})
+				
+				$("#orderinfo_show").html("");
+				$("#orderinfo_show").append($(str));
+
+			}
+		},"json")
+
 	}
 	</script>
         

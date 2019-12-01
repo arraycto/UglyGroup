@@ -92,14 +92,11 @@ public class FoodServlet extends BasicServlet{
 		 */
 		private void findfood(HttpServletRequest request, HttpServletResponse response) throws IOException {
 			String str = request.getParameter("stri");
-			System.out.println(str+"4");
 			if(str == null) {
 				this.send(response, null);
 			}
 			IFoodBiz foodsbiz = new FoodBizlmpl();
 			List<Map<String, String>> list = foodsbiz.findfood(str);
-			System.out.println("3"+list);
-			System.out.println(list.size());
 			if(list.size()>0) {
 				this.send(response, list);
 			}else {

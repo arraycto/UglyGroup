@@ -1,5 +1,6 @@
 package com.yc.uglygroup.dao.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,5 +16,20 @@ public class FoodorderDaolmpl implements IFoodorderDao{
 		String sql = "select rname ,r.rpic,oprice,otime,ostate from foodorder f ,restaurant r where f.rid = r.rid and f.uid = ?  order by otime desc limit ?,?";
 		return db.finds(sql, uid,(page-1)*rows,rows);
 	}
+
+	@Override
+	public Map<String, String> ordertransmission(String fid, String fpic, String fname, String fprice, String num,
+			String price) {
+		Map<String ,String> map = new HashMap<String, String>();
+		map.put("fid", fid);
+		map.put("fpic", fpic);
+		map.put("fname", fname);
+		map.put("fprice", fprice);
+		map.put("num", num);
+		map.put("price", price);
+		return map;
+	}
+	
+	
 
 }

@@ -11,5 +11,8 @@ public interface IFoodorderDao {
 	 */
 	public List<Map<String,String>> findByPage(Integer uid , int page, int rows);
 	
-	
+	/**
+	 * 订单数据整合传输
+	 */
+	public Map<String,String> ordertransmission(String fid , String fpic, String fname,String fprice,String num,String price);
 }

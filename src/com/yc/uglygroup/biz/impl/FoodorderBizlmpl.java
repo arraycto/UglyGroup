@@ -16,4 +16,11 @@ public class FoodorderBizlmpl implements IFoodorderBiz{
 		return dao.findByPage(uid, page, rows);
 	}
 
+	@Override
+	public Map<String, String> ordertransmission(String fid, String fpic, String fname, String fprice, String num,
+			String price) {
+		IFoodorderDao dao = new FoodorderDaolmpl();
+		return dao.ordertransmission(fid, fpic, fname, fprice, num, price);
+	}
+
 }
