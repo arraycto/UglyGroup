@@ -8,7 +8,8 @@
 	<link rel="stylesheet" type="text/css" href="../../css/public.css">
 	<link rel="stylesheet" type="text/css" href="../../css/store.css">
 	<link rel="shortcut icon" href="favicon.ico" /> 
-	<link rel="stylesheet" href="../../css/cart.css">
+	<link rel="stylesheet" href="../../css/test.css">
+	 <link rel="stylesheet" href="../../css/cart.css"> 
 	<link rel="stylesheet" href="../../css/responsive/css">
 	<link rel="stylesheet" href="../../css/font-awesome.css">
 	<script type="text/javascript" src="../../js/jquery-1.12.2.min.js"></script>
@@ -110,9 +111,10 @@ function buy(e){
 		})
 		 
 	}else{
-	 	str +='<ul><li class="col01"><input type="checkbox" id="check"+fid checked></li><li class="col02"><img src="'+fpic+'"></li><li class="col03">'+fname+'</li>';
+	 	str +='<ul class="q1"><li class="col01"><input type="checkbox" id="check"+fid checked></li><li class="col02"><img src="'+fpic+'"></li><li class="col03">'+fname+'</li>';
 	 	str +='<li class="col05">'+fprice+'</li><li class="col06"><div class="num_add"><a id="lost"+fid href="javascript:void(0)" onclick="lost(this)" class="minus fl">-</a><input id="num"+fid type="text" value="1" class="num_show fl">';
 	 	str +='<a id="add"+fid href="javascript:void(0)" onclick="add(this)" class="add fl">+</a></div></li><li  id ="price"+fid class="col07">price</li><li class="col08"><a href="javascript:;" onclick="delGoods(this)">删除</a></li></ul>';
+	 	
 	 	$("#cart_list_td").append($(str));
 	}
 }
@@ -206,7 +208,7 @@ function buy(e){
 	</footer>
 	<nav class="menu-wrap">
         <div class="menu">
-	        <div class="cart_list_th clearfix" class="div1">
+	        <div class="cart_list_th clearfix" id="div1">
 	        	<ul>
 	            	<li class="col01">商品名称</li>
 	            	<li class="col02">商品图片</li>
@@ -217,12 +219,12 @@ function buy(e){
 	                
 	            </ul>
 	        </div>
-	        <div class="div2">
+	        <div id="div2">
 				<div class="cart_list_td clearfix" id="cart_list_td">
 		       		
             	</div>	        
 	        </div>
-            <div class="setElements" class="div3">
+            <div class="setElements" id="div3">
 	        	<ul>
 	            	<li class="col01"><input type="checkbox" checked id="all"></li>
 	            	<li class="col02"><label for="all">全选</label></li>
