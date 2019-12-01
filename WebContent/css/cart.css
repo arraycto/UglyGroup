@@ -1,23 +1,23 @@
 @charset "utf-8";
 /* CSS Document */
 
- .fl {
+.fl {
     float: left;
 }
 
-ul {
+.menu ul {
 	list-style: none;
 }
 
-.menu {
+.menu div{
 	position: absolute;
 }
 
-.div1 {
+#div1 {
 	top: 0;	
 }
 
-.div2 {
+#div2 {
 	overflow:scroll;
 	top: 40px;
 	bottom: 50px;
@@ -25,11 +25,11 @@ ul {
 	width: 800px;
 }
 
-.div3 {
+#div3 {
 	bottom: 0;
 }
 
-购物车每列样式
+/*购物车每列样式*/
 .cart_list_th{
 	width:800px;
 	border:1px solid #ddd;
@@ -42,7 +42,7 @@ ul {
 	text-align:center;
 }
 
-每列宽度
+/*每列宽度*/
 .cart_list_th .col01{width:26%;}
 .cart_list_th .col02{width:16%;}
 .cart_list_th .col03{width:13%;}
@@ -51,7 +51,7 @@ ul {
 .cart_list_th .col06{width:18%;}
 
 
-购物车商品显示
+/*购物车商品显示*/
 .cart_list_td{
 	width:800px;
 	border:1px solid #ddd;
@@ -67,11 +67,10 @@ ul {
 .cart_list_td .col01{width:4%;}
 .cart_list_td .col02{width:12%;}
 .cart_list_td .col03{width:10%;}
-.cart_list_td .col04{width:16%;}
 .cart_list_td .col05{width:13%;}
 .cart_list_td .col06{width:12%;}
 .cart_list_td .col07{width:15%;}
-.cart_list_td .col08{width:18%;}
+.cart_list_td .col08{width:34%;}
 
 .cart_list_td .col02 img{
 	width:50px;
@@ -90,7 +89,7 @@ ul {
 	color:#999;	
 }
 
-加减按钮
+/*加减按钮*/
 .cart_list_td .col06 .num_add{
 	width:98px;
 	height:28px;
@@ -115,7 +114,7 @@ ul {
 	border-right:1px solid #ddd;
 }
 
-购物车价格统计
+/*购物车价格统计*/
 .setElements{
 	width:800px;
 	height:50px;
@@ -135,7 +134,7 @@ ul {
 	width:12%;
 	text-align:center;
 }
-总价和数量
+/*总价和数量*/
 .setElements .col03{
 	width:69%;
 	height:50px;
@@ -155,7 +154,7 @@ ul {
 	color:#ff0000;
 	padding:0 5px;
 }
-删除
+/*删除*/
 .setElements .col04{
 	width:14%;
 	text-align:center;
@@ -170,58 +169,3 @@ ul {
 	color:#fff;
 	font-size:24px;
 }
- 
-
-/*原test.css里面  */
-
-.menu-wrap {
-	font-size: 10px;
-	font-family: 'Microsoft Yahei';
-    color: #666;
-    position: fixed;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 55px;
-    transition: width 0.2s linear;
-    -webkit-transition: width 0.2s linear;
-    transform: translateZ(0) scale(1, 1);
-    -webkit-transform: translateZ(0) scale(1, 1);
-    background-color: #f5f5f5;
-    box-shadow: 1px 0 15px rgba(0, 0, 0, 0.07);
-    overflow: hidden;
-    z-index: 2;
-}
-
-.menu-wrap:hover {
-    width: 800px;
-}
-
-.menu {
-    position: absolute;
-    height: 700px;
-    width: 800px;
-}
-
-.menu li {
-    height: 42px;
-    line-height: 42px;
-    transition: all .14s linear;
-}
-
-.menu::-webkit-scrollbar-track {
-    border-radius: 2px;
-}
-
-.menu::-webkit-scrollbar {
-    width: 5px;
-    background-color: #f7f7f7;
-}
-
-.menu::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    background-color: #bfbfbf;
-}
-
